@@ -1,0 +1,174 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Toyger">
+      <UniqueIdentifier>{b73ac9bb-5ad7-43ae-83ab-07f5ed70dd17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Parts">
+      <UniqueIdentifier>{e1758e81-b20c-4cd0-9fc3-8ce38abb3c0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{a24ac9ff-336c-4183-a83c-8deb3db6d7eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Cmd">
+      <UniqueIdentifier>{98fb09a0-4eae-4bfe-aff2-771631c88039}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GUI">
+      <UniqueIdentifier>{6abd95cf-86a5-43cd-a2b8-1657da885898}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test">
+      <UniqueIdentifier>{382e09ad-e127-466e-a83f-813b7a6a3b72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ResManage">
+      <UniqueIdentifier>{51f705b0-baaf-4c0c-a96b-c0cf18f2f88f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="framework.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="X102.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_GameWnd.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_IContentPainter.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_IInputState.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_InputImpl.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_IWnd.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_IWndInputListener.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\MCIThread.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\CMonoBMP.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Toyger\Toyger_ScrollBarHandling.h">
+      <Filter>Toyger</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\Flags.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Cmd\ICmd.h">
+      <Filter>Cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="Cmd\CmdSeq.h">
+      <Filter>Cmd</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MenuItem.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\Vec2D.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\TupleForEach.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\Rect.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Menu.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Color.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="IController.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalConst.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="ITopLV.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="IScene.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Test\TestScene.h">
+      <Filter>Test</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManage\ImgBank.h">
+      <Filter>ResManage</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
+      <Filter>Toyger</Filter>
+    </ClCompile>
+    <ClCompile Include="Parts\MCIThread.cpp">
+      <Filter>Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="Toyger\Toyger_IBMGPlayer.h">
+      <Filter>Toyger</Filter>
+    </ClCompile>
+    <ClCompile Include="X102.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Toyger\Toyger_ScrollBarHandling.cpp">
+      <Filter>Toyger</Filter>
+    </ClCompile>
+    <ClCompile Include="Game.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MenuItem.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Menu.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GUI.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Test\TestScene.cpp">
+      <Filter>Test</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManage\ImgBank.cpp">
+      <Filter>ResManage</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="X102.rc">
+      <Filter>リソース ファイル</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+    <Image Include="X102.ico">
+      <Filter>リソース ファイル</Filter>
+    </Image>
+  </ItemGroup>
+</Project>

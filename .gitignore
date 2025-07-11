@@ -1,0 +1,9 @@
+/X102/x64/*
+/.vs/*
+*.pdb
+*.iobj
+*.exe
+*.lastbuildstate
+*.log
+*.sav
+*.aps

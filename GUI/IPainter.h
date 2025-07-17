@@ -15,10 +15,22 @@ namespace GUI
 		virtual ~IPainter() = default;
 
 	public:
-		/// <summary>描画処理</summary>
-		/// <param name="hdc">描画対象</param>
-		virtual void Paint( HDC hdc ) const = 0;
+		/// <summary>可視性（描画処理の有効/無効）</summary>
+		/// <returns></returns>
+		bool Visible() const {	return m_IsVisible;	}
 
+		/// <summary>可視性（描画処理の有効/無効）の変更</summary>
+		/// <param name="Visiblity"></param>
+		/// <returns>*this</returns>
+		IPainter &Visible( bool Visiblity ){	m_IsVisible=Visiblity;	return *this;	}
+
+		/// <summary>
+		/// 描画処理．ただし Visible() がfalseの状態では何もしない
+		/// </summary>
+		/// <param name="hdc">描画対象</param>
+		void Paint( HDC hdc ) const {	if( Visible() )Paint_(hdc);	}
+
+	public:
 		/// <summary>描画範囲（最小包括矩形）の左上座標の取得</summary>
 		/// <returns>左上座標</returns>
 		virtual Vec2i TopLeft() const = 0;
@@ -32,8 +44,12 @@ namespace GUI
 		/// <returns>サイズ</returns>
 		virtual Vec2i Size() const = 0;
 
-	public:	//ヘルパ
+	protected:
+		/// <summary>描画処理</summary>
+		/// <param name="hdc">描画対象</param>
+		virtual void Paint_( HDC hdc ) const = 0;
 
+	public:	//ヘルパ
 		/// <summary>描画範囲（最小包括矩形）取得</summary>
 		/// <returns>範囲</returns>
 		Rect BoundingRect() const
@@ -56,5 +72,8 @@ namespace GUI
 		/// <param name="H">配置範囲高さ</param>
 		/// <returns>*this</returns>
 		IPainter &YCenter( int H ){	return TopLeft( Vec2i{ TopLeft()[0], ( H - Size()[1] )/2 } );	}
+
+	private:
+		bool m_IsVisible = true;
 	};
 }

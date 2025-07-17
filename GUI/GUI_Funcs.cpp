@@ -19,10 +19,10 @@ namespace GUI
 	}
 
 	//
-	void DrawMenuCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused )
+	void FillRectReg( HDC hdc, const Rect &Rect, COLORREF Color )
 	{
-		HBRUSH hbr = CreateSolidBrush( Color::MenuCursor(IsMenuFocused) );
-		auto r = ItemDrawReg.AsRECT();
+		HBRUSH hbr = CreateSolidBrush( Color );
+		auto r = Rect.AsRECT();
 		FillRect( hdc, &r, hbr );
 		DeleteBrush( hbr );
 	}

@@ -7,6 +7,11 @@
 
 namespace GUI::Menu
 {
+	//
+	void DrawMenuCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused )
+	{	FillRectReg( hdc, ItemDrawReg, Color::MenuCursor(IsMenuFocused) );	}
+
+	//
 	Vec2i Menu::Size() const
 	{
 		if( !m_pContent )return Vec2i{0,0};
@@ -30,7 +35,7 @@ namespace GUI::Menu
 	}
 
 	//
-	Rect Menu::ItemDrawRECT( int index ) const
+	Rect Menu::ItemDrawRect( int index ) const
 	{
 		if( !m_pContent )return Rect();
 
@@ -42,7 +47,7 @@ namespace GUI::Menu
 	}
 
 	//
-	void Menu::Paint( HDC hdc ) const
+	void Menu::Paint_( HDC hdc ) const
 	{
 		if( !m_pContent )return;
 
@@ -51,8 +56,13 @@ namespace GUI::Menu
 			DrawFrame( hdc, Rect( m_TopLeft, size[0], size[1] ), Color::White );
 		}
 
-		//€–ÚŒQ
 		const int iCursorPos = m_pContent->CursorPos();
+		if( iCursorPos>=0 )
+		{//ƒJ[ƒ\ƒ‹
+			DrawMenuCursor( hdc, ItemDrawRect(iCursorPos), m_bFocused );
+		}
+
+		//€–ÚŒQ
 		const auto ItemSize = m_pContent->ItemSize();
 		const Vec2i Offset =
 			m_pContent->IsVerticalMenu() ?

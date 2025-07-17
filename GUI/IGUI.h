@@ -41,12 +41,6 @@ namespace GUI
 	public:
 		virtual ~IGUI() = default;
 	public:
-
-		//GUIStack の描画処理の起点となるべきか否か．
-		//trueを返す場合，このインスタンス以前に GUIStack にPushされているインスタンスの Paint() の呼び出しを抑制する．
-		//このメソッドの戻り値はインスタンス毎に定数であること（常に同じ値を返さねばならない）．
-		virtual bool IsPaintStart() const {	return false;	}
-
 		/// <summary>更新処理</summary>
 		/// <param name="Stack">このUpdateを呼び出したGUIStack（つまりこのインスタンスが所属するGUIStack）への要素追加手段</param>
 		/// <param name="Controller">入力</param>
@@ -90,15 +84,11 @@ namespace GUI
 	/// IGUIのスタック的な．以下の仕事をするだけのコンテナみたいな．
 	/// 
 	/// * 最後に Push された物の Update() をコールする
-	/// * Paint() は Push 順にコールする．
-	///   ただし IGUI::IsPaintStart() がtrueを返す物がある場合，
-	///   その中で最も最後に Push された物が Paint() コールの先頭となる．
-	///   （つまり，それよりも前に Push された物の Paint() は呼ばれない）
+	/// * Paint() は Push された物全ての Paint() を Push 順にコールする．
 	/// </summary>
 	class GUIStack : public IGUIStack
 	{
 	public:
-		GUIStack(){	m_iPaintBegin = m_GUIs.end();	}
 		~GUIStack(){	clear();	}
 
 	private:
@@ -110,28 +100,17 @@ namespace GUI
 		{
 			if( !upGUI )return *this;
 
-			const bool FromEmptyState = m_GUIs.empty();
-
-			if( !FromEmptyState )
+			if( !m_GUIs.empty() )
 			{	m_GUIs.back()->OnLostFocus();	}
 
 			m_GUIs.push_back( std::move(upGUI) );
 			m_GUIs.back()->OnGotFocus();
-
-			if( FromEmptyState  ||  m_GUIs.back()->IsPaintStart() )
-			{	m_iPaintBegin = std::prev( m_GUIs.end() );	}
-
 			return *this;
 		}
 
 	public:
 		bool empty() const {	return m_GUIs.empty();	}
-
-		void clear()
-		{
-			m_GUIs.clear();
-			m_iPaintBegin = m_GUIs.end();
-		}
+		void clear(){	m_GUIs.clear();	}
 
 		/// <summary>
 		/// 最後に Push された物の Update() をコールする
@@ -157,17 +136,12 @@ namespace GUI
 			return NeedToRedraw;
 		}
 
-		/// <summary>
-		/// 所属要素群の Paint() を Push 順にコールする．
-		/// ただし GUIPart::IsPaintStart() がtrueを返す物がある場合，
-		/// その中で最も最後に Push された物が Paint() コールの先頭となる．
-		/// （つまり，それよりも前に Push された物の Paint() は呼ばれない）
-		/// </summary>
+		/// <summary>所属要素群の Paint() を Push 順にコールする</summary>
 		/// <param name="hdc"></param>
 		void Paint( HDC hdc )
 		{
-			for( auto i=m_iPaintBegin; i!=m_GUIs.end(); ++i )
-			{	(*i)->Paint( hdc );	}
+			for( const auto &upGUI : m_GUIs )
+			{	upGUI->Paint( hdc );	}
 		}
 
 	private:
@@ -188,16 +162,9 @@ namespace GUI
 				if( TgtIsCurrent && !m_GUIs.empty() )
 				{	m_GUIs.back()->OnGotFocus();	}
 			}
-			//m_iPaintBegin の更新作業
-			auto ri = std::find_if( m_GUIs.rbegin(), m_GUIs.rend(), []( const auto &upGUI )->bool{	return upGUI->IsPaintStart();	} );
-			if( ri != m_GUIs.rend() )
-			{	m_iPaintBegin = --(ri.base());	}
-			else
-			{	m_iPaintBegin = m_GUIs.begin();	}
 		}
 
 	private:
 		std::list<   std::unique_ptr< IGUI >   > m_GUIs;	//最後にPushされた物が back 側
-		Iter m_iPaintBegin;	//描画開始位置
 	};
 }

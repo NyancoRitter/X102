@@ -68,7 +68,6 @@ namespace GUI::Menu
 		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const override
 		{
 			Rect RestReg = ItemDrawReg;
-			if( IsAtCursorPos ){	DrawMenuCursor( hdc, ItemDrawReg, IsMenuFocused );	}
 			TupleForEach(
 				m_Parts,
 				[hdc, &RestReg, Color=m_Color]( const auto &Part )

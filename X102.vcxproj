@@ -99,7 +99,6 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GUI\Color.h" />
-    <ClInclude Include="GUI\GUI.h" />
     <ClInclude Include="GUI\Menu.h" />
     <ClInclude Include="GUI\MenuItem.h" />
     <ClInclude Include="IScene.h" />
@@ -125,7 +124,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="GUI\GUI.cpp" />
     <ClCompile Include="GUI\GUI_Funcs.cpp" />
     <ClCompile Include="GUI\Menu.cpp" />
     <ClCompile Include="GUI\MenuItem.cpp" />

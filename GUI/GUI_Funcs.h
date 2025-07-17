@@ -15,11 +15,10 @@ namespace GUI
 	void DrawFrame( HDC hdc, const Rect &Rect, COLORREF Color, bool bFill=true, int RoundedCornerRadius=5 );
 
 	/// <summary>
-	/// メニュー用のカーソル描画．
-	/// ItemDrawReg で指定された矩形範囲を塗りつぶす．
+	/// 矩形領域を指定色で塗りつぶす
 	/// </summary>
 	/// <param name="hdc"></param>
-	/// <param name="ItemDrawReg">カーソルが指す項目の描画範囲</param>
-	/// <param name="IsMenuFocused">メニューがフォーカス状態か否か（描画色に影響）</param>
-	void DrawMenuCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused );
+	/// <param name="Rect"></param>
+	/// <param name="Color"></param>
+	void FillRectReg( HDC hdc, const Rect &Rect, COLORREF Color );
 }

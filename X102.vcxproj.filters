@@ -95,9 +95,6 @@
     <ClInclude Include="Parts\Rect.h">
       <Filter>Parts</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\GUI.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="GUI\Color.h">
       <Filter>GUI</Filter>
     </ClInclude>
@@ -156,9 +153,6 @@
     </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\GUI.cpp">
-      <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="Test\TestScene.cpp">
       <Filter>Test</Filter>

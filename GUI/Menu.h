@@ -41,11 +41,12 @@ namespace GUI::Menu
 		/// </returns>
 		virtual Vec2i Size() const override;
 
+	protected:
 		/// <summary>
 		/// 描画．ただし SetContent() で有効な描画対象を指定していない状態では何もしない．
 		/// </summary>
 		/// <param name="hdc"></param>
-		virtual void Paint( HDC hdc ) const override;
+		virtual void Paint_( HDC hdc ) const override;
 
 	public:
 		/// <summary>処理対象の指定</summary>
@@ -84,7 +85,7 @@ namespace GUI::Menu
 		/// <returns>
 		/// 描画範囲．ただし SetContent() で有効な描画対象を指定していない状態では不定．
 		/// </returns>
-		Rect ItemDrawRECT( int index ) const;
+		Rect ItemDrawRect( int index ) const;
 
 	private:
 		IMenuContent *m_pContent = nullptr;
@@ -94,4 +95,13 @@ namespace GUI::Menu
 		bool m_bDrawFrame = false;
 		bool m_bFocused = false;
 	};
+
+	/// <summary>
+	/// メニュー用のカーソル描画．
+	/// ItemDrawReg で指定された矩形範囲を塗りつぶす．
+	/// </summary>
+	/// <param name="hdc"></param>
+	/// <param name="ItemDrawReg">カーソルが指す項目の描画範囲</param>
+	/// <param name="IsMenuFocused">メニューがフォーカス状態か否か（描画色に影響）</param>
+	void DrawMenuCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused );
 }

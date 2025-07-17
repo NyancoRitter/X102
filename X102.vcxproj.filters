@@ -134,6 +134,12 @@
     <ClInclude Include="GUI\IPainter.h">
       <Filter>GUI</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\SimpleSelection.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MenuContent.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -168,6 +174,9 @@
     </ClCompile>
     <ClCompile Include="GUI\GUI_Funcs.cpp">
       <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\SimpleSelection.cpp">
+      <Filter>GUI\Menu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

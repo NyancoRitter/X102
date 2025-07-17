@@ -51,6 +51,7 @@ namespace GUI::Menu
 	{
 		if( !m_pContent )return;
 
+		if( m_bDrawFrame )
 		{//˜g
 			auto size = Size();
 			DrawFrame( hdc, Rect( m_TopLeft, size[0], size[1] ), Color::White );

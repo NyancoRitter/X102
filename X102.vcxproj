@@ -95,6 +95,8 @@
     <ClInclude Include="GUI\IGUI.h" />
     <ClInclude Include="GUI\IMenuContent.h" />
     <ClInclude Include="GUI\IPainter.h" />
+    <ClInclude Include="GUI\MenuContent.h" />
+    <ClInclude Include="GUI\SimpleSelection.h" />
     <ClInclude Include="IController.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
@@ -127,6 +129,7 @@
     <ClCompile Include="GUI\GUI_Funcs.cpp" />
     <ClCompile Include="GUI\Menu.cpp" />
     <ClCompile Include="GUI\MenuItem.cpp" />
+    <ClCompile Include="GUI\SimpleSelection.cpp" />
     <ClCompile Include="Parts\MCIThread.cpp" />
     <ClCompile Include="ResManage\ImgBank.cpp" />
     <ClCompile Include="Test\TestScene.cpp" />

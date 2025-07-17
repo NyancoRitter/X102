@@ -89,14 +89,14 @@ namespace GUI
 	class GUIStack : public IGUIStack
 	{
 	public:
+		GUIStack() = default;
 		~GUIStack(){	clear();	}
-
 	private:
 		GUIStack( const GUIStack & ) = delete;
 		GUIStack &operator =( const GUIStack & ) = delete;
 
 	public:	// IGUIStack Impl
-		virtual GUIStack &Push( const std::unique_ptr<IGUI> upGUI ) override
+		virtual GUIStack &Push( std::unique_ptr<IGUI> upGUI ) override
 		{
 			if( !upGUI )return *this;
 
@@ -112,9 +112,7 @@ namespace GUI
 		bool empty() const {	return m_GUIs.empty();	}
 		void clear(){	m_GUIs.clear();	}
 
-		/// <summary>
-		/// 最後に Push された物の Update() をコールする
-		/// </summary>
+		/// <summary>最後に Push された物の Update() をコールする</summary>
 		/// <param name="Controller"></param>
 		/// <returns>再描画（ Draw() の実施）が必要か否か</returns>
 		bool Update( const IController &Controller )

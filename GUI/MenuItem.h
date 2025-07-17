@@ -95,7 +95,7 @@ namespace GUI::Menu
 	public:
 		/// <summary>ctor </summary>
 		/// <param name="TextU16">•`‰æText</param>
-		/// <param name="W">•`‰æ”ÍˆÍ‚Ì•</param>
+		/// <param name="W">•`‰æ”ÍˆÍ‚Ì•. 0ˆÈ‰º‚ğw’è‚µ‚½ê‡‚Í Draw() ‚Ìˆø””ÍˆÍ‚ğ‚»‚Ì‚Ü‚Ü•`‰æ”ÍˆÍ‚Æ‚·‚é</param>
 		Text( const std::wstring &TextU16, int W=0 ) : m_TextU16(TextU16), m_XSize(W) {}
 
 	public:	//as Menu Item Part

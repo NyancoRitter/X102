@@ -1,16 +1,13 @@
 #pragma once
 #include "IScene.h"
 #include <memory>
+#include "GUI/IGUI.h"
 
 class ITopLV;
 class CMonoBMP;
 
-namespace TestSceneImpl
-{
-	class TestMenuContent;
-}
 
-namespace GUI::Menu{	class Menu;	}
+namespace GUI::Menu{	class Menu;	class IMenuContent;	}
 
 /// <summary>
 /// ƒeƒXƒg
@@ -29,7 +26,8 @@ public:	// IScene Impl
 
 private:
 	ITopLV &m_rTopLV;
-	std::unique_ptr<CMonoBMP> m_upMenuIcon;
-	std::unique_ptr<TestSceneImpl::TestMenuContent> m_upMenuContent;
-	std::unique_ptr< GUI::Menu::Menu > m_upMenu;
+	//std::unique_ptr<CMonoBMP> m_upMenuIcon;
+	//std::unique_ptr< GUI::Menu::IMenuContent > m_upMenuContent;
+	//std::unique_ptr< GUI::Menu::Menu > m_upMenu;
+	GUI::GUIStack m_Stack;
 };

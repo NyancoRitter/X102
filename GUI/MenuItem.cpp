@@ -14,7 +14,7 @@ namespace GUI::Menu
 		SetBkMode( hdc, TRANSPARENT );
 
 		Rect ThisReg = RestReg;
-		if( ThisReg.Width() > XSize() ){	ThisReg.SetWidth( XSize() );	}
+		if( XSize()>0  &&  ThisReg.Width() > XSize() ){	ThisReg.SetWidth( XSize() );	}
 
 		auto TextRect = ThisReg.AsRECT();
 		DrawTextW(

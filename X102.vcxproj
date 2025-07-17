@@ -91,6 +91,10 @@
     <ClInclude Include="Cmd\CmdSeq.h" />
     <ClInclude Include="Cmd\ICmd.h" />
     <ClInclude Include="GlobalConst.h" />
+    <ClInclude Include="GUI\GUI_Funcs.h" />
+    <ClInclude Include="GUI\IGUI.h" />
+    <ClInclude Include="GUI\IMenuContent.h" />
+    <ClInclude Include="GUI\IPainter.h" />
     <ClInclude Include="IController.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
@@ -122,6 +126,7 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GUI\GUI.cpp" />
+    <ClCompile Include="GUI\GUI_Funcs.cpp" />
     <ClCompile Include="GUI\Menu.cpp" />
     <ClCompile Include="GUI\MenuItem.cpp" />
     <ClCompile Include="Parts\MCIThread.cpp" />

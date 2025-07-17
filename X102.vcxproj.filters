@@ -30,6 +30,9 @@
     <Filter Include="ResManage">
       <UniqueIdentifier>{51f705b0-baaf-4c0c-a96b-c0cf18f2f88f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GUI\Menu">
+      <UniqueIdentifier>{0d6a1e3b-0653-487e-bc55-2599c1f10bc4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -83,9 +86,6 @@
     <ClInclude Include="Cmd\CmdSeq.h">
       <Filter>Cmd</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\MenuItem.h">
-      <Filter>GUI</Filter>
-    </ClInclude>
     <ClInclude Include="Parts\Vec2D.h">
       <Filter>Parts</Filter>
     </ClInclude>
@@ -94,9 +94,6 @@
     </ClInclude>
     <ClInclude Include="Parts\Rect.h">
       <Filter>Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\Menu.h">
-      <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\GUI.h">
       <Filter>GUI</Filter>
@@ -122,6 +119,24 @@
     <ClInclude Include="ResManage\ImgBank.h">
       <Filter>ResManage</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\Menu.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MenuItem.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\IMenuContent.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\GUI_Funcs.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\IGUI.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\IPainter.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -142,12 +157,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\MenuItem.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\Menu.cpp">
-      <Filter>GUI</Filter>
-    </ClCompile>
     <ClCompile Include="GUI\GUI.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
@@ -156,6 +165,15 @@
     </ClCompile>
     <ClCompile Include="ResManage\ImgBank.cpp">
       <Filter>ResManage</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Menu.cpp">
+      <Filter>GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MenuItem.cpp">
+      <Filter>GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\GUI_Funcs.cpp">
+      <Filter>GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

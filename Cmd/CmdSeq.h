@@ -26,7 +26,7 @@ public:
 	void clear(){	m_CmdList.clear();	}
 
 public:	//IAddCmdToSeq Impl
-	virtual CmdSeq &PushBack( std::shared_ptr<ICmd> spCmd ) override {	m_CmdList.push_back(spCmd);	return *this;	}
+	virtual CmdSeq &PushBack( std::unique_ptr<ICmd> spCmd ) override {	m_CmdList.push_back( std::move(spCmd) );	return *this;	}
 
 public:	//ICmd Impl
 	virtual Flags<CmdResult> Exec( IAddCmdToSeq &Owner ) override
@@ -62,6 +62,6 @@ public:	//ICmd Impl
 	}
 
 private:
-	std::list< std::shared_ptr<ICmd> > m_CmdList;
+	std::list< std::unique_ptr<ICmd> > m_CmdList;
 	bool m_bSuppressSubsequents_when_NotEmpty;
 };

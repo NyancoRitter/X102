@@ -30,6 +30,13 @@ public:
 	Vec2i &RightBottom(){	return m_RB;	}
 	const Vec2i &RightBottom() const {	return m_RB;	}
 
+	Rect &Offset( const Vec2i &d )
+	{
+		m_TL += d;
+		m_RB += d;
+		return *this;
+	}
+
 	int Width() const {	return m_RB[0] - m_TL[0];	}
 	int Height() const {	return m_RB[1] - m_TL[1];	}
 

@@ -34,7 +34,7 @@ class IAddCmdToSeq;
 
 /// <summary>
 /// コマンド．
-/// 何らかのコマンドシーケンス（ ICmdDeq ）に登録され，そこから Exec() が呼ばれる想定．
+/// 何らかのコマンドシーケンスに登録され，そこから Exec() が呼ばれる想定．
 /// </summary>
 class ICmd
 {
@@ -56,26 +56,10 @@ class IAddCmdToSeq
 public:
 	virtual ~IAddCmdToSeq() = default;
 
-	/// <summary>
-	/// 末尾に追加（shared_ptr版）
-	/// </summary>
+	/// <summary>末尾に追加</summary>
 	/// <param name="spCmd">追加対象．ただしnullptrの場合は追加しない</param>
 	/// <returns>*thisを返す</returns>
-	virtual IAddCmdToSeq &PushBack( std::shared_ptr<ICmd> spCmd ) = 0;
-
-	/// <summary>
-	/// 末尾に追加（ポインタ版）
-	/// </summary>
-	/// <param name="pCmd">追加対象．ただしnullptrの場合は追加しない</param>
-	/// <returns>*thisを返す</returns>
-	IAddCmdToSeq &PushBack( ICmd *pCmd )
-	{	//※何もしないカスタムデリータを持たせたshared_ptrとしてAddする
-		if( !pCmd )return *this;
-		return PushBack( std::shared_ptr<ICmd>{ pCmd, NOP_Deleter } );
-	}
-
-protected:
-	static void NOP_Deleter( ICmd* ){}
+	virtual IAddCmdToSeq &PushBack( std::unique_ptr<ICmd> spCmd ) = 0;
 };
 
 //-----------------

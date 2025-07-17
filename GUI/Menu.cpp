@@ -1,17 +1,20 @@
 #include "framework.h"
-#include "GUI.h"
 #include "Menu.h"
+#include "IMenuContent.h"
+#include "GUI_Funcs.h"
 #include "Color.h"
 #include "IController.h"
 
 namespace GUI::Menu
 {
-	Vec2i MenuPainter::TotalSize( const IMenuContent &Content ) const
+	Vec2i Menu::Size() const
 	{
+		if( !m_pContent )return Vec2i{0,0};
+
 		Vec2i Total = m_OuterMargin * 2;
-		const int n = Content.nItems();
-		const auto ItemSize = Content.ItemSize();
-		if( Content.IsVerticalMenu() )
+		const int n = m_pContent->nItems();
+		const auto ItemSize = m_pContent->ItemSize();
+		if( m_pContent->IsVerticalMenu() )
 		{
 			Total[0] += ItemSize[0];
 			Total[1] += n * ItemSize[1];
@@ -27,58 +30,73 @@ namespace GUI::Menu
 	}
 
 	//
-	Rect MenuPainter::ItemDrawRECT( const IMenuContent &Content, int index ) const
+	Rect Menu::ItemDrawRECT( int index ) const
 	{
+		if( !m_pContent )return Rect();
+
 		Vec2i TL = m_TopLeft + m_OuterMargin;
-		int iOffsetCoord = ( Content.IsVerticalMenu() ? 1 : 0 );
-		const auto ItemSize = Content.ItemSize();
+		int iOffsetCoord = ( m_pContent->IsVerticalMenu() ? 1 : 0 );
+		const auto ItemSize = m_pContent->ItemSize();
 		TL[ iOffsetCoord ] += index * ( ItemSize[ iOffsetCoord ] + m_ItemSpacing );
 		return Rect( TL, ItemSize[0], ItemSize[1] );
 	}
 
 	//
-	void MenuPainter::Draw( HDC hdc, const IMenuContent &Content ) const
+	void Menu::Paint( HDC hdc ) const
 	{
+		if( !m_pContent )return;
+
 		{//òg
-			auto Size = TotalSize( Content );
-			DrawFrame( hdc, Rect( m_TopLeft, Size[0], Size[1] ).AsRECT(), Color::White );
+			auto size = Size();
+			DrawFrame( hdc, Rect( m_TopLeft, size[0], size[1] ), Color::White );
 		}
+
 		//çÄñ⁄åQ
-		const int iCursorPos = Content.CursorPos();
-		for( int i=0; i<Content.nItems(); ++i )
+		const int iCursorPos = m_pContent->CursorPos();
+		const auto ItemSize = m_pContent->ItemSize();
+		const Vec2i Offset =
+			m_pContent->IsVerticalMenu() ?
+			Vec2i{ 0, ItemSize[1]+m_ItemSpacing } :
+			Vec2i{ ItemSize[0]+m_ItemSpacing, 0 };
+
+		Rect ItemRect( m_TopLeft + m_OuterMargin, ItemSize[0], ItemSize[1] );
+		for( int i=0; i<m_pContent->nItems(); ++i )
 		{
-			Content.Item( i ).Draw( hdc, ItemDrawRECT( Content, i ), (i==iCursorPos), m_bFocused );
+			m_pContent->Item( i ).Draw( hdc, ItemRect, (i==iCursorPos), m_bFocused );
+			ItemRect.Offset( Offset );
 		}
 	}
 
 	//
-	HandleInputResult HandleInput( IMenuContent &Content, const IController &Controller )
+	HandleInputResult Menu::HandleInput( const IController &Controller )
 	{
-		if( Content.nItems() >= 1 )
+		if( !m_pContent )return HandleInputResult::None;
+
+		if( m_pContent->nItems() >= 1 )
 		{//ÉJÅ[É\Éãà⁄ìÆ
-			int NewCursorPos = Content.CursorPos();
-			if( Content.IsVerticalMenu() ? Controller.CursorUp() : Controller.CursorLeft() )
+			int NewCursorPos = m_pContent->CursorPos();
+			if( m_pContent->IsVerticalMenu() ? Controller.CursorUp() : Controller.CursorLeft() )
 			{
 				--NewCursorPos;
-				if( NewCursorPos<0 )NewCursorPos = Content.nItems() - 1;
+				if( NewCursorPos < 0 )NewCursorPos = m_pContent->nItems() - 1;
 			}
-			else if( Content.IsVerticalMenu() ? Controller.CursorDown() : Controller.CursorRight() )
+			else if( m_pContent->IsVerticalMenu() ? Controller.CursorDown() : Controller.CursorRight() )
 			{
 				++NewCursorPos;
-				if( NewCursorPos<0 )NewCursorPos = 0;
-				if( NewCursorPos>=Content.nItems() )NewCursorPos = 0;
+				if( NewCursorPos < 0 )NewCursorPos = 0;
+				if( NewCursorPos >= m_pContent->nItems() )NewCursorPos = 0;
 			}
 
-			if( Content.CursorPos() != NewCursorPos )
+			if( m_pContent->CursorPos() != NewCursorPos )
 			{
-				Content.CursorPos( NewCursorPos );
+				m_pContent->CursorPos( NewCursorPos );
 				return HandleInputResult::CursorMoved;
 			}
 		}
 
-		if( Controller.Select()  &&  Content.CursorPos()>=0 )
+		if( Controller.Select()  &&  m_pContent->CursorPos() >= 0 )
 		{	return HandleInputResult::Selected;	}
-		
+
 		if( Controller.Cancel() )
 		{	return HandleInputResult::Canceled;	}
 

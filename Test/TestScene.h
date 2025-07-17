@@ -10,6 +10,8 @@ namespace TestSceneImpl
 	class TestMenuContent;
 }
 
+namespace GUI::Menu{	class Menu;	}
+
 /// <summary>
 /// ƒeƒXƒg
 /// </summary>
@@ -29,4 +31,5 @@ private:
 	ITopLV &m_rTopLV;
 	std::unique_ptr<CMonoBMP> m_upMenuIcon;
 	std::unique_ptr<TestSceneImpl::TestMenuContent> m_upMenuContent;
+	std::unique_ptr< GUI::Menu::Menu > m_upMenu;
 };

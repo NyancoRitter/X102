@@ -2,6 +2,7 @@
 #include "TestScene.h"
 #include "Parts/CMonoBMP.h"
 #include "ResManage/ImgBank.h"
+#include "GUI/IMenuContent.h"
 #include "GUI/Menu.h"
 #include <vector>
 
@@ -46,8 +47,13 @@ TestScene::TestScene( ITopLV &rTopLV )
 	: m_rTopLV( rTopLV )
 {
 	m_upMenuIcon = ResManage::LoadMonoBMP_or_Dummy( L"Dummy16.bmp" );
-	if( m_upMenuIcon )
-	{	m_upMenuContent = std::make_unique<TestSceneImpl::TestMenuContent>( *m_upMenuIcon );	}
+	
+	m_upMenuContent = std::make_unique<TestSceneImpl::TestMenuContent>( *m_upMenuIcon );
+	m_upMenu = std::make_unique< GUI::Menu::Menu >( m_upMenuContent.get() );
+	m_upMenu->OuterMargin( { 8, 12 } )
+		.WithFrame( true )
+		.TopLeft( { 20, 10 } )
+		.IsFocused( true );
 }
 
 TestScene::~TestScene() = default;
@@ -59,7 +65,7 @@ Flags<SceneUpdateResult> TestScene::Update( const IController &Controller )
 	if( !m_upMenuContent )return SceneUpdateResult::None;
 
 	using GUI::Menu::HandleInputResult;
-	switch( auto MHR = GUI::Menu::HandleInput( *m_upMenuContent, Controller ) )
+	switch( auto MHR = m_upMenu->HandleInput( Controller ) )
 	{
 	case HandleInputResult::CursorMoved:
 		return SceneUpdateResult::ReqRedraw;	break;
@@ -78,13 +84,5 @@ Flags<SceneUpdateResult> TestScene::Update( const IController &Controller )
 
 void TestScene::Draw( HDC hdc )
 {
-	if( m_upMenuIcon )
-	{
-		GUI::Menu::MenuPainter()
-			.OuterMargin( { 8, 12 } )
-			.WithFrame( true )
-			.TopLeft( { 20, 10 } )
-			.IsFocused( true )
-			.Draw( hdc, *m_upMenuContent );
-	}
+	m_upMenu->Paint( hdc );
 }

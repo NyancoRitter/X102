@@ -2,18 +2,9 @@
 #include <windowsx.h>
 #include "MenuItem.h"
 #include "Parts/CMonoBMP.h"
-#include "Color.h"
 
 namespace GUI::Menu
 {
-	void DrawCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused )
-	{
-		HBRUSH hbr = CreateSolidBrush( Color::MenuCursor(IsMenuFocused) );
-		auto r = ItemDrawReg.AsRECT();
-		FillRect( hdc, &r, hbr );
-		DeleteBrush( hbr );
-	}
-
 	//------------------------------------
 	//Text
 

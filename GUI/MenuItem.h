@@ -1,19 +1,18 @@
 #pragma once
 
 #include "Parts/Vec2D.h"
-#include "Parts/Rect.h"
 #include "Parts/TupleForEach.h"
 #include <string>
+#include "GUI_Funcs.h"
 
 class CMonoBMP;
 
 namespace GUI::Menu
 {
-	//カーソル描画
-	void DrawCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused );
-
 	/// <summary>
-	/// メニュー内の１項目の描画
+	/// メニュー内の１項目の描画手段
+	/// 
+	/// * 設定として描画色を保持
 	/// </summary>
 	class IMenuItem
 	{
@@ -39,7 +38,8 @@ namespace GUI::Menu
 	};
 
 	/// <summary>
-	/// パーツで構成されたメニュー項目
+	/// 汎用．
+	/// いくつかの描画パーツで構成されたメニュー項目．
 	/// 
 	/// templateで指定したパーツ群を左側から横並びに描画する．
 	/// 各パーツの型は以下のメソッドを持つ必要がある．
@@ -49,9 +49,9 @@ namespace GUI::Menu
 	///		具体的には右隣りのパーツの描画範囲（のleft）はこの分だけ右にずらされる．
 	///		（故に，最も右端のパーツが返す値は描画に影響を与えない）
 	/// * void Draw( HDC hdc, const Rect &Reg, COLORREF Color ) const;
-	///		描画処理．hdcのRegの範囲にパーツの描画を行う．
+	///		描画処理．
 	///		Reg はメニュー項目の描画範囲からこのパーツよりも左側のパーツ群が占める範囲を除いたもの．
-	///		Colorは描画色である．
+	///		Colorは項目の描画色である．
 	/// </summary>
 	/// <typeparam name="...DrawParts">項目を構成するパーツ（描画要素）群</typeparam>
 	template< class ...DrawParts >
@@ -68,7 +68,7 @@ namespace GUI::Menu
 		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const override
 		{
 			Rect RestReg = ItemDrawReg;
-			if( IsAtCursorPos ){	DrawCursor( hdc, ItemDrawReg, IsMenuFocused );	}
+			if( IsAtCursorPos ){	DrawMenuCursor( hdc, ItemDrawReg, IsMenuFocused );	}
 			TupleForEach(
 				m_Parts,
 				[hdc, &RestReg, Color=m_Color]( const auto &Part )
@@ -88,7 +88,7 @@ namespace GUI::Menu
 	};
 
 	//--------------------------
-	//MenuItem 用のメニュー項目パーツ実装
+	//MenuItem<> 用のメニュー項目パーツ実装
 
 	/// <summary>メニュー項目パーツ：Textを描画する</summary>
 	class Text

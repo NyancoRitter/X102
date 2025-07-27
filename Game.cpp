@@ -5,7 +5,7 @@
 #include "Toyger/Toyger_IWnd.h"
 #include "IController.h"
 
-#include "Test/TestScene.h"	//Test
+#include "Scene/TownScene/TownScene.h"
 
 //===============================================
 
@@ -62,13 +62,13 @@ bool Game::Initialize()
 	}
 
 	//ウィンドウ設定
-	m_rWnd.SetCaption( L"Tentative" );
+	m_rWnd.SetCaption( L"Tiny DRPG Remake" );
 	m_rWnd.SetViewContentSize( GlobalConst::GC_W, GlobalConst::GC_H );
 	m_rWnd.ResizeToFit();
 
 	//初期ステート設定
-	m_upTestScene = std::make_unique< TestScene >( *this );
-	ChangeCurrSceneTo( m_upTestScene.get() );
+	m_upTownScene = std::make_unique< Town::TownScene >( *this );
+	ChangeCurrSceneTo( m_upTownScene.get() );
 
 	//初期状態描画
 	m_rWnd.UpdateViewContent( *this );

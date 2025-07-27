@@ -1,5 +1,6 @@
 #pragma once
 #include "Parts/Flags.h"
+#include <memory>
 
 class IController;
 

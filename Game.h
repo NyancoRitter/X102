@@ -8,7 +8,7 @@ namespace Toyger{ class IWnd; }
 using InputState = Toyger::IInputState<uint8_t>;
 
 class IScene;
-class TestScene;
+namespace Town{	class TownScene;	}
 
 /// <summary>
 /// ゲーム実装
@@ -75,5 +75,5 @@ private:
 
 	IScene *m_pCurrScene = nullptr;	//カレントシーン
 
-	std::unique_ptr< TestScene > m_upTestScene;	//テスト用
+	std::unique_ptr< Town::TownScene > m_upTownScene;	//テスト用
 };

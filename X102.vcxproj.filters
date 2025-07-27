@@ -24,14 +24,17 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{6abd95cf-86a5-43cd-a2b8-1657da885898}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Test">
-      <UniqueIdentifier>{382e09ad-e127-466e-a83f-813b7a6a3b72}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ResManage">
       <UniqueIdentifier>{51f705b0-baaf-4c0c-a96b-c0cf18f2f88f}</UniqueIdentifier>
     </Filter>
     <Filter Include="GUI\Menu">
       <UniqueIdentifier>{0d6a1e3b-0653-487e-bc55-2599c1f10bc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene">
+      <UniqueIdentifier>{b5b45ac0-9b80-41e8-8464-f786fc71b75d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene\TownScene">
+      <UniqueIdentifier>{89530158-53ee-4ccb-be7f-f7130f6386f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -107,12 +110,6 @@
     <ClInclude Include="ITopLV.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="IScene.h">
-      <Filter>Game</Filter>
-    </ClInclude>
-    <ClInclude Include="Test\TestScene.h">
-      <Filter>Test</Filter>
-    </ClInclude>
     <ClInclude Include="ResManage\ImgBank.h">
       <Filter>ResManage</Filter>
     </ClInclude>
@@ -140,6 +137,24 @@
     <ClInclude Include="GUI\MenuContent.h">
       <Filter>GUI\Menu</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\TextLinePainter.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\IScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TownScene\TownScene.h">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TownScene\TownCenter_UI.h">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClInclude>
+    <ClInclude Include="DataPath.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\CvtUTF.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -160,9 +175,6 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="Test\TestScene.cpp">
-      <Filter>Test</Filter>
-    </ClCompile>
     <ClCompile Include="ResManage\ImgBank.cpp">
       <Filter>ResManage</Filter>
     </ClCompile>
@@ -177,6 +189,18 @@
     </ClCompile>
     <ClCompile Include="GUI\SimpleSelection.cpp">
       <Filter>GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\TextLinePainter.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene\TownScene.cpp">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene\TownCenter_UI.cpp">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClCompile>
+    <ClCompile Include="DataPath.cpp">
+      <Filter>Game</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

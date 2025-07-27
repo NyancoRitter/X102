@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "Parts/CMonoBMP.h"
+#include "ImgBank.h"
 
 namespace ResManage
 {
@@ -33,5 +34,21 @@ namespace ResManage
 		for( auto &L : Ptn ){	L = (L & 0xFF00)>>8  |  (L & 0x00FF)<<8;	}	//エンディアン的に必要っぽい
 		HBITMAP hDummyBMP = ::CreateBitmap( 16,16,1,1, Ptn );
 		return std::make_unique<CMonoBMP>( hDummyBMP );
+	}
+
+	//----------------------------------------------
+	//MonoBmpBank
+
+	MonoBmpBank::~MonoBmpBank() = default;
+
+	const CMonoBMP* MonoBmpBank::operator[]( int index )
+	{
+		if( index<0 || index>=(int)m_Bank.size() )return nullptr;
+		auto &Ret = m_Bank[index];
+		if( !Ret )
+		{//初回にロード
+			Ret = LoadMonoBMP_or_Dummy( m_ImgDirU16 + m_ImgFileNamesU16[index] );
+		}
+		return Ret.get();
 	}
 }

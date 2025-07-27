@@ -41,7 +41,7 @@ namespace
 		//ウィンドウ生成
 		Toyger::ConcreteInputState< uint8_t > InputSt{ false };	//※false : ウィンドウを閉じる操作に対してはゲーム処理側で対処する
 		Toyger::GameWnd Wnd{ InputSt };
-		if( !Wnd.CreateWnd( L"Toyger", true ) ){	return Err( L"Wnd.CrateWnd() failed" );	}
+		if( !Wnd.CreateWnd( L"X102", true ) ){	return Err( L"Wnd.CrateWnd() failed" );	}
 
 		//{//Set Window Icon
 		//	HANDLE hBigIcon = ::LoadImage( hInstance, MAKEINTRESOURCE(IDI_ICON32), IMAGE_ICON, 32,32, LR_DEFAULTCOLOR );

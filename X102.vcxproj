@@ -55,7 +55,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -74,7 +74,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>./;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>./;./Scene;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClInclude Include="Cmd\CmdSeq.h" />
     <ClInclude Include="Cmd\ICmd.h" />
+    <ClInclude Include="DataPath.h" />
     <ClInclude Include="GlobalConst.h" />
     <ClInclude Include="GUI\GUI_Funcs.h" />
     <ClInclude Include="GUI\IGUI.h" />
@@ -97,15 +98,16 @@
     <ClInclude Include="GUI\IPainter.h" />
     <ClInclude Include="GUI\MenuContent.h" />
     <ClInclude Include="GUI\SimpleSelection.h" />
+    <ClInclude Include="GUI\TextLinePainter.h" />
     <ClInclude Include="IController.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GUI\Color.h" />
     <ClInclude Include="GUI\Menu.h" />
     <ClInclude Include="GUI\MenuItem.h" />
-    <ClInclude Include="IScene.h" />
     <ClInclude Include="ITopLV.h" />
     <ClInclude Include="Parts\CMonoBMP.h" />
+    <ClInclude Include="Parts\CvtUTF.h" />
     <ClInclude Include="Parts\Flags.h" />
     <ClInclude Include="Parts\MCIThread.h" />
     <ClInclude Include="Parts\Rect.h" />
@@ -113,8 +115,10 @@
     <ClInclude Include="Parts\Vec2D.h" />
     <ClInclude Include="ResManage\ImgBank.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\IScene.h" />
+    <ClInclude Include="Scene\TownScene\TownCenter_UI.h" />
+    <ClInclude Include="Scene\TownScene\TownScene.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Test\TestScene.h" />
     <ClInclude Include="Toyger\Toyger_GameWnd.h" />
     <ClInclude Include="Toyger\Toyger_IContentPainter.h" />
     <ClInclude Include="Toyger\Toyger_IInputState.h" />
@@ -125,14 +129,17 @@
     <ClInclude Include="X102.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="DataPath.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GUI\GUI_Funcs.cpp" />
     <ClCompile Include="GUI\Menu.cpp" />
     <ClCompile Include="GUI\MenuItem.cpp" />
     <ClCompile Include="GUI\SimpleSelection.cpp" />
+    <ClCompile Include="GUI\TextLinePainter.cpp" />
     <ClCompile Include="Parts\MCIThread.cpp" />
     <ClCompile Include="ResManage\ImgBank.cpp" />
-    <ClCompile Include="Test\TestScene.cpp" />
+    <ClCompile Include="Scene\TownScene\TownCenter_UI.cpp" />
+    <ClCompile Include="Scene\TownScene\TownScene.cpp" />
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp" />
     <ClCompile Include="Toyger\Toyger_IBMGPlayer.h" />
     <ClCompile Include="Toyger\Toyger_ScrollBarHandling.cpp" />

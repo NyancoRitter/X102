@@ -4,6 +4,7 @@
 #include "GUI/IGUI.h"
 
 class ITopLV;
+class PlayData;
 
 namespace Town
 {
@@ -24,18 +25,23 @@ namespace Town
 
 	private:
 		class TownCenter_UI;
-		class INN_UI;
-		class PUB_UI;
+		class Inn_UI;
+		class Pub_UI;
 		class Shop_UI;
 
-		void GoTo_TownCenter();
-		void GoTo_Inn();
-		void GoTo_Pub();
-		void GoTo_Shop();
+		PlayData &CurrPlayData();
+
+		void Push_Inn_UI();
+		void Push_Pub_UI();
+		void Push_Shop_UI();
+		void Push_CampMenu_UI();
 		void GoTo_Maze();
 
 	public:
 		ITopLV &m_rTopLV;
 		GUI::GUIStack m_Stack;
+
+		//Å¶Ç±ÇÃUIÇÕìsìxê∂ê¨Ç∆îjä¸ÇÇπÇ∏Ç…ï€éùÇ∑ÇÈ
+		std::unique_ptr< TownCenter_UI > m_upTownCenterUI;
 	};
 }

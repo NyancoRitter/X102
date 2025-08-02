@@ -4,18 +4,23 @@
 
 namespace GUI
 {
+	TextLinePainter::TextLinePainter( int LineW, int LineH )
+		: m_LineW(LineW), m_LineH(LineH)
+		, m_Color( Color::White )
+	{	AlignCenter();	}
+
 	void TextLinePainter::Paint_( HDC hdc ) const
 	{
 		if( m_TextLinesU16.empty() )return;
 
-		SetTextColor( hdc, Color::White );
+		SetTextColor( hdc, m_Color );
 		SetBkMode( hdc, TRANSPARENT );
 
 		const UINT Format = DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|m_HorizontalFormat;
 
 		RECT TextLineRect;
 		TextLineRect.left = m_TopLeft[0];
-		TextLineRect.right = TextLineRect.left + m_Size[0];
+		TextLineRect.right = TextLineRect.left + m_LineW;
 		TextLineRect.top = m_TopLeft[1];
 		TextLineRect.bottom = TextLineRect.top + m_LineH;
 		for( const auto &rLine : m_TextLinesU16 )

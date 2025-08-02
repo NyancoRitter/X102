@@ -10,6 +10,8 @@ using InputState = Toyger::IInputState<uint8_t>;
 class IScene;
 namespace Town{	class TownScene;	}
 
+class PlayData;
+
 /// <summary>
 /// ゲーム実装
 /// </summary>
@@ -62,6 +64,8 @@ public:	// Toyger::IContentPainter Impl
 	virtual void Paint( HDC hdc, int W, int H ) override;
 
 public:	// ITopLV Imp;
+	virtual PlayData &CurrPlayData() override;
+	virtual void ChangeToTownScene() override;
 	virtual void ShowMsgBox( const std::wstring &Title, const std::wstring &Msg ) const override;
 
 
@@ -69,11 +73,17 @@ private:
 	//引数が指すシーンをカレントシーンにする
 	void ChangeCurrSceneTo( IScene *pScene );
 
+	//表示倍率を変更
+	void ChangeViewMagRate( int Rate );
+
 private:
 	Toyger::IWnd &m_rWnd;	//ウィンドウへのアクセス手段．ctorで指定された参照を保持
 	HFONT m_hDefaultFont = NULL;	//デフォルトのフォント
 
-	IScene *m_pCurrScene = nullptr;	//カレントシーン
+	//
+	std::unique_ptr< PlayData > m_upPlayData;	//プレイ状況データ
 
+	//
+	IScene *m_pCurrScene = nullptr;	//カレントシーン
 	std::unique_ptr< Town::TownScene > m_upTownScene;	//テスト用
 };

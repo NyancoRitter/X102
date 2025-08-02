@@ -64,14 +64,16 @@ namespace GUI
 		IPainter &Offset( const Vec2i &dPos ){	return TopLeft( TopLeft()+dPos );	}
 
 		/// <summary>x方向位置を 幅 W の領域の中心にセット</summary>
-		/// <param name="W">配置範囲幅</param>
+		/// <param name="RangeW">配置範囲幅</param>
+		/// <param name="RangeLeft">配置範囲の左端座標</param>
 		/// <returns>*this</returns>
-		IPainter &XCenter( int W ){	return TopLeft( Vec2i{ ( W - Size()[0] )/2, TopLeft()[1] } );	}
+		IPainter &XCenter( int RangeW, int RangeLeft=0 ){	return TopLeft( Vec2i{ RangeLeft + ( RangeW - Size()[0] )/2, TopLeft()[1] } );	}
 
 		/// <summary>y方向位置を 高さ H の領域の中心にセット</summary>
-		/// <param name="H">配置範囲高さ</param>
+		/// <param name="RangeH">配置範囲高さ</param>
+		/// <param name="RangeTop">配置範囲の上端座標</param>
 		/// <returns>*this</returns>
-		IPainter &YCenter( int H ){	return TopLeft( Vec2i{ TopLeft()[0], ( H - Size()[1] )/2 } );	}
+		IPainter &YCenter( int RangeH, int RangeTop=0 ){	return TopLeft( Vec2i{ TopLeft()[0], RangeTop + ( RangeH - Size()[1] )/2 } );	}
 
 	private:
 		bool m_IsVisible = true;

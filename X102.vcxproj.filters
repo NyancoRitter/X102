@@ -36,6 +36,21 @@
     <Filter Include="Game\Scene\TownScene">
       <UniqueIdentifier>{89530158-53ee-4ccb-be7f-f7130f6386f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\PlayData">
+      <UniqueIdentifier>{21138c75-4639-4383-820c-ce07d419360a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\GameContent">
+      <UniqueIdentifier>{111a06a7-ed88-43aa-9d2a-53e27322940d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Misc">
+      <UniqueIdentifier>{d10a6fc0-5f2a-4941-bf7a-0e892da3c2c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\CampMenu">
+      <UniqueIdentifier>{d7d399a5-e331-4e6e-b4ee-83b36de4969c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Common">
+      <UniqueIdentifier>{9a4c830d-258a-4ac1-9621-cfc1f5768509}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -110,19 +125,19 @@
     <ClInclude Include="ITopLV.h">
       <Filter>Game</Filter>
     </ClInclude>
-    <ClInclude Include="ResManage\ImgBank.h">
+    <ClInclude Include="ResManage\MonoBmpHolder.h">
       <Filter>ResManage</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Menu.h">
       <Filter>GUI\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\MenuItem.h">
+    <ClInclude Include="GUI\GenericMenuContent.h">
       <Filter>GUI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="GUI\IMenuContent.h">
       <Filter>GUI\Menu</Filter>
     </ClInclude>
-    <ClInclude Include="GUI\GUI_Funcs.h">
+    <ClInclude Include="GUI\DrawFuncs.h">
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\IGUI.h">
@@ -132,9 +147,6 @@
       <Filter>GUI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\SimpleSelection.h">
-      <Filter>GUI\Menu</Filter>
-    </ClInclude>
-    <ClInclude Include="GUI\MenuContent.h">
       <Filter>GUI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="GUI\TextLinePainter.h">
@@ -154,6 +166,72 @@
     </ClInclude>
     <ClInclude Include="Parts\CvtUTF.h">
       <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\ImgPainter.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TownScene\Inn_UI.h">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayData\PlayData.h">
+      <Filter>Game\PlayData</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\MenuAsGUI.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TownScene\Pub_UI.h">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\TownScene\Shop_UI.h">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\PartyChar.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\PartyCharID.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\AttackElement.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\Spell.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\ItemID.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\IMenuItem.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManage\BmpBank.h">
+      <Filter>ResManage</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\DataVec.h">
+      <Filter>Game\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\ActResult.h">
+      <Filter>Game\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\StlRnd.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Rnd.h">
+      <Filter>Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CampMenu\CampMenu.h">
+      <Filter>Game\CampMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\HandleMenuInput.h">
+      <Filter>GUI\Menu</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\CharSelMenuContent.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\DrawCharPanel.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\MoneyView.h">
+      <Filter>Game\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -175,16 +253,16 @@
     <ClCompile Include="Game.cpp">
       <Filter>Game</Filter>
     </ClCompile>
-    <ClCompile Include="ResManage\ImgBank.cpp">
+    <ClCompile Include="ResManage\MonoBmpHolder.cpp">
       <Filter>ResManage</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Menu.cpp">
       <Filter>GUI\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\MenuItem.cpp">
+    <ClCompile Include="GUI\GenericMenuContent.cpp">
       <Filter>GUI\Menu</Filter>
     </ClCompile>
-    <ClCompile Include="GUI\GUI_Funcs.cpp">
+    <ClCompile Include="GUI\DrawFuncs.cpp">
       <Filter>GUI</Filter>
     </ClCompile>
     <ClCompile Include="GUI\SimpleSelection.cpp">
@@ -201,6 +279,45 @@
     </ClCompile>
     <ClCompile Include="DataPath.cpp">
       <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\ImgPainter.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene\Inn_UI.cpp">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayData\PlayData.cpp">
+      <Filter>Game\PlayData</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayData\PlayData_SaveLoad.cpp">
+      <Filter>Game\PlayData</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene\Pub_UI.cpp">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene\Shop_UI.cpp">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GameContent\PartyChar.cpp">
+      <Filter>Game\GameContent</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManage\BmpBank.cpp">
+      <Filter>ResManage</Filter>
+    </ClCompile>
+    <ClCompile Include="CampMenu\CampMenu.cpp">
+      <Filter>Game\CampMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\HandleMenuInput.cpp">
+      <Filter>GUI\Menu</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\CharSelMenuContent.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\DrawCharPanel.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\MoneyView.cpp">
+      <Filter>Game\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

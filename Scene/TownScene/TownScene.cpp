@@ -1,21 +1,28 @@
 #include "framework.h"
 #include "TownScene.h"
 #include "TownCenter_UI.h"
+#include "Inn_UI.h"
+#include "Pub_UI.h"
+#include "Shop_UI.h"
+
+#include "ITopLV.h"
+#include "CampMenu/CampMenu.h"
 
 namespace Town
 {
-	TownScene::TownScene( ITopLV &rTopLV ) : m_rTopLV( rTopLV ) {}
+
+	TownScene::TownScene( ITopLV &rTopLV ) : m_rTopLV( rTopLV )
+	{
+		m_upTownCenterUI = std::make_unique<TownCenter_UI>( *this );
+	}
+
 	TownScene::~TownScene() = default;
 
 	void TownScene::OnEnter()
-	{
-		GoTo_TownCenter();
-	}
+	{	m_Stack.Push( std::make_unique<GUI::RefWrapper>( *m_upTownCenterUI ) );	}
 	
 	void TownScene::OnLeave()
-	{
-		m_Stack.clear();
-	}
+	{	m_Stack.clear();	}
 
 	Flags<SceneUpdateResult> TownScene::Update( const IController &Controller )
 	{
@@ -32,31 +39,14 @@ namespace Town
 		m_Stack.Paint( hdc );
 	}
 
-	void TownScene::GoTo_TownCenter()
-	{
-		m_Stack.clear();
-		m_Stack.Push( std::make_unique<TownCenter_UI>( *this ) );
-	}
-
-	void TownScene::GoTo_Inn()
-	{
-		//m_Stack.clear();
-		//m_Stack.Push( std::make_unique<TownCenter_UI>( *this ) );
-	}
-
-	void TownScene::GoTo_Pub()
-	{
-		//m_Stack.clear();
-		//m_Stack.Push( std::make_unique<TownCenter_UI>( *this ) );
-	}
-
-	void TownScene::GoTo_Shop()
-	{
-		//m_Stack.clear();
-		//m_Stack.Push( std::make_unique<TownCenter_UI>( *this ) );
-	}
+	void TownScene::Push_Inn_UI(){	m_Stack.Push( std::make_unique<Inn_UI>( *this ) );	}
+	void TownScene::Push_Pub_UI(){	m_Stack.Push( std::make_unique<Pub_UI>( *this ) );	}
+	void TownScene::Push_Shop_UI(){	m_Stack.Push( std::make_unique<Shop_UI>( *this ) );	}
+	void TownScene::Push_CampMenu_UI(){	m_Stack.Push( std::make_unique<CampMenu>( CurrPlayData() ) );	}
 
 	void TownScene::GoTo_Maze()
 	{
 	}
+
+	PlayData &TownScene::CurrPlayData(){	return m_rTopLV.CurrPlayData();	}
 }

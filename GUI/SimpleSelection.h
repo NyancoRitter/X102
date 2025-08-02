@@ -3,7 +3,7 @@
 #include <functional>
 #include <string>
 #include "IGUI.h"
-#include "MenuContent.h"
+#include "GenericMenuContent.h"
 #include "Menu.h"
 
 namespace GUI::Menu
@@ -13,6 +13,7 @@ namespace GUI::Menu
 	/// 単純な選択肢UI
 	/// 
 	/// 1行のテキストの下に（横線を挟んで）単純な選択メニューを表示する．
+	///		<remarks>ちょっとした Yes/No みたいなのを出す用</remarks>
 	/// </summary>
 	class SimpleSelection : public IGUI
 	{
@@ -68,7 +69,7 @@ namespace GUI::Menu
 		SimpleSelection &Cancelable( bool val ){	m_bCancelable=val;	return *this;	}
 
 	public:	// IGUI Impl
-		virtual Flags<GUIResult> Update( IGUIStack &Stack, const IController &Controller ) override;
+		virtual Flags<GUIResult> Update( const IController &Controller ) override;
 		virtual void OnGotFocus() override;
 		virtual void OnLostFocus() override;
 	
@@ -82,7 +83,7 @@ namespace GUI::Menu
 		void UpdateMenuPos();
 
 	private:
-		VMenuContent< Text > m_Content;
+		GenericMenuContent<true> m_Content;
 		Menu m_Menu;
 		std::wstring m_MsgText;
 		Vec2i m_TopLeft;

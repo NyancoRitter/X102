@@ -20,9 +20,13 @@ namespace GUI
 		None = 0,
 
 		/// <summary>
-		/// 所属StackからPopされるべきことを示す．
+		/// UIの作業が終わったことを示す．
+		///		<remarks>
+		///		例えば，複数階層のメニューの一部がこれを返した場合，
+		///		１つ前の階層に戻るべきことを示す……という感じ．
+		///		</remarks>
 		/// </summary>
-		ShouldPop =  1,
+		Finished =  1,
 
 		/// <summary>
 		/// 再描画が必要であることを示す．
@@ -42,10 +46,9 @@ namespace GUI
 		virtual ~IGUI() = default;
 	public:
 		/// <summary>更新処理</summary>
-		/// <param name="Stack">このUpdateを呼び出したGUIStack（つまりこのインスタンスが所属するGUIStack）への要素追加手段</param>
 		/// <param name="Controller">入力</param>
-		/// <returns>再描画が必要か否か．</returns>
-		virtual Flags<GUIResult> Update( IGUIStack &Stack, const IController &Controller ) = 0;
+		/// <returns>処理結果</returns>
+		virtual Flags<GUIResult> Update( const IController &Controller ) = 0;
 
 		/// <summary>
 		/// Update()が呼ばれる対象になった際
@@ -86,7 +89,7 @@ namespace GUI
 	/// * 最後に Push された物の Update() をコールする
 	/// * Paint() は Push された物全ての Paint() を Push 順にコールする．
 	/// </summary>
-	class GUIStack : public IGUIStack
+	class GUIStack
 	{
 	public:
 		GUIStack() = default;
@@ -95,8 +98,16 @@ namespace GUI
 		GUIStack( const GUIStack & ) = delete;
 		GUIStack &operator =( const GUIStack & ) = delete;
 
-	public:	// IGUIStack Impl
-		virtual GUIStack &Push( std::unique_ptr<IGUI> upGUI ) override
+	public:
+
+		/// <summary>スタックへの要素追加</summary>
+		/// <param name="upGUI">
+		/// 追加する要素．
+		/// * nullptr を指定した場合には何もしない
+		/// * 同一対象を多重に追加した場合の動作は保証しない
+		/// </param>
+		/// <returns>*this</returns>
+		GUIStack &Push( std::unique_ptr<IGUI> upGUI )
 		{
 			if( !upGUI )return *this;
 
@@ -108,9 +119,9 @@ namespace GUI
 			return *this;
 		}
 
-	public:
 		bool empty() const {	return m_GUIs.empty();	}
 		void clear(){	m_GUIs.clear();	}
+		size_t size() const {	return m_GUIs.size();	}
 
 		/// <summary>最後に Push された物の Update() をコールする</summary>
 		/// <param name="Controller"></param>
@@ -120,10 +131,10 @@ namespace GUI
 			if( empty() )return false;
 
 			auto iCurr = std::prev( m_GUIs.end() );
-			auto Result = (*iCurr)->Update( *this, Controller );
+			auto Result = (*iCurr)->Update( Controller );
 
 			bool NeedToRedraw = false;
-			if( Result.Has( GUIResult::ShouldPop ) )
+			if( Result.Has( GUIResult::Finished ) )
 			{
 				Remove( iCurr );
 				NeedToRedraw = true;
@@ -136,7 +147,7 @@ namespace GUI
 
 		/// <summary>所属要素群の Paint() を Push 順にコールする</summary>
 		/// <param name="hdc"></param>
-		void Paint( HDC hdc )
+		void Paint( HDC hdc ) const
 		{
 			for( const auto &upGUI : m_GUIs )
 			{	upGUI->Paint( hdc );	}
@@ -164,5 +175,35 @@ namespace GUI
 
 	private:
 		std::list<   std::unique_ptr< IGUI >   > m_GUIs;	//最後にPushされた物が back 側
+	};
+
+
+	/// <summary>
+	/// オブジェクトの所有権を移管しない形で
+	/// IGUIStack.Push() を使うための型．
+	///		Push( std::make_unique<RefWrapper>( 長寿なオブジェクト ) );
+	/// のようにして使う．
+	/// </summary>
+	class RefWrapper : public IGUI
+	{
+	public:
+		/// <summary>ctor</summary>
+		/// <param name="rGUI">所有権を移管したくないオブジェクト</param>
+		RefWrapper( IGUI &rGUI ) : m_rGUI(rGUI) {}
+
+	public:	// IGUI Impl
+		virtual Flags<GUIResult> Update( const IController &Controller ) override {	return m_rGUI.Update(Controller);	}
+		virtual void OnGotFocus() override {	m_rGUI.OnGotFocus();	}
+		virtual void OnLostFocus() override {	m_rGUI.OnLostFocus();	}
+
+		virtual Vec2i TopLeft() const override {	return m_rGUI.TopLeft();	}
+		virtual RefWrapper &TopLeft( const Vec2i &TL ) override {	m_rGUI.TopLeft(TL);	return *this;	}
+		virtual Vec2i Size() const override {	return m_rGUI.Size();	}
+
+	protected:
+		virtual void Paint_( HDC hdc ) const override {	m_rGUI.Paint(hdc);	}
+
+	private:
+		IGUI &m_rGUI;
 	};
 }

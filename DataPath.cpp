@@ -1,4 +1,3 @@
-#include "framework.h"
 #include "DataPath.h"
 #include "Parts/CvtUTF.h"
 

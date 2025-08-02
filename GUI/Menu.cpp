@@ -1,15 +1,40 @@
 #include "framework.h"
+#include <windowsx.h>
 #include "Menu.h"
+#include "IMenuItem.h"
 #include "IMenuContent.h"
-#include "GUI_Funcs.h"
+#include "DrawFuncs.h"
 #include "Color.h"
 #include "IController.h"
 
 namespace GUI::Menu
 {
+
 	//
-	void DrawMenuCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused )
-	{	FillRectReg( hdc, ItemDrawReg, Color::MenuCursor(IsMenuFocused) );	}
+	int Menu::ActualItemAreaSpace() const
+	{
+		if( m_ItemAreaSpace <= 0 )
+		{	return ( m_pContent  ?  m_pContent->nItems()  :  0 );	}
+		else
+		{	return m_ItemAreaSpace;	}
+	}
+
+	Menu &Menu::UpdateScrollState()
+	{
+		const int nSpc = ActualItemAreaSpace();
+		if( !m_pContent  ||  m_pContent->nItems()<=nSpc )
+		{	m_iDrawBegin = 0;	return *this;	}
+
+		int iCursorPos = m_pContent->CursorPos();
+		if( iCursorPos < 0 )
+		{	m_iDrawBegin = 0;	}
+		else if( iCursorPos<m_iDrawBegin )
+		{	m_iDrawBegin = iCursorPos;	}
+		else if( m_iDrawBegin+nSpc <= iCursorPos )
+		{	m_iDrawBegin = iCursorPos - (nSpc-1);	}
+
+		return *this;
+	}
 
 	//
 	Vec2i Menu::Size() const
@@ -17,8 +42,8 @@ namespace GUI::Menu
 		if( !m_pContent )return Vec2i{0,0};
 
 		Vec2i Total = m_OuterMargin * 2;
-		const int n = m_pContent->nItems();
-		const auto ItemSize = m_pContent->ItemSize();
+		const int n = ActualItemAreaSpace();
+		const auto ItemSize = m_pContent->ItemDrawSize();
 		if( m_pContent->IsVerticalMenu() )
 		{
 			Total[0] += ItemSize[0];
@@ -41,8 +66,9 @@ namespace GUI::Menu
 
 		Vec2i TL = m_TopLeft + m_OuterMargin;
 		int iOffsetCoord = ( m_pContent->IsVerticalMenu() ? 1 : 0 );
-		const auto ItemSize = m_pContent->ItemSize();
-		TL[ iOffsetCoord ] += index * ( ItemSize[ iOffsetCoord ] + m_ItemSpacing );
+		const auto ItemSize = m_pContent->ItemDrawSize();
+
+		TL[ iOffsetCoord ] += (index-m_iDrawBegin) * ( ItemSize[ iOffsetCoord ] + m_ItemSpacing );
 		return Rect( TL, ItemSize[0], ItemSize[1] );
 	}
 
@@ -51,30 +77,59 @@ namespace GUI::Menu
 	{
 		if( !m_pContent )return;
 
-		if( m_bDrawFrame )
-		{//枠
-			auto size = Size();
-			DrawFrame( hdc, Rect( m_TopLeft, size[0], size[1] ), Color::White );
-		}
-
+		const auto BR = this->BoundingRect();
+		const int nSpc = ActualItemAreaSpace();
 		const int iCursorPos = m_pContent->CursorPos();
-		if( iCursorPos>=0 )
-		{//カーソル
-			DrawMenuCursor( hdc, ItemDrawRect(iCursorPos), m_bFocused );
-		}
+
+		//枠
+		if( m_bDrawFrame )
+		{	DrawFilledFrame( hdc, BR, Color::White, RGB(0,0,0) );	}
 
 		//項目群
-		const auto ItemSize = m_pContent->ItemSize();
+		const auto ItemSize = m_pContent->ItemDrawSize();
 		const Vec2i Offset =
 			m_pContent->IsVerticalMenu() ?
 			Vec2i{ 0, ItemSize[1]+m_ItemSpacing } :
 			Vec2i{ ItemSize[0]+m_ItemSpacing, 0 };
 
 		Rect ItemRect( m_TopLeft + m_OuterMargin, ItemSize[0], ItemSize[1] );
-		for( int i=0; i<m_pContent->nItems(); ++i )
+		for( int i=0; i<nSpc; ++i )
 		{
-			m_pContent->Item( i ).Draw( hdc, ItemRect, (i==iCursorPos), m_bFocused );
+			int iItem = m_iDrawBegin + i;
+			if( iItem >= m_pContent->nItems() )break;
+
+			m_pContent->Item( iItem ).Draw( hdc, ItemRect, (iItem==iCursorPos), m_bFocused );
 			ItemRect.Offset( Offset );
+		}
+
+		{//スクロールマーク
+			const bool CanScrollToDecDir = ( m_iDrawBegin > 0 );
+			const bool CanScrollToIncDir = ( m_iDrawBegin+nSpc < m_pContent->nItems() );
+			if( CanScrollToDecDir || CanScrollToIncDir )
+			{
+				HPEN OldPen = SelectPen( hdc, GetStockPen( BLACK_PEN ) );
+				HBRUSH OldBrush = SelectBrush( hdc, GetStockBrush( DC_BRUSH ) );
+				SetDCPenColor( hdc, Color::White );
+
+				constexpr int EdgeLength = 12;
+				if( CanScrollToDecDir )
+				{
+					if( m_pContent->IsVerticalMenu() )
+					{	DrawTriangle( hdc, Vec2i{ ( BR.Left() + BR.Right() )/2, BR.Top() }, EdgeLength );	}
+					else
+					{	DrawTriangle( hdc, Vec2i{ BR.Left(), ( BR.Top() + BR.Bottom() )/2 }, EdgeLength, 3u );	}
+				}
+				if( CanScrollToIncDir )
+				{
+					if( m_pContent->IsVerticalMenu() )
+					{	DrawTriangle( hdc, Vec2i{ ( BR.Left() + BR.Right() )/2, BR.Bottom() }, EdgeLength, 2u );	}
+					else
+					{	DrawTriangle( hdc, Vec2i{ BR.Right(), ( BR.Top() + BR.Bottom() )/2 }, EdgeLength, 1u );	}
+				}
+
+				SelectBrush( hdc, OldBrush );
+				SelectPen( hdc, OldPen );
+			}
 		}
 	}
 
@@ -83,34 +138,12 @@ namespace GUI::Menu
 	{
 		if( !m_pContent )return HandleInputResult::None;
 
-		if( m_pContent->nItems() >= 1 )
-		{//カーソル移動
-			int NewCursorPos = m_pContent->CursorPos();
-			if( m_pContent->IsVerticalMenu() ? Controller.CursorUp() : Controller.CursorLeft() )
-			{
-				--NewCursorPos;
-				if( NewCursorPos < 0 )NewCursorPos = m_pContent->nItems() - 1;
-			}
-			else if( m_pContent->IsVerticalMenu() ? Controller.CursorDown() : Controller.CursorRight() )
-			{
-				++NewCursorPos;
-				if( NewCursorPos < 0 )NewCursorPos = 0;
-				if( NewCursorPos >= m_pContent->nItems() )NewCursorPos = 0;
-			}
+		auto Ret = GUI::Menu::HandleInput( *m_pContent, Controller );
 
-			if( m_pContent->CursorPos() != NewCursorPos )
-			{
-				m_pContent->CursorPos( NewCursorPos );
-				return HandleInputResult::CursorMoved;
-			}
-		}
+		if( Ret == HandleInputResult::CursorMoved )
+		{	UpdateScrollState();	}
 
-		if( Controller.Select()  &&  m_pContent->CursorPos() >= 0 )
-		{	return HandleInputResult::Selected;	}
-
-		if( Controller.Cancel() )
-		{	return HandleInputResult::Canceled;	}
-
-		return HandleInputResult::None;
+		return Ret;
 	}
+
 }

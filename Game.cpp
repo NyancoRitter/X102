@@ -6,6 +6,7 @@
 #include "IController.h"
 
 #include "Scene/TownScene/TownScene.h"
+#include "PlayData/PlayData.h"
 
 //===============================================
 
@@ -27,6 +28,8 @@ namespace
 		//選択，キャンセル
 		virtual bool Select() const override {	return Toyger::PosEdge( m_rInput, 'Z' );	}
 		virtual bool Cancel() const override {	return Toyger::PosEdge( m_rInput, 'X' );	}
+		//パーティメニューを開く
+		virtual bool OpenPartyMenu() const override {	return Toyger::PosEdge( m_rInput, 'C' ) || Toyger::PosEdge( m_rInput, 'M' );	}
 	};
 }
 
@@ -64,15 +67,24 @@ bool Game::Initialize()
 	//ウィンドウ設定
 	m_rWnd.SetCaption( L"Tiny DRPG Remake" );
 	m_rWnd.SetViewContentSize( GlobalConst::GC_W, GlobalConst::GC_H );
-	m_rWnd.ResizeToFit();
+	ChangeViewMagRate( 1 );
+
+	//(仮)
+	m_upPlayData = std::make_unique<PlayData>();
 
 	//初期ステート設定
-	m_upTownScene = std::make_unique< Town::TownScene >( *this );
-	ChangeCurrSceneTo( m_upTownScene.get() );
+	ChangeToTownScene();
 
 	//初期状態描画
 	m_rWnd.UpdateViewContent( *this );
 	return true;
+}
+
+//表示倍率変更
+void Game::ChangeViewMagRate( int Rate )
+{
+	m_rWnd.SetViewMagRate( Rate );
+	m_rWnd.ResizeToFit();
 }
 
 //描画
@@ -103,12 +115,23 @@ bool Game::Update( const InputState &Input )
 		{	return false;	}
 	}
 
-	//
+	//表示倍率
+	if( Toyger::PosEdge( Input, '1' ) ){	ChangeViewMagRate( 1 );	}
+	if( Toyger::PosEdge( Input, '2' ) ){	ChangeViewMagRate( 2 );	}
+
+	//更新
 	auto Ret = m_pCurrScene->Update( Controller(Input) );
 	if( Ret.Has( SceneUpdateResult::ReqAppQuit ) )return false;
 	if( Ret.Has( SceneUpdateResult::ReqRedraw ) ){	m_rWnd.UpdateViewContent( *this );	}
 
 	return true;
+}
+
+//
+PlayData &Game::CurrPlayData()
+{
+	if( !m_upPlayData )throw std::exception( "No PlayData" );
+	return *m_upPlayData;
 }
 
 //シーン切り替え処理
@@ -119,6 +142,14 @@ void Game::ChangeCurrSceneTo( IScene *pScene )
 	if( m_pCurrScene )m_pCurrScene->OnLeave();
 	m_pCurrScene = pScene;
 	m_pCurrScene->OnEnter();
+}
+
+void Game::ChangeToTownScene()
+{
+	if( !m_upTownScene )
+	{	m_upTownScene = std::make_unique< Town::TownScene >( *this );	}
+
+	ChangeCurrSceneTo( m_upTownScene.get() );
 }
 
 //メッセージボックス表示

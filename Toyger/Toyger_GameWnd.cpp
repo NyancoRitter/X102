@@ -355,6 +355,7 @@ namespace Toyger
 			if( ::GetWindowRect( m_hWnd, &rect ) == 0 )return false;
 			if( ::SetWindowPos( m_hWnd, NULL, 0,0, rect.right+dx-rect.left ,rect.bottom+dy-rect.top, SWP_NOMOVE|SWP_NOZORDER ) == 0 )return false;
 		}
+		::InvalidateRect( m_hWnd, NULL, TRUE );
 		return true;
 	}
 

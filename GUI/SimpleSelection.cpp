@@ -2,7 +2,7 @@
 
 #include <windowsx.h>
 #include "SimpleSelection.h"
-#include "GUI_Funcs.h"
+#include "DrawFuncs.h"
 #include "Color.h"
 
 namespace
@@ -16,7 +16,7 @@ namespace GUI::Menu
 	//項目追加
 	SimpleSelection &SimpleSelection::Add( const std::wstring &ItemText )
 	{
-		m_Content.Add( Text( ItemText ).AlignCenter() );
+		m_Content.Add( { Text( ItemText ).AlignCenter() } );
 		return *this;
 	}
 
@@ -42,7 +42,7 @@ namespace GUI::Menu
 	{
 		//外枠
 		Rect BRect = BoundingRect();
-		DrawFrame( hdc, BRect, Color::White );
+		DrawFilledFrame( hdc, BRect, Color::White, RGB(0,0,0) );
 
 		//テキスト
 		::SetTextColor( hdc, Color::White );
@@ -66,7 +66,7 @@ namespace GUI::Menu
 	}
 
 	//Update
-	Flags<GUIResult> SimpleSelection::Update( IGUIStack &Stack, const IController &Controller )
+	Flags<GUIResult> SimpleSelection::Update( const IController &Controller )
 	{
 		switch( m_Menu.HandleInput(Controller) )
 		{
@@ -79,13 +79,13 @@ namespace GUI::Menu
 			if( int iCur=m_Content.CursorPos(); 0<=iCur )
 			{
 				if( m_OnSelect( iCur ) )
-				{	return ( GUIResult::ShouldPop | GUIResult::ReqRedraw );	}
+				{	return ( GUIResult::Finished | GUIResult::ReqRedraw );	}
 			}
 			break;
 
 		case HandleInputResult::Canceled:
 			if( m_bCancelable )
-			{	return ( GUIResult::ShouldPop | GUIResult::ReqRedraw );	}
+			{	return ( GUIResult::Finished | GUIResult::ReqRedraw );	}
 			break;
 
 		default:

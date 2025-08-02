@@ -1,22 +1,10 @@
 #pragma once
 
 #include "IPainter.h"
-
-class IController;
+#include "HandleMenuInput.h"
 
 namespace GUI::Menu
 {
-	class IMenuContent;
-
-	//Menu::HandleInput()の戻り値用
-	enum class HandleInputResult
-	{
-		None,	//有効な操作が行われなかった（何も変化無し）
-		CursorMoved,	//カーソル位置が変化した
-		Selected,	//項目選択操作が成された
-		Canceled	//キャンセル操作が成された
-	};
-
 	/// <summary>
 	/// メニューの入力操作と描画処理の実装．
 	/// 
@@ -55,7 +43,20 @@ namespace GUI::Menu
 		/// nullptrを指定した場合，いくつかのメソッドが意味をなさない動作となる．
 		/// </param>
 		/// <returns>*this</returns>
-		Menu &SetContent( IMenuContent *pContent ){	m_pContent = pContent;	return *this;	}
+		Menu &SetContent( IMenuContent *pContent )
+		{
+			m_pContent=pContent;
+			m_iDrawBegin=0;
+			return *this;
+		}
+
+		/// <summary>
+		/// スクロール状態を現在のコンテンツに合わせて更新する．
+		/// SetContent() で指定されているコンテンツの内容（項目数やカーソル位置など）が
+		/// 外部で変更された場合，表示状態をそれに合わせるためにこれを呼ぶ必要がある．
+		/// </summary>
+		/// <returns>*this</returns>
+		Menu &UpdateScrollState();
 
 		/// <summary>メニューの操作処理</summary>
 		/// <param name="Controller">操作入力</param>
@@ -87,6 +88,17 @@ namespace GUI::Menu
 		/// </returns>
 		Rect ItemDrawRect( int index ) const;
 
+		// 項目表示域の広さ（表示できるアイテムの個数）の設定
+		// * 1以上の値を設定した場合，コンテンツの項目個数とは無関係に指定分の項目表示域の広さがとられる．
+		//   * コンテンツの項目個数がその広さよりも少ない場合には，描画されない空白が生まれる．
+		//   * コンテンツの項目個数がその広さよりも多い場合には，スクロールする形の対応となる．
+		// * 0以下の値を指定した場合「コンテンツの項目個数分」を意味する．（デフォルト値は0）
+		int ItemAreaSpace() const {	return m_ItemAreaSpace;	}
+		Menu &ItemAreaSpace( int nItem ){	m_ItemAreaSpace=nItem;	return *this;	}
+
+	private:
+		int ActualItemAreaSpace() const;
+
 	private:
 		IMenuContent *m_pContent = nullptr;
 		Vec2i m_TopLeft;
@@ -94,14 +106,8 @@ namespace GUI::Menu
 		Vec2i m_OuterMargin;
 		bool m_bDrawFrame = false;
 		bool m_bFocused = false;
-	};
 
-	/// <summary>
-	/// メニュー用のカーソル描画．
-	/// ItemDrawReg で指定された矩形範囲を塗りつぶす．
-	/// </summary>
-	/// <param name="hdc"></param>
-	/// <param name="ItemDrawReg">カーソルが指す項目の描画範囲</param>
-	/// <param name="IsMenuFocused">メニューがフォーカス状態か否か（描画色に影響）</param>
-	void DrawMenuCursor( HDC hdc, const Rect &ItemDrawReg, bool IsMenuFocused );
+		int m_ItemAreaSpace = 0;
+		int m_iDrawBegin = 0;	//現在描画する範囲の項目群の先頭
+	};
 }

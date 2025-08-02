@@ -22,8 +22,8 @@ public:
 	virtual bool Select() const = 0;
 	virtual bool Cancel() const = 0;
 
-	////パーティメニューを開く
-	//virtual bool OpenPartyMenu() const = 0;
+	//パーティメニューを開く
+	virtual bool OpenPartyMenu() const = 0;
 
 	////アイテムの　キャラクタ←→ストック　移動
 	//virtual bool MoveItem() const = 0;

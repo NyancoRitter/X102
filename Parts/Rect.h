@@ -14,6 +14,16 @@ public:
 		SetHeight(H);
 	}
 
+	/// <summary>
+	/// Src ‚ğ¶‰E‚É dx, ã‰º‚É dy ‚¾‚¯L‚°‚½‚à‚Ì‚ğ“¾‚é
+	/// </summary>
+	/// <param name="Src"></param>
+	/// <param name="dx"></param>
+	/// <param name="dy"></param>
+	/// <returns></returns>
+	static Rect Dilation( const Rect &Src, int dx, int dy )
+	{	return Rect( Src.TopLeft()-Vec2i{dx,dy}, Src.Width()+2*dx, Src.Height()+2*dy );	}
+
 	RECT AsRECT() const
 	{
 		RECT ret;
@@ -26,9 +36,13 @@ public:
 
 	Vec2i &TopLeft(){	return m_TL;	}
 	const Vec2i &TopLeft() const {	return m_TL;	}
+	int Left() const {	return m_TL[0];	}
+	int Top() const {	return m_TL[1];	}
 
 	Vec2i &RightBottom(){	return m_RB;	}
 	const Vec2i &RightBottom() const {	return m_RB;	}
+	int Right() const {	return m_RB[0];	}
+	int Bottom() const {	return m_RB[1];	}
 
 	Rect &Offset( const Vec2i &d )
 	{

@@ -1,6 +1,6 @@
-#include "framework.h"
 #include "Parts/CMonoBMP.h"
-#include "ImgBank.h"
+#include "MonoBmpHolder.h"
+#include <stdexcept>
 
 namespace ResManage
 {
@@ -39,16 +39,22 @@ namespace ResManage
 	//----------------------------------------------
 	//MonoBmpBank
 
-	MonoBmpBank::~MonoBmpBank() = default;
+	MonoBmpHolder MonoBmpHolder::Create(
+		const std::wstring &ImgDirU16,
+		std::initializer_list<std::wstring> ImgFileNamesU16
+	)
+	{	return MonoBmpHolder( ImgDirU16, ImgFileNamesU16.begin(), ImgFileNamesU16.end() );	}
 
-	const CMonoBMP* MonoBmpBank::operator[]( int index )
+	MonoBmpHolder::~MonoBmpHolder() = default;
+
+	const CMonoBMP& MonoBmpHolder::operator[]( int index )
 	{
-		if( index<0 || index>=(int)m_Bank.size() )return nullptr;
+		if( index<0 || index>=(int)m_Bank.size() )throw std::out_of_range( "index out of range" );
 		auto &Ret = m_Bank[index];
 		if( !Ret )
 		{//èââÒÇ…ÉçÅ[Éh
 			Ret = LoadMonoBMP_or_Dummy( m_ImgDirU16 + m_ImgFileNamesU16[index] );
 		}
-		return Ret.get();
+		return *Ret;
 	}
 }

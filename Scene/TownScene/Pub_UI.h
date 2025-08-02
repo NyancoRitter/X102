@@ -31,7 +31,7 @@ namespace Town
 		virtual void Paint_( HDC hdc ) const override;
 
 	private:
-		Flags<GUI::GUIResult> HandleTopMenuInput( const IController &Controller );
+		Flags<GUI::GUIResult> TopMenuProc( GUI::Menu::HandleInputResult HIR );
 
 	private:
 		TownScene &m_Outer;

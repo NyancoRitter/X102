@@ -49,6 +49,10 @@ namespace Town
 				.TopLeft( { Padding, m_Header.BoundingRect().Bottom() + Padding } )
 				.OuterMargin( Vec2i{12,4} )
 				.IsFocused( true );
+
+			m_LocalStack.Push(
+				std::make_unique< GUI::Menu::MenuAsGUI >( m_Menu, [this]( HandleInputResult HIR ){	return TopMenuProc(HIR);	} )
+			);
 		}
 		{//店員
 			m_StaffImgPainter.SetImg( &ResManage::BMP( ResManage::NPC::PubStaff ) );
@@ -57,13 +61,6 @@ namespace Town
 
 			m_StaffText = L"あら　いらっしゃい！";
 		}
-
-		m_LocalStack.Push(
-			std::make_unique< GUI::Menu::MenuAsGUI >(
-				m_Menu,
-				[this]( const IController &Controller )->auto{	return HandleTopMenuInput(Controller);	}
-			) 
-		);
 	}
 
 	TownScene::Pub_UI::~Pub_UI() = default;
@@ -110,11 +107,11 @@ namespace Town
 	}
 
 	//トップメニューの入力
-	Flags<GUIResult> TownScene::Pub_UI::HandleTopMenuInput( const IController &Controller )
+	Flags<GUIResult> TownScene::Pub_UI::TopMenuProc( GUI::Menu::HandleInputResult HIR )
 	{
 		using namespace GUI::Menu;
 
-		switch( m_Menu.HandleInput( Controller ) )
+		switch( HIR )
 		{
 		case HandleInputResult::CursorMoved:
 			return GUIResult::ReqRedraw;

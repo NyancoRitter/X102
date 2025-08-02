@@ -41,7 +41,7 @@ namespace ResManage
 	{
 		static auto Imgs = MonoBmpHolder::Create(
 			ImgDirU16(),
-			{	L"Face1.bmp", L"Face2.bmp", L"Face3.bmp", L"Face4.bmp", L"Face5.bmp", L"Face6.bmp"	} 
+			{	L"Face1.bmp", L"Face2.bmp", L"Face3.bmp", L"Face4.bmp", L"Face5.bmp", L"Face6.bmp", L"Face7.bmp"	} 
 		);
 		return Imgs[ (int)ID ];
 	}

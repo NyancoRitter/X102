@@ -89,6 +89,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CampMenu\CampMenu.h" />
+    <ClInclude Include="CampMenu\TopLVMenu.h" />
     <ClInclude Include="Cmd\CmdSeq.h" />
     <ClInclude Include="Cmd\ICmd.h" />
     <ClInclude Include="Common\CharSelMenuContent.h" />
@@ -151,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CampMenu\CampMenu.cpp" />
+    <ClCompile Include="CampMenu\TopLVMenu.cpp" />
     <ClCompile Include="Common\CharSelMenuContent.cpp" />
     <ClCompile Include="Common\DrawCharPanel.cpp" />
     <ClCompile Include="Common\MoneyView.cpp" />

@@ -14,6 +14,10 @@ public:
 		SetHeight(H);
 	}
 
+	explicit Rect( const Vec2i &TL, const Vec2i &RB )
+		: m_TL(TL), m_RB(RB)
+	{}
+
 	/// <summary>
 	/// Src ‚ğ¶‰E‚É dx, ã‰º‚É dy ‚¾‚¯L‚°‚½‚à‚Ì‚ğ“¾‚é
 	/// </summary>

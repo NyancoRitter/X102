@@ -24,9 +24,6 @@
     <Filter Include="GUI">
       <UniqueIdentifier>{6abd95cf-86a5-43cd-a2b8-1657da885898}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ResManage">
-      <UniqueIdentifier>{51f705b0-baaf-4c0c-a96b-c0cf18f2f88f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI\Menu">
       <UniqueIdentifier>{0d6a1e3b-0653-487e-bc55-2599c1f10bc4}</UniqueIdentifier>
     </Filter>
@@ -50,6 +47,9 @@
     </Filter>
     <Filter Include="Game\Common">
       <UniqueIdentifier>{9a4c830d-258a-4ac1-9621-cfc1f5768509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\ResManage">
+      <UniqueIdentifier>{51f705b0-baaf-4c0c-a96b-c0cf18f2f88f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -126,7 +126,7 @@
       <Filter>Game</Filter>
     </ClInclude>
     <ClInclude Include="ResManage\MonoBmpHolder.h">
-      <Filter>ResManage</Filter>
+      <Filter>Game\ResManage</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Menu.h">
       <Filter>GUI\Menu</Filter>
@@ -204,7 +204,7 @@
       <Filter>GUI\Menu</Filter>
     </ClInclude>
     <ClInclude Include="ResManage\BmpBank.h">
-      <Filter>ResManage</Filter>
+      <Filter>Game\ResManage</Filter>
     </ClInclude>
     <ClInclude Include="Misc\DataVec.h">
       <Filter>Game\Misc</Filter>
@@ -233,6 +233,9 @@
     <ClInclude Include="Common\MoneyView.h">
       <Filter>Game\Common</Filter>
     </ClInclude>
+    <ClInclude Include="CampMenu\TopLVMenu.h">
+      <Filter>Game\CampMenu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -254,7 +257,7 @@
       <Filter>Game</Filter>
     </ClCompile>
     <ClCompile Include="ResManage\MonoBmpHolder.cpp">
-      <Filter>ResManage</Filter>
+      <Filter>Game\ResManage</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Menu.cpp">
       <Filter>GUI\Menu</Filter>
@@ -302,7 +305,7 @@
       <Filter>Game\GameContent</Filter>
     </ClCompile>
     <ClCompile Include="ResManage\BmpBank.cpp">
-      <Filter>ResManage</Filter>
+      <Filter>Game\ResManage</Filter>
     </ClCompile>
     <ClCompile Include="CampMenu\CampMenu.cpp">
       <Filter>Game\CampMenu</Filter>
@@ -318,6 +321,9 @@
     </ClCompile>
     <ClCompile Include="Common\MoneyView.cpp">
       <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="CampMenu\TopLVMenu.cpp">
+      <Filter>Game\CampMenu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

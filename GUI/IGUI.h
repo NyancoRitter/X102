@@ -64,26 +64,6 @@ namespace GUI
 	};
 
 	/// <summary>
-	/// スタックへの要素Push手段
-	/// </summary>
-	class IGUIStack
-	{
-	public:
-		virtual ~IGUIStack() = default;
-
-		/// <summary>
-		/// スタックへの要素追加
-		/// </summary>
-		/// <param name="upGUI">
-		/// 追加する要素．
-		/// * nullptr を指定した場合には何もしない
-		/// * 同一対象を多重に追加した場合の動作は保証しない
-		/// </param>
-		/// <returns>*this</returns>
-		virtual IGUIStack &Push( std::unique_ptr<IGUI> upGUI ) = 0;
-	};
-
-	/// <summary>
 	/// IGUIのスタック的な．以下の仕事をするだけのコンテナみたいな．
 	/// 
 	/// * 最後に Push された物の Update() をコールする

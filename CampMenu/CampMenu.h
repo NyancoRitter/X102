@@ -5,9 +5,9 @@
 //#include "GUI/MenuContent.h"
 //#include "GUI/TextLinePainter.h"
 //#include "GUI/ImgPainter.h"
-#include "GUI/Menu.h"
+//#include "GUI/Menu.h"
 #include "Common/MoneyView.h"
-#include "Common/CharSelMenuContent.h"
+//#include "Common/CharSelMenuContent.h"
 
 //class CMonoBMP;
 
@@ -30,11 +30,28 @@ protected:
 	virtual void Paint_( HDC hdc ) const override;
 
 private:
+	class TopLVMenu;
+
+private:
 	PlayData &m_rPlayData;
+
+	GUI::GUIStack m_LocalStack;
+	
+
+	
 
 	MoneyView m_MoneyView;
 
-	GUI::Menu::Menu m_CharSelMenu;
-	GUI::Menu::CharSelMenuContent<true> m_CharSelMenuContent;
+private:	//レイアウト用
+	//メイン領域の枠
+	static const Rect MainAreaRect;//{ 168, 24, GC_W-2, GC_H-2 };
+//	//メイン領域内に表示する物の位置
+//	static const Vec2i MainAreaContent_TopLeft;//{ 168+16, 24+32 };
+//
+//
+//	//キャラクタ選択
+//	inline static const Vec2i CharSelUI_TopLeft{4,64};
+//	inline static const Vec2i CharSelUI_ItemSize{ 160, 64 };
+//	inline static constexpr int CharSelUI_ItemSpacing = 8;
 };
 

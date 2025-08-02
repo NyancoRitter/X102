@@ -12,7 +12,7 @@ namespace GUI::Menu
 	class MenuAsGUI : public IGUI
 	{
 	public:
-		using InputHandler = std::function< Flags<GUIResult>( const IController & ) >;
+		using ProcFunc = std::function< Flags<GUIResult>( HandleInputResult ) >;
 
 	public:
 		/// <summary>
@@ -20,15 +20,19 @@ namespace GUI::Menu
 		/// メニューと，Update()で呼ばれることになるメニューの入力処理を渡す
 		/// </summary>
 		/// <param name="rMenu">メニュー</param>
-		/// <param name="Handler">入力処理．引数や戻り値の仕様は IGUI::Update() と同一．</param>
-		MenuAsGUI( Menu &rMenu, const InputHandler &Handler )
+		/// <param name="Handler">
+		/// メニュー入力処理結果に応じた処理実装．
+		/// 引数には rMenu.HandleInput() が返した値が与えられる．
+		/// 戻り値は Update() の戻り値となる．
+		/// </param>
+		MenuAsGUI( Menu &rMenu, const ProcFunc &Handler )
 			: m_rMenu( rMenu )
-			, m_InputHandler( Handler )
+			, m_ProcFunc( Handler )
 		{}
 
 	public:	// IGUI Impl
 		virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override
-		{	return m_InputHandler( Controller );	}
+		{	return m_ProcFunc( m_rMenu.HandleInput(Controller) );	}
 
 		virtual void OnGotFocus() override {	m_rMenu.IsFocused(true);	}
 		virtual void OnLostFocus() override {	m_rMenu.IsFocused(false);	}
@@ -42,7 +46,7 @@ namespace GUI::Menu
 
 	private:
 		Menu &m_rMenu;
-		InputHandler m_InputHandler;
+		ProcFunc m_ProcFunc;
 	};
 
 }

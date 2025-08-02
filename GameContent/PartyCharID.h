@@ -14,11 +14,12 @@ namespace GameContent
 		VISMATO,
 		LIBER,
 		IRY,
-		ASLAY
+		ASLAY,
+		ENA_MEA
 	};
 
 	/// <summary>定義されているパーティキャラクタの人数</summary>
-	constexpr int N_PARTY_CHAR_DEF = 6;
+	constexpr int N_PARTY_CHAR_DEF = 7;
 
 	/// <summary>キャラクタの名前</summary>
 	/// <param name="ID">キャラクタID</param>
@@ -31,7 +32,8 @@ namespace GameContent
 			L"ヴィスマト",
 			L"リーベル",
 			L"イリィ",
-			L"アスレイ"
+			L"アスレイ",
+			L"エナ・メア"
 		};
 
 		return Names[ (int)ID ];

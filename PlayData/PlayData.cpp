@@ -7,7 +7,8 @@ PlayData::PlayData()
 	: m_Chars{
 		PartyChar(PartyCharID::AKINS), PartyChar(PartyCharID::FANA),
 		PartyChar(PartyCharID::VISMATO), PartyChar(PartyCharID::LIBER),
-		PartyChar(PartyCharID::IRY), PartyChar(PartyCharID::ASLAY)
+		PartyChar(PartyCharID::IRY), PartyChar(PartyCharID::ASLAY),
+		PartyChar(PartyCharID::ENA_MEA)
 	}
 	, m_CurrParty( 3 )	//パーティ最大人数
 	, m_ItemStock( std::numeric_limits<size_t>::max() )

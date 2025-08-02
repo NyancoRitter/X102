@@ -83,7 +83,7 @@ namespace
 		std::array< MPDef, N_FirstSpell > m_MP1st;
 		std::array< MPDef, N_SecondSpell > m_MP2nd;
 		std::array<int, 4> m_DmgReducePercentage{0};
-		int m_PoisonRegistPercentage;
+		int m_PoisonRegistPercentage = 0;
 		int m_nMaxItem = 8;
 		//std::vector<ItemID> m_InitItems;
 		//SkillID m_Skill = -1;
@@ -152,7 +152,15 @@ namespace
 		.MP( FirstSpell::All_LV2, 8,1, 7 )
 		.MP( SecondSpell::Fire, 1,7, 3 )
 		.MP( SecondSpell::Ice, 12,1, 10 )
-		.MP( SecondSpell::Thunder, 1,6, 3 )
+		.MP( SecondSpell::Thunder, 1,6, 3 ),
+
+		//エナ・メア
+		PartyCharDef( 98 ).BasicStats( 6, 7, 12 ).nMaxItem(12)
+		.DmgReducePercentage( { 12, -30, 0, 30 } ).PoisonResistPercentage( 20 )
+		.MP( FirstSpell::All_LV1, 1,2, 4 )
+		.MP( FirstSpell::Poison, 10,1, 7 )
+		.MP( SecondSpell::Ice, 3,1, 5 )
+		.MP( SecondSpell::Thunder, 1,1, 4 ),
 	};
 }
 

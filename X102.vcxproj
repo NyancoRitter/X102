@@ -89,9 +89,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CampMenu\CampMenu.h" />
+    <ClInclude Include="CampMenu\ItemPage.h" />
+    <ClInclude Include="CampMenu\MagicPage.h" />
+    <ClInclude Include="CampMenu\StatusPage.h" />
     <ClInclude Include="CampMenu\TopLVMenu.h" />
     <ClInclude Include="Cmd\CmdSeq.h" />
     <ClInclude Include="Cmd\ICmd.h" />
+    <ClInclude Include="Common\CharDrawColor.h" />
     <ClInclude Include="Common\CharSelMenuContent.h" />
     <ClInclude Include="Common\DrawCharPanel.h" />
     <ClInclude Include="Common\MoneyView.h" />
@@ -152,6 +156,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CampMenu\CampMenu.cpp" />
+    <ClCompile Include="CampMenu\ItemPage.cpp" />
+    <ClCompile Include="CampMenu\MagicPage.cpp" />
+    <ClCompile Include="CampMenu\StatusPage.cpp" />
     <ClCompile Include="CampMenu\TopLVMenu.cpp" />
     <ClCompile Include="Common\CharSelMenuContent.cpp" />
     <ClCompile Include="Common\DrawCharPanel.cpp" />

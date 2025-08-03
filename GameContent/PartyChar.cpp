@@ -1,6 +1,7 @@
 #include "PartyChar.h"
 #include <cmath>
 #include <algorithm>
+#include "AttackElement.h"
 
 namespace
 {
@@ -173,6 +174,7 @@ namespace GameContent
 		, m_Items( Defs[ (int)ID ].nMaxItem() )
 	{
 		const auto &Def = Defs[ (int)ID ];
+		m_HP = MaxHP();
 		FullRecoverMP();
 	}
 		

@@ -10,8 +10,8 @@ public:
 	virtual ~IController() = default;
 
 public:
-	////Test (開発中テスト処理用)
-	//virtual bool TestKey() const = 0;
+	//Test (開発中テスト処理用)
+	virtual bool TestKey() const = 0;
 
 	//カーソルの上下左右移動
 	virtual bool CursorUp() const = 0;
@@ -25,20 +25,20 @@ public:
 	//パーティメニューを開く
 	virtual bool OpenPartyMenu() const = 0;
 
-	////アイテムの　キャラクタ←→ストック　移動
-	//virtual bool MoveItem() const = 0;
-	////アイテム整理（アイテム欄の一番後ろに移動させる）
-	//virtual bool MoveItemToBack() const = 0;
+	//アイテムの　キャラクタ←→ストック　移動
+	virtual bool MoveItem() const = 0;
+	//アイテム等の整理（一番後ろに移動させる）
+	virtual bool MoveItemToBack() const = 0;
 
-	////テキストを次に進める
-	//virtual bool ToNextText() const = 0;
+	//テキストを次に進める
+	virtual bool ToNextText() const = 0;
 
-	////迷路内移動
-	//virtual bool MoveFront() const = 0;
-	//virtual bool MoveBack() const = 0;
-	//virtual bool TurnLeft() const = 0;
-	//virtual bool TurnRight() const = 0;
-	////迷路内で調べる
-	//virtual bool Inspect() const = 0;
+	//迷路内移動
+	virtual bool MoveFront() const = 0;
+	virtual bool MoveBack() const = 0;
+	virtual bool TurnLeft() const = 0;
+	virtual bool TurnRight() const = 0;
+	//迷路内で調べる
+	virtual bool Inspect() const = 0;
 };
 

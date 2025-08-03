@@ -86,7 +86,7 @@ namespace GUI::Menu
 		//
 
 		/// <summary>項目を全破棄</summary>
-		void Clear(){	m_Items.clear();	}
+		void Clear(){	m_Items.clear();	m_CursorPos = -1;	}
 
 		/// <summary>項目データ保持vectorのreserve()を実施</summary>
 		/// <param name="n">データ保持vectorのreserve()への引数</param>

@@ -31,27 +31,28 @@ protected:
 
 private:
 	class TopLVMenu;
+	class StatusPage;
+	class ItemPage;
+	class MagicPage;
+
+	void OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder );
+	void OnTopLVMenuSelected( int CharOrder, int CmdOrder );
 
 private:
 	PlayData &m_rPlayData;
 
 	GUI::GUIStack m_LocalStack;
-	
-
-	
-
 	MoneyView m_MoneyView;
 
+	int m_iCurrChar = -1;
+	int m_iCurrPage = -1;
+	std::unique_ptr< StatusPage > m_upStatusPage;
+	std::unique_ptr< ItemPage > m_upItemPage;
+	std::unique_ptr< MagicPage > m_upMagicPage;
+
 private:	//レイアウト用
-	//メイン領域の枠
-	static const Rect MainAreaRect;//{ 168, 24, GC_W-2, GC_H-2 };
-//	//メイン領域内に表示する物の位置
-//	static const Vec2i MainAreaContent_TopLeft;//{ 168+16, 24+32 };
-//
-//
-//	//キャラクタ選択
-//	inline static const Vec2i CharSelUI_TopLeft{4,64};
-//	inline static const Vec2i CharSelUI_ItemSize{ 160, 64 };
-//	inline static constexpr int CharSelUI_ItemSpacing = 8;
+	//ページ表示領域の枠
+	static const Rect MainAreaRect;
+
 };
 

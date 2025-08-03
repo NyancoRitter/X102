@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include "AttackElement.h"
 
 namespace GameContent
 {
@@ -20,14 +21,14 @@ namespace GameContent
 	
 	/// <summary>
 	/// Second Spell．
-	/// 値は 0 からの連番とする．
+	/// 値は 0 からの連番とする，且つ，{Fire, Ice, Thunder} の値は AttackElement と一致させる．
 	/// </summary>
 	enum class SecondSpell
 	{
 		Recover=0,
-		Fire,
-		Ice,
-		Thunder
+		Fire = AttackElement::Fire,
+		Ice = AttackElement::Ice,
+		Thunder = AttackElement::Thunder
 	};
 	constexpr int N_SecondSpell = 4;
 

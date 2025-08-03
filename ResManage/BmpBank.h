@@ -2,25 +2,21 @@
 
 class CMonoBMP;
 
-namespace GameContent{	enum class PartyCharID;	}
+namespace GameContent
+{	
+	enum class PartyCharID;
+	enum class AttackElement;
+	enum class FirstSpell;
+	enum class SecondSpell;
+}
 
 namespace ResManage
 {
-	/// <summary>16x16[pixel]アイコン画像ID．値は0から始まる連番とする</summary>
-	enum class Icon16
+	/// <summary>街の画面で使う画像ID．値は0から始まる連番とする</summary>
+	enum class TownImg
 	{
-		Inn,
-		Pub,
-		Shop,
-		Maze,
-
-	};
-
-	/// <summary>街の背景画像ID．値は0から始まる連番とする</summary>
-	enum class TownBkgnd
-	{
-		TownCenter,
-		Outskirts
+		Inn, Pub, Shop, Maze,
+		TownCenter, Outskirts
 	};
 
 	/// <summary>NPC画像ID．値は0から始まる連番とする</summary>
@@ -34,9 +30,11 @@ namespace ResManage
 	//------------------------------------
 	//モノクロBMPへの参照を取得
 
-	const CMonoBMP &BMP( Icon16 ID );
-	const CMonoBMP &BMP( TownBkgnd ID );
+	const CMonoBMP &BMP( TownImg ID );
 	const CMonoBMP &BMP( NPC ID );
+	const CMonoBMP &BMP( GameContent::AttackElement Elem );
+	const CMonoBMP &BMP( GameContent::FirstSpell Spell );
+	const CMonoBMP &BMP( GameContent::SecondSpell Spell );
 
 	const CMonoBMP &FaceBMP( GameContent::PartyCharID ID );
 }

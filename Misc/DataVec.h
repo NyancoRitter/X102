@@ -29,13 +29,18 @@ public: //保有 vector への単純な処理移譲
 	const T_Data &operator[]( size_t index ) const {	return m_Vec[index];	}
 	T_Data &operator[]( size_t index ){	return m_Vec[index];	}
 
-	//using Iter = std::vector<T_Data>::iterator;
-	//using cIter = std::vector<T_Data>::const_iterator;
+	//using Iter = typename std::vector<T_Data>::iterator;
+	//using cIter = typename std::vector<T_Data>::const_iterator;
 
-	//Iter begin(){	return m_Data.begin();	}
-	//cIter begin() const {	return m_Data.begin();	}
-	//Iter end(){	return m_Data.end();	}
-	//cIter end() const {	return m_Data.end();	}
+	//Iter begin(){	return m_Vec.begin();	}
+	//cIter begin() const {	return m_Vec.begin();	}
+	//Iter end(){	return m_Vec.end();	}
+	//cIter end() const {	return m_Vec.end();	}
+
+	auto begin()->auto{	return m_Vec.begin();	}
+	auto begin() const ->auto{	return m_Vec.begin();	}
+	auto end()->auto{	return m_Vec.end();	}
+	auto end() const ->auto{	return m_Vec.end();	}
 
 	//保持データのコピーを返す
 	std::vector<T_Data> DataClone() const {	return m_Vec;	}
@@ -74,10 +79,13 @@ public:	//項目操作
 
 	/// <summary>指定項目を末尾に移動する（整理用のメソッド）</summary>
 	/// <param name="index">対象index</param>
-	/// <returns>成否．データ個数が1以下の場合には何もせずにfalseを返す．</returns>
+	/// <returns>
+	/// 成否．
+	/// データが空の場合や，指定indexが末尾要素を指す場合には何もせずにfalseを返す．
+	/// </returns>
 	bool MoveItemToBack( int index )
 	{
-		if( size()<=1 )return false;
+		if( empty() || index==(int)size()-1 )return false;
 
 		T_Data Tgt = m_Vec[index];
 		RemoveAt( index );

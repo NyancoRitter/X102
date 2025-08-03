@@ -57,12 +57,11 @@ namespace GUI::Menu
 	public:
 		/// <summary>項目を追加</summary>
 		/// <param name="TgtChar">キャラクタID</param>
-		/// <returns></returns>
-		CharSelMenuContent &Add( GameContent::PartyCharID TgtChar )
+		/// <returns>追加された項目への参照を返す</returns>
+		CharSelMenuItem &Add( GameContent::PartyCharID TgtChar )
 		{
 			this->m_Items.emplace_back( TgtChar );
-			this->m_Items.back().OffsetWhenCursorPos( m_CursorPosItemOffset );
-			return *this;
+			return this->m_Items.back().OffsetWhenCursorPos( m_CursorPosItemOffset );
 		}
 
 	private:

@@ -20,6 +20,9 @@ namespace
 	public:
 		Controller( const InputState &rInput ) : m_rInput(rInput) {}
 	public:	// IController Impl
+		//Test (開発中テスト処理用)
+		virtual bool TestKey() const {	return Toyger::PosEdge( m_rInput, 'T' );	}
+
 		//カーソルの上下左右移動
 		virtual bool CursorUp() const override {	return Toyger::PosEdge( m_rInput, VK_UP );	}
 		virtual bool CursorDown() const override {	return Toyger::PosEdge( m_rInput, VK_DOWN );	}
@@ -30,6 +33,21 @@ namespace
 		virtual bool Cancel() const override {	return Toyger::PosEdge( m_rInput, 'X' );	}
 		//パーティメニューを開く
 		virtual bool OpenPartyMenu() const override {	return Toyger::PosEdge( m_rInput, 'C' ) || Toyger::PosEdge( m_rInput, 'M' );	}
+
+		//アイテムの　キャラクタ←→ストック　移動
+		virtual bool MoveItem() const override {	return Toyger::PosEdge( m_rInput, 'S' );	}
+		//アイテム等の整理（一番後ろに移動させる）
+		virtual bool MoveItemToBack() const override {	return Toyger::PosEdge( m_rInput, 'B' );	}
+
+		//テキスト送り
+		virtual bool ToNextText() const override {	return Select() || Cancel();	}
+		//迷路内移動
+		virtual bool MoveFront() const override {	return Toyger::Pressed( m_rInput, VK_UP );	}
+		virtual bool MoveBack() const override {	return Toyger::Pressed( m_rInput, VK_DOWN );	}
+		virtual bool TurnLeft() const override {	return Toyger::Pressed( m_rInput, VK_LEFT );	}
+		virtual bool TurnRight() const override {	return Toyger::Pressed( m_rInput, VK_RIGHT );	}
+		//迷路内で調べる
+		virtual bool Inspect() const override {	return Select();	}
 	};
 }
 

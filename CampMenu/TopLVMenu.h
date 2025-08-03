@@ -11,7 +11,7 @@
 class CampMenu::TopLVMenu final : public IGUI
 {
 public:
-	TopLVMenu( CampMenu &Outer );
+	TopLVMenu( CampMenu &Outer, std::vector<std::wstring> CmdMenuItemStrs );
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
@@ -23,6 +23,8 @@ public:	// IGUI Impl
 protected:
 	virtual void Paint_( HDC hdc ) const override;
 
+private:
+	void UpdateCharSelMenuContent();
 private:
 	CampMenu &m_Outer;
 

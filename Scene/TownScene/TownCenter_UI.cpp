@@ -31,10 +31,10 @@ namespace Town
 
 			m_MenuContent.Reserve( 4 );
 			m_MenuContent
-				.Add( { Icon( BMP( Icon16::Inn ), 16+6 ), Text( L"h" ) } )
-				.Add( { Icon( BMP( Icon16::Pub ), 16+6 ), Text( L"ğê" ) } )
-				.Add( { Icon( BMP( Icon16::Shop ), 16+6 ), Text( L"“X" ) } )
-				.Add( { Icon( BMP( Icon16::Maze ), 16+6 ), Text( L"–À‹{" ) } )
+				.Add( { Icon( BMP( TownImg::Inn ), 16+6 ), Text( L"h" ) } )
+				.Add( { Icon( BMP( TownImg::Pub ), 16+6 ), Text( L"ğê" ) } )
+				.Add( { Icon( BMP( TownImg::Shop ), 16+6 ), Text( L"“X" ) } )
+				.Add( { Icon( BMP( TownImg::Maze ), 16+6 ), Text( L"–À‹{" ) } )
 				.CursorPos( 0 );
 
 			m_Menu.SetContent( &m_MenuContent )
@@ -47,7 +47,7 @@ namespace Town
 			const int MenuR = m_Menu.BoundingRect().Right();
 			const int HeaderB = m_Header.BoundingRect().Bottom();
 
-			m_ImgPainter.SetImg( &BMP( TownBkgnd::TownCenter ) )
+			m_ImgPainter.SetImg( &BMP( TownImg::TownCenter ) )
 				.TransBit0Part( false )
 				.XCenter( GlobalConst::GC_W-MenuR, MenuR )
 				.YCenter( GlobalConst::GC_H-HeaderB, HeaderB );
@@ -57,7 +57,7 @@ namespace Town
 	TownScene::TownCenter_UI::~TownCenter_UI() = default;
 
 	void TownScene::TownCenter_UI::SetImgToOutskirts()
-	{	m_ImgPainter.SetImg( &ResManage::BMP( ResManage::TownBkgnd::Outskirts ) );	}
+	{	m_ImgPainter.SetImg( &ResManage::BMP( ResManage::TownImg::Outskirts ) );	}
 
 	//•`‰æ
 	void TownScene::TownCenter_UI::Paint_( HDC hdc ) const
@@ -92,7 +92,7 @@ namespace Town
 
 		case HandleInputResult::Selected:
 			{
-				m_ImgPainter.SetImg( &ResManage::BMP( ResManage::TownBkgnd::TownCenter ) );	//‚±‚Ìƒ^ƒCƒ~ƒ“ƒO‚Å”wŒi‰æ‘œ‚ğƒŠƒZƒbƒg
+				m_ImgPainter.SetImg( &ResManage::BMP( ResManage::TownImg::TownCenter ) );	//‚±‚Ìƒ^ƒCƒ~ƒ“ƒO‚Å”wŒi‰æ‘œ‚ğƒŠƒZƒbƒg
 
 				switch( m_MenuContent.CursorPos() )
 				{

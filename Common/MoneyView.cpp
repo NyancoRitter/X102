@@ -5,7 +5,7 @@
 
 MoneyView::MoneyView()
 {
-	m_TextView.LineWidth( 160 ).LineHeight( 40 ).AlignRight();
+	m_TextView.LineWidth( 136 ).LineHeight( 40 ).AlignRight();
 	SetMoney(0);
 }
 

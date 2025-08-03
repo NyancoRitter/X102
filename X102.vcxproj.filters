@@ -236,6 +236,18 @@
     <ClInclude Include="CampMenu\TopLVMenu.h">
       <Filter>Game\CampMenu</Filter>
     </ClInclude>
+    <ClInclude Include="Common\CharDrawColor.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CampMenu\StatusPage.h">
+      <Filter>Game\CampMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="CampMenu\ItemPage.h">
+      <Filter>Game\CampMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="CampMenu\MagicPage.h">
+      <Filter>Game\CampMenu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -323,6 +335,15 @@
       <Filter>Game\Common</Filter>
     </ClCompile>
     <ClCompile Include="CampMenu\TopLVMenu.cpp">
+      <Filter>Game\CampMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="CampMenu\StatusPage.cpp">
+      <Filter>Game\CampMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="CampMenu\ItemPage.cpp">
+      <Filter>Game\CampMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="CampMenu\MagicPage.cpp">
       <Filter>Game\CampMenu</Filter>
     </ClCompile>
   </ItemGroup>

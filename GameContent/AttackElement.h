@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace TestGame::GameContent
+namespace GameContent
 {
 	/// <summary>
 	/// UŒ‚‘®«D
@@ -12,7 +12,7 @@ namespace TestGame::GameContent
 	{
 		Physical = 0,	//•¨—
 		Fire = 1,	//‰Î
-		Freeze = 2,	//•X
+		Ice = 2,	//•X
 		Thunder = 3	//—‹
 	};
 

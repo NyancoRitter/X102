@@ -13,6 +13,8 @@ PlayData::PlayData()
 	, m_CurrParty( 3 )	//パーティ最大人数
 	, m_ItemStock( std::numeric_limits<size_t>::max() )
 {
+	//Test Code
+	SetupParty( { PartyCharID::FANA, PartyCharID::IRY, PartyCharID::ENA_MEA } );
 }
 
 PlayData::~PlayData() = default;

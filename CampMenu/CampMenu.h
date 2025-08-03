@@ -5,7 +5,6 @@
 //#include "GUI/MenuContent.h"
 //#include "GUI/TextLinePainter.h"
 //#include "GUI/ImgPainter.h"
-//#include "GUI/Menu.h"
 #include "Common/MoneyView.h"
 //#include "Common/CharSelMenuContent.h"
 
@@ -13,6 +12,10 @@
 
 class PlayData;
 
+/// <summary>
+/// キャンプメニュー
+/// （ステータス確認，アイテムや魔法の使用等を行う画面）
+/// </summary>
 class CampMenu final : public GUI::IGUI
 {
 public:
@@ -31,6 +34,8 @@ protected:
 
 private:
 	class TopLVMenu;
+
+	class IPage;
 	class StatusPage;
 	class ItemPage;
 	class MagicPage;
@@ -46,9 +51,7 @@ private:
 
 	int m_iCurrChar = -1;
 	int m_iCurrPage = -1;
-	std::unique_ptr< StatusPage > m_upStatusPage;
-	std::unique_ptr< ItemPage > m_upItemPage;
-	std::unique_ptr< MagicPage > m_upMagicPage;
+	std::unique_ptr< IPage > m_Pages[3];
 
 private:	//レイアウト用
 	//ページ表示領域の枠

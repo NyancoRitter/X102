@@ -37,11 +37,10 @@ namespace Town
 			using namespace GUI::Menu;
 			{
 				m_MenuContent.Reserve( 3 );
-				m_MenuContent
-					.Add( { Text( L"”ƒ‚¤" ) } )
-					.Add( { Text( L"”„‚é" ) } )
-					.Add( { Text( L"o‚é" ) } )
-					.CursorPos( 0 );
+				m_MenuContent.Add( { Text( L"”ƒ‚¤" ) } );
+				m_MenuContent.Add( { Text( L"”„‚é" ) } );
+				m_MenuContent.Add( { Text( L"o‚é" ) } );
+				m_MenuContent.CursorPos( 0 );
 			}
 
 			m_Menu.SetContent( &m_MenuContent )

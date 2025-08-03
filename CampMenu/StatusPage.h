@@ -1,31 +1,26 @@
 #pragma once
 
-#include "CampMenu.h"
-
-namespace GameContent{	class PartyChar;	}
+#include "IPage.h"
 
 /// <summary>
 /// キャンプ画面 - ステータス表示
 /// </summary>
-class CampMenu::StatusPage final : public IGUI
+class CampMenu::StatusPage final : public CampMenu::IPage
 {
 public:
 	StatusPage( CampMenu &Outer ) : m_Outer( Outer ) {}
 
 public:
-	void SetDispTgt( const GameContent::PartyChar *pChar ){	m_pChar = pChar;	}
-
+	virtual void OnSelectedCharChanged( const GameContent::PartyChar &Char ){	m_pChar = &Char;	}
+	virtual bool CanEnter() const override {	return false;	}
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override {	return GUI::GUIResult::None;	}
 	//virtual void OnGotFocus() override;
 	//virtual void OnLostFocus() override;
 	virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
 	virtual StatusPage &TopLeft( const Vec2i &TL ) override {	m_TopLeft=TL;	return *this;	}
-	virtual Vec2i Size() const override {	return Vec2i();	}	//※使わないのでDummy実装
 protected:
 	virtual void Paint_( HDC hdc ) const override;
-
-private:
 
 private:
 	CampMenu &m_Outer;

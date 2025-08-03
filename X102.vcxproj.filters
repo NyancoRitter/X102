@@ -51,6 +51,9 @@
     <Filter Include="Game\ResManage">
       <UniqueIdentifier>{51f705b0-baaf-4c0c-a96b-c0cf18f2f88f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\ActProc">
+      <UniqueIdentifier>{4b408cbe-76f7-4460-9acc-fc663475d3c9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -209,9 +212,6 @@
     <ClInclude Include="Misc\DataVec.h">
       <Filter>Game\Misc</Filter>
     </ClInclude>
-    <ClInclude Include="Misc\ActResult.h">
-      <Filter>Game\Misc</Filter>
-    </ClInclude>
     <ClInclude Include="Parts\StlRnd.h">
       <Filter>Parts</Filter>
     </ClInclude>
@@ -247,6 +247,21 @@
     </ClInclude>
     <ClInclude Include="CampMenu\MagicPage.h">
       <Filter>Game\CampMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\MagicSelUI.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="CampMenu\IPage.h">
+      <Filter>Game\CampMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\ActResult.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\ActEfficacy.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\ICharacter.h">
+      <Filter>Game\GameContent</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -345,6 +360,9 @@
     </ClCompile>
     <ClCompile Include="CampMenu\MagicPage.cpp">
       <Filter>Game\CampMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\MagicSelUI.cpp">
+      <Filter>Game\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -37,12 +37,11 @@ namespace Town
 			using namespace GUI::Menu;
 			{
 				m_MenuContent.Reserve( 4 );
-				m_MenuContent
-					.Add( { Text( L"泊まる" ) } )
-					.Add( { Text( L"Save" ) } )
-					.Add( { Text( L"1F(酒場)へ" ) } )
-					.Add( { Text( L"出る" ) } )
-					.CursorPos( 0 );
+				m_MenuContent.Add( { Text( L"泊まる" ) } );	
+				m_MenuContent.Add( { Text( L"Save" ) } );
+				m_MenuContent.Add( { Text( L"1F(酒場)へ" ) } );
+				m_MenuContent.Add( { Text( L"出る" ) } );
+				m_MenuContent.CursorPos( 0 );
 
 				//パーティメンバーがいない状態では「泊まる」をグレー表示
 				if( PD.CurrParty().empty() )

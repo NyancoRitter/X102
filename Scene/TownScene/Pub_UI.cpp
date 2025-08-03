@@ -36,12 +36,11 @@ namespace Town
 			using namespace GUI::Menu;
 			{
 				m_MenuContent.Reserve( 4 );
-				m_MenuContent
-					.Add( { Text(L"パーティ編成") } )
-					.Add( { Text(L"LV UP") } )
-					.Add( { Text(L"2F(宿)へ") } )
-					.Add( { Text(L"出る") } )
-					.CursorPos( 0 );
+				m_MenuContent.Add( { Text(L"パーティ編成") } );
+				m_MenuContent.Add( { Text(L"LV UP") } );
+				m_MenuContent.Add( { Text(L"2F(宿)へ") } );
+				m_MenuContent.Add( { Text(L"出る") } );
+				m_MenuContent.CursorPos( 0 );
 			}
 
 			m_Menu.SetContent( &m_MenuContent )

@@ -199,10 +199,10 @@ namespace GameContent
 		{	throw std::exception("Invalid Items.size()");	}
 	}
 
-	int PartyChar::MaxHP( int LV ) const {	return Defs[ (int)m_ID ].MaxHP( LV>0 ? LV : m_LV );	}
-	int PartyChar::STR( int LV ) const {	return Defs[ (int)m_ID ].STR( LV>0 ? LV : m_LV );	}
-	int PartyChar::MAG( int LV ) const {	return Defs[ (int)m_ID ].MAG( LV>0 ? LV : m_LV );	}
-	int PartyChar::AGI( int LV ) const {	return Defs[ (int)m_ID ].AGI( LV>0 ? LV : m_LV );	}
+	int PartyChar::MaxHP_at( int LV ) const {	return Defs[ (int)m_ID ].MaxHP( LV>0 ? LV : m_LV );	}
+	int PartyChar::STR_at( int LV ) const {	return Defs[ (int)m_ID ].STR( LV>0 ? LV : m_LV );	}
+	int PartyChar::MAG_at( int LV ) const {	return Defs[ (int)m_ID ].MAG( LV>0 ? LV : m_LV );	}
+	int PartyChar::AGI_at( int LV ) const {	return Defs[ (int)m_ID ].AGI( LV>0 ? LV : m_LV );	}
 	int PartyChar::MaxMP( FirstSpell Spell, int LV ) const {	return Defs[ (int)m_ID ].MaxMP( Spell, ( LV>0 ? LV : m_LV ) );	}
 	int PartyChar::MaxMP( SecondSpell Spell, int LV ) const {	return Defs[ (int)m_ID ].MaxMP( Spell, ( LV>0 ? LV : m_LV ) );	}
 

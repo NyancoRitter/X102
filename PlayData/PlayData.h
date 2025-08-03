@@ -4,7 +4,7 @@
 #include <string>
 #include <memory>
 #include "Misc/DataVec.h"
-#include "Misc/ActResult.h"
+#include "ActProc/ActResult.h"
 #include "GameContent/PartyChar.h"
 
 /// <summary>
@@ -84,8 +84,8 @@ public:	//--- その他 ------------------------------------------------
 	/// 宿屋に泊まった際の処理(各種回復等)．
 	/// ただし，所持金の増減処理はここでは行わない → 別途AddMoney()で実施のこと．
 	/// </summary>
-	/// <returns>発生した回復効果</returns>
-	std::vector< PartyActResult > ProcOfINN();
+	/// <returns>発生した回復効果．型のintは効果発生対象のパーティ内での位置(0-based)</returns>
+	std::vector< ActResult<int> > ProcOfINN();
 
 	//===============================================================
 private:

@@ -30,12 +30,11 @@ namespace Town
 			using namespace GUI::Menu;
 
 			m_MenuContent.Reserve( 4 );
-			m_MenuContent
-				.Add( { Icon( BMP( TownImg::Inn ), 16+6 ), Text( L"èh" ) } )
-				.Add( { Icon( BMP( TownImg::Pub ), 16+6 ), Text( L"éèÍ" ) } )
-				.Add( { Icon( BMP( TownImg::Shop ), 16+6 ), Text( L"ìX" ) } )
-				.Add( { Icon( BMP( TownImg::Maze ), 16+6 ), Text( L"ñ¿ã{" ) } )
-				.CursorPos( 0 );
+			m_MenuContent.Add( { Icon( BMP( TownImg::Inn ), 16+6 ), Text( L"èh" ) } );
+			m_MenuContent.Add( { Icon( BMP( TownImg::Pub ), 16+6 ), Text( L"éèÍ" ) } );
+			m_MenuContent.Add( { Icon( BMP( TownImg::Shop ), 16+6 ), Text( L"ìX" ) } );
+			m_MenuContent.Add( { Icon( BMP( TownImg::Maze ), 16+6 ), Text( L"ñ¿ã{" ) } );
+			m_MenuContent.CursorPos( 0 );
 
 			m_Menu.SetContent( &m_MenuContent )
 				.WithFrame( true )

@@ -1,6 +1,8 @@
 #include "PlayData.h"
 #include "Rnd.h"
 
+#include "ActProc/ActEfficacy.h"
+
 using namespace GameContent;
 
 PlayData::PlayData()
@@ -14,7 +16,7 @@ PlayData::PlayData()
 	, m_ItemStock( std::numeric_limits<size_t>::max() )
 {
 	//Test Code
-	SetupParty( { PartyCharID::FANA, PartyCharID::IRY, PartyCharID::ENA_MEA } );
+	SetupParty( { PartyCharID::AKINS, PartyCharID::IRY, PartyCharID::ENA_MEA } );
 }
 
 PlayData::~PlayData() = default;
@@ -30,10 +32,10 @@ void PlayData::SetupParty( const std::vector<GameContent::PartyCharID> &Chars )
 }
 
 //hh”‘ˆ—
-std::vector< PartyActResult > PlayData::ProcOfINN()
+std::vector< ActResult<int> > PlayData::ProcOfINN()
 {
 	//‰ñ•œˆ—
-	std::vector< PartyActResult > Results;
+	std::vector< ActResult<int> > Results;
 	for( int iOrder=0; iOrder<(int)m_CurrParty.size(); ++iOrder )
 	{
 		auto &TgtChar = Char( m_CurrParty[iOrder] );
@@ -41,14 +43,14 @@ std::vector< PartyActResult > PlayData::ProcOfINN()
 		//HP‚ÍÅ‘åHP•ª‚¾‚¯‰ñ•œ
 		const int RecovAmount = TgtChar.MaxHP();
 		TgtChar.ChangeHP( RecovAmount );
-		Results.emplace_back( ChangeHP<int>( iOrder, RecovAmount, TgtChar.HP() ) );
+		Results.emplace_back( HPChanged<int>( iOrder, RecovAmount, TgtChar.HP() ) );
 
 		//MP‚Í‘S‰ñ•œ
 		TgtChar.FullRecoverMP();
 
 		//“Å‚Ì‰ñ•œ
 		if( TgtChar.CurePoison() )
-		{	Results.emplace_back( PoionCured<int>( iOrder ) );	}
+		{	Results.emplace_back( PoisonCured<int>( iOrder ) );	}
 	}
 
 	//“Áêˆ—
@@ -59,7 +61,6 @@ std::vector< PartyActResult > PlayData::ProcOfINN()
 		if( IRY.HP()>0  &&   RND().GetInt<int>( 1,100 )<=( IRY.Items().Contains( ItemID::HandMadePotion ) ? 20 : 60 ) )
 		{	IRY.Items().PushBack( ItemID::HandMadePotion );	}
 	}
-
 
 	return Results;
 }

@@ -27,14 +27,13 @@ CampMenu::CampMenu( PlayData &rPlayData )
 	}
 
 	{//ページ
-		m_upStatusPage = std::make_unique<StatusPage>( *this );
-		m_upItemPage = std::make_unique<ItemPage>( *this );
-		m_upMagicPage = std::make_unique<MagicPage>( *this );
+		m_Pages[0] = std::make_unique<StatusPage>( *this );
+		m_Pages[1] = std::make_unique<ItemPage>( *this );
+		m_Pages[2]= std::make_unique<MagicPage>( *this );
 
 		const auto TL = MainAreaRect.TopLeft() + Vec2i{ 16, 32 };
-		m_upStatusPage->TopLeft( TL );
-		m_upItemPage->TopLeft( TL );
-		m_upMagicPage->TopLeft( TL );
+		for( auto &upPage : m_Pages )
+		{	upPage->TopLeft( TL );	}
 	}
 
 	m_LocalStack.Push(
@@ -57,12 +56,11 @@ void CampMenu::Paint_( HDC hdc ) const
 	m_MoneyView.Paint( hdc );
 	m_LocalStack.Paint( hdc );
 
-	//LocalStackに積まれていない状況でも描画する
-	m_upStatusPage->Paint( hdc );
+	//LocalStackに積まれていない状況でもページを描画する
 	if( m_LocalStack.size() == 1 )
 	{
-		m_upItemPage->Paint( hdc );
-		m_upMagicPage->Paint( hdc );
+		for( const auto &upPage : m_Pages )
+		{	upPage->Paint( hdc );	}
 	}
 }
 
@@ -85,35 +83,33 @@ void CampMenu::OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder )
 	const auto Party = m_rPlayData.CurrParty();
 	if( CmdOrder<0 || CharOrder<0 || Party.empty() )
 	{
-		m_upStatusPage->Visible( false );
-		m_upItemPage->Visible( false );
-		m_upMagicPage->Visible( false );
+		for( auto &upPage : m_Pages )
+		{	upPage->Visible( false );	}
+
 		return;
 	}
 
 	if( m_iCurrChar != CharOrder )
 	{
 		m_iCurrChar = CharOrder;
-		m_upStatusPage->SetDispTgt( &m_rPlayData.Char( Party[CharOrder] ) );
+		const auto &SelectedChar = m_rPlayData.Char( Party[CharOrder] );
+		for( auto &upPage : m_Pages )
+		{	upPage->OnSelectedCharChanged( SelectedChar );	}
 	}
 
-	m_upStatusPage->Visible( CmdOrder==0 );
-	m_upItemPage->Visible( CmdOrder==1 );
-	m_upMagicPage->Visible( CmdOrder==2 );
+	if( m_iCurrPage != CmdOrder )
+	{
+		m_iCurrPage = CmdOrder;
+		for( int i=0; i<3; ++i )
+		{	m_Pages[i]->Visible( i==m_iCurrPage );	}
+	}
 }
 
 void CampMenu::OnTopLVMenuSelected( int CharOrder, int CmdOrder )
 {
-	switch( CmdOrder )
+	if( m_Pages[CmdOrder]->CanEnter() )
 	{
-	case 1:
-		m_LocalStack.Push( std::make_unique<GUI::RefWrapper>( *m_upItemPage ) );
-		break;
-	case 2:
-		m_LocalStack.Push( std::make_unique<GUI::RefWrapper>( *m_upMagicPage ) );
-		break;
-	default:
-		break;
+		m_LocalStack.Push( std::make_unique<GUI::RefWrapper>( *m_Pages[CmdOrder] ) );
 	}
 }
 

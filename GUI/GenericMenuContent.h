@@ -63,11 +63,10 @@ namespace GUI::Menu
 	public:
 		/// <summary>€–Ú‚ğ’Ç‰Á </summary>
 		/// <param name="...ItemParts">€–Ú\¬—v‘fŒQ</param>
-		/// <returns>*this</returns>
-		GenericMenuContent &Add( std::initializer_list< GenericMenuItem::PartFunc > ItemParts )
+		/// <returns>’Ç‰Á‚³‚ê‚½€–Ú‚Ö‚ÌQÆ</returns>
+		GenericMenuItem &Add( std::initializer_list< GenericMenuItem::PartFunc > ItemParts )
 		{
-			this->m_Items.emplace_back( ItemParts );
-			return *this;
+			return this->m_Items.emplace_back( ItemParts );
 		}
 	};
 

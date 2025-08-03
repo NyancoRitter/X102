@@ -88,7 +88,10 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActProc\ActEfficacy.h" />
+    <ClInclude Include="ActProc\ActResult.h" />
     <ClInclude Include="CampMenu\CampMenu.h" />
+    <ClInclude Include="CampMenu\IPage.h" />
     <ClInclude Include="CampMenu\ItemPage.h" />
     <ClInclude Include="CampMenu\MagicPage.h" />
     <ClInclude Include="CampMenu\StatusPage.h" />
@@ -98,9 +101,11 @@
     <ClInclude Include="Common\CharDrawColor.h" />
     <ClInclude Include="Common\CharSelMenuContent.h" />
     <ClInclude Include="Common\DrawCharPanel.h" />
+    <ClInclude Include="Common\MagicSelUI.h" />
     <ClInclude Include="Common\MoneyView.h" />
     <ClInclude Include="DataPath.h" />
     <ClInclude Include="GameContent\AttackElement.h" />
+    <ClInclude Include="GameContent\ICharacter.h" />
     <ClInclude Include="GameContent\ItemID.h" />
     <ClInclude Include="GameContent\PartyChar.h" />
     <ClInclude Include="GameContent\PartyCharID.h" />
@@ -123,7 +128,6 @@
     <ClInclude Include="GUI\Menu.h" />
     <ClInclude Include="GUI\GenericMenuContent.h" />
     <ClInclude Include="ITopLV.h" />
-    <ClInclude Include="Misc\ActResult.h" />
     <ClInclude Include="Misc\DataVec.h" />
     <ClInclude Include="Parts\CMonoBMP.h" />
     <ClInclude Include="Parts\CvtUTF.h" />
@@ -162,6 +166,7 @@
     <ClCompile Include="CampMenu\TopLVMenu.cpp" />
     <ClCompile Include="Common\CharSelMenuContent.cpp" />
     <ClCompile Include="Common\DrawCharPanel.cpp" />
+    <ClCompile Include="Common\MagicSelUI.cpp" />
     <ClCompile Include="Common\MoneyView.cpp" />
     <ClCompile Include="DataPath.cpp" />
     <ClCompile Include="Game.cpp" />

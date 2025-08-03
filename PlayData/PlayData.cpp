@@ -1,8 +1,6 @@
 #include "PlayData.h"
 #include "Rnd.h"
 
-#include "ActProc/ActEfficacy.h"
-
 using namespace GameContent;
 
 PlayData::PlayData()
@@ -32,25 +30,26 @@ void PlayData::SetupParty( const std::vector<GameContent::PartyCharID> &Chars )
 }
 
 //hh”‘ˆ—
-std::vector< ActResult<int> > PlayData::ProcOfINN()
+std::vector< ActResult > PlayData::ProcOfINN()
 {
 	//‰ñ•œˆ—
-	std::vector< ActResult<int> > Results;
+	std::vector< ActResult > Results;
 	for( int iOrder=0; iOrder<(int)m_CurrParty.size(); ++iOrder )
 	{
 		auto &TgtChar = Char( m_CurrParty[iOrder] );
 
 		//HP‚ÍÅ‘åHP•ª‚¾‚¯‰ñ•œ
 		const int RecovAmount = TgtChar.MaxHP();
+		const int PrevHP = TgtChar.HP();
 		TgtChar.ChangeHP( RecovAmount );
-		Results.emplace_back( HPChanged<int>( iOrder, RecovAmount, TgtChar.HP() ) );
+		Results.emplace_back( HPChanged( iOrder, RecovAmount, PrevHP, TgtChar.HP() ) );
 
 		//MP‚Í‘S‰ñ•œ
 		TgtChar.FullRecoverMP();
 
 		//“Å‚Ì‰ñ•œ
 		if( TgtChar.CurePoison() )
-		{	Results.emplace_back( PoisonCured<int>( iOrder ) );	}
+		{	Results.emplace_back( PoisonCured( iOrder ) );	}
 	}
 
 	//“Áêˆ—

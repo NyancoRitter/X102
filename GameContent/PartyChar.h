@@ -1,5 +1,4 @@
 #pragma once
-#include "ICharacter.h"
 #include "PartyCharID.h"
 #include "Spell.h"
 #include "ItemID.h"
@@ -8,10 +7,12 @@
 
 namespace GameContent
 {
+	enum class AttackElement;
+
 	/// <summary>
 	/// パーティキャラクタデータ
 	/// </summary>
-	class PartyChar : public ICharacter
+	class PartyChar
 	{
 	public:
 		//LV最大値
@@ -46,34 +47,29 @@ namespace GameContent
 
 	public:	//ステータス参照関連
 		//現在LV
-		virtual int LV() const override {	return m_LV;	}
+		int LV() const {	return m_LV;	}
 		//現在HP
-		virtual int HP() const override {	return m_HP;	}
+		int HP() const {	return m_HP;	}
 		//現在MP
 		int MP( FirstSpell Spell ) const {	return m_MP1st[(int)Spell];	}
 		int MP( SecondSpell Spell ) const {	return m_MP2nd[(int)Spell];	}
 
 		//毒付与状態か
-		virtual bool PoisonInfected() const override {	return m_PoisonInfected;	}
+		bool PoisonInfected() const {	return m_PoisonInfected;	}
 
 		//指定LVにおける各種ステータス．
 		//ただし引数に0以下の値を指定した場合には現在LVでのステータスを返す．
-		int MaxHP_at( int LV=0 ) const;
+		int MaxHP( int LV=0 ) const;
 		int MaxMP( FirstSpell Spell, int LV=0 ) const;
 		int MaxMP( SecondSpell Spell, int LV=0 ) const;
-		int STR_at( int LV=0 ) const;
-		int MAG_at( int LV=0 ) const;
-		int AGI_at( int LV=0 ) const;
-
-		virtual int MaxHP() const override {	return MaxHP_at(0);	}
-		virtual int STR() const override {	return STR_at(0);	}
-		virtual int MAG() const override {	return MAG_at(0);	}
-		virtual int AGI() const override {	return AGI_at(0);	}
+		int STR( int LV=0 ) const;
+		int MAG( int LV=0 ) const;
+		int AGI( int LV=0 ) const;
 
 		//ダメージ軽減率[%]
-		virtual int DmgReducePercentage( AttackElement Elem ) const override;
+		int DmgReducePercentage( AttackElement Elem ) const;
 		//毒付与回避率[%]
-		virtual int PoisonResistPercentage() const override;
+		int PoisonResistPercentage() const;
 
 	public:	//ステータス変化関連
 
@@ -87,7 +83,7 @@ namespace GameContent
 		/// ただし結果は 上限/下限 を超えない値となる．
 		/// </summary>
 		/// <param name="dHP">所望の変化量．正ならば回復，負ならダメージ</param>
-		virtual void ChangeHP( int dHP ) override;
+		void ChangeHP( int dHP );
 
 		/// <summary>
 		/// MPを1ずつ減らす（魔法使用時のMP消費）
@@ -111,11 +107,11 @@ namespace GameContent
 
 		/// <summary>毒を付与</summary>
 		/// <returns>新たに付与したか否か．毒状態であった場合にはfalse．</returns>
-		virtual bool InfectPoison() override {	return ChangePoisonStateTo( true );	}
+		bool InfectPoison(){	return ChangePoisonStateTo( true );	}
 
 		/// <summary>毒を回復</summary>
 		/// <returns>回復したか否か．毒状態でなかった場合にはfalse．</returns>
-		virtual bool CurePoison() override {	return ChangePoisonStateTo( false );	}
+		bool CurePoison(){	return ChangePoisonStateTo( false );	}
 
 	public:	//所有アイテム : ※特にカプセル化しない
 		DataVec< ItemID > &Items() {	return m_Items;	}

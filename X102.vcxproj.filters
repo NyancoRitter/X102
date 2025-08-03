@@ -260,8 +260,17 @@
     <ClInclude Include="ActProc\ActEfficacy.h">
       <Filter>Game\ActProc</Filter>
     </ClInclude>
-    <ClInclude Include="GameContent\ICharacter.h">
+    <ClInclude Include="ActProc\TgtRange.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\Magic.h">
       <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\ICharacter.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\TgtSpecifier.h">
+      <Filter>Game\ActProc</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

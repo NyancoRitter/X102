@@ -1,22 +1,21 @@
 #pragma once
 
 #include <variant>
+#include "TgtSpecifier.h"
 
 //
 //アイテムや魔法を使う等，何らかの行動を行った結果，発生した効果
 //
 
 /// <summary>HPの変更(回復orダメージ)</summary>
-/// <typeparam name="TgtSpecifer">効果発生対象を示す型</typeparam>
-template< class TgtSpecifer >
 struct HPChanged
 {
-	HPChanged( TgtSpecifer TgtChar, int Amount, int AfterHP )
-		: TgtChar( TgtChar ), Amount( Amount ), AfterHP( AfterHP )
+	HPChanged( TgtSpecifier TgtChar, int Amount, int PrevHP, int AfterHP )
+		: TgtChar( TgtChar ), Amount( Amount ), PrevHP( PrevHP ), AfterHP( AfterHP )
 	{}
 
 	/// <summary>対象キャラクタ</summary>
-	TgtSpecifer TgtChar;
+	TgtSpecifier TgtChar;
 
 	/// <summary>
 	/// 効果量（変化させようとした値）
@@ -28,37 +27,36 @@ struct HPChanged
 	/// </summary>
 	int Amount;
 
+	/// <summary>効果発揮処理前の対象のHP</summary>
+	int PrevHP;
+
 	/// <summary>効果発揮処理後の対象のHP</summary>
 	int AfterHP;
 };
 
 /// <summary>毒状態になった</summary>
-/// <typeparam name="TgtSpecifer">効果発生対象を示す型</typeparam>
-template< class TgtSpecifer >
 struct PoisonInfected
 {
-	PoisonInfected( TgtSpecifer TgtChar ) : TgtChar( TgtChar ) {}
+	PoisonInfected( TgtSpecifier TgtChar ) : TgtChar( TgtChar ) {}
 
 	/// <summary>対象キャラクタ</summary>
-	TgtSpecifer TgtChar;
+	TgtSpecifier TgtChar;
 };
 
 /// <summary>毒状態が解消された</summary>
 /// <typeparam name="TgtSpecifer">効果発生対象を示す型</typeparam>
-template< class TgtSpecifer >
 struct PoisonCured
 {
-	PoisonCured( TgtSpecifer TgtChar ) : TgtChar( TgtChar ) {}
+	PoisonCured( TgtSpecifier TgtChar ) : TgtChar( TgtChar ) {}
 
 	/// <summary>対象キャラクタ</summary>
-	TgtSpecifer TgtChar;
+	TgtSpecifier TgtChar;
 };
 
 //------------------------------------
 	
-template< class TgtSpecifer >
 using ActResult = std::variant<
-	HPChanged<TgtSpecifer>,
-	PoisonInfected<TgtSpecifer>,
-	PoisonCured<TgtSpecifer>
+	HPChanged,
+	PoisonInfected,
+	PoisonCured
 >;

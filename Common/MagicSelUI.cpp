@@ -1,6 +1,7 @@
 #include "framework.h"
 #include "MagicSelUI.h"
 #include "GameContent/PartyChar.h"
+#include "GameContent/Magic.h"
 #include "GUI/Color.h"
 #include "IController.h"
 #include "ResManage/BmpBank.h"
@@ -105,6 +106,7 @@ void MagicSelUI::OnGotFocus()
 
 void MagicSelUI::OnLostFocus()
 {
+	//※カーソルが表示されないようにカーソル位置を無効値にセット
 	for( auto &Cont : m_Content )Cont.CursorPos( -1 );
 }
 
@@ -145,28 +147,18 @@ Flags<GUIResult> MagicSelUI::Update( const IController &Controller )
 	switch( HIR )
 	{
 	case HandleInputResult::CursorMoved:
-		{
-			if( !m_OnIndicatedMagicChanged || m_Spell1st.empty() || m_Spell2nd.empty() )
-			{	return GUIResult::ReqRedraw;	}
-
-			return m_OnIndicatedMagicChanged( m_Spell1st[ m_Content[0].CursorPos() ], m_Spell2nd[ m_Content[1].CursorPos() ] );
-		}
+		return ( m_OnIndicatedMagicChanged  ?  m_OnIndicatedMagicChanged()  :  GUIResult::ReqRedraw );
 		break;
 	case HandleInputResult::Selected:
-		{
-			if( !m_OnMagicSelected || m_Spell1st.empty() || m_Spell2nd.empty() )
-			{	return GUIResult::None;	}
-
-			return m_OnMagicSelected( m_Spell1st[ m_Content[0].CursorPos() ], m_Spell2nd[ m_Content[1].CursorPos() ] );
-		}
+		return ( m_OnMagicSelected  ?  m_OnMagicSelected()  :  GUIResult::None );
 		break;
 	case HandleInputResult::Canceled:
-		return GUIResult::Finished;	break;
+		return GUIResult::Finished;
+		break;
 	}
 
 	return GUIResult::None;
 }
-
 
 void MagicSelUI::Paint_( HDC hdc ) const
 {
@@ -180,4 +172,12 @@ void MagicSelUI::Paint_( HDC hdc ) const
 		m_Menu[0].Paint( hdc );
 		m_Menu[1].Paint( hdc );
 	}
+}
+
+const GameContent::Magic *MagicSelUI::CurrIndicatedMagic()
+{
+	if( m_Spell1st.empty() || m_Spell2nd.empty() || m_Content[0].CursorPos()<0 || m_Content[1].CursorPos()<0 )
+	{	return nullptr;	}
+	
+	return &Magic::Definition( m_Spell1st[ m_Content[0].CursorPos() ], m_Spell2nd[ m_Content[1].CursorPos() ] );
 }

@@ -26,9 +26,9 @@ namespace GameContent
 	enum class SecondSpell
 	{
 		Recover=0,
-		Fire = AttackElement::Fire,
-		Ice = AttackElement::Ice,
-		Thunder = AttackElement::Thunder
+		Fire = (int)AttackElement::Fire,
+		Ice = (int)AttackElement::Ice,
+		Thunder = (int)AttackElement::Thunder
 	};
 	constexpr int N_SecondSpell = 4;
 

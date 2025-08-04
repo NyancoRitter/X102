@@ -8,7 +8,11 @@
 #include "GUI/Menu.h"
 #include "GUI/GenericMenuContent.h"
 
-namespace GameContent{	class PartyChar;	}
+namespace GameContent
+{
+	class PartyChar;
+	class Magic;
+}
 
 /// <summary>
 /// 魔法選択用 UI
@@ -16,17 +20,47 @@ namespace GameContent{	class PartyChar;	}
 class MagicSelUI final : public GUI::IGUI
 {
 public:
-	using OnIndicatedMagicChanged = std::function< Flags<GUI::GUIResult>(GameContent::FirstSpell,GameContent::SecondSpell) >;
-	using OnMagicSelected = std::function< Flags<GUI::GUIResult>(GameContent::FirstSpell,GameContent::SecondSpell) >;
+	using OnIndicatedMagicChanged = std::function< Flags<GUI::GUIResult>() >;
+	using OnMagicSelected = std::function< Flags<GUI::GUIResult>() >;
 
 public:
 	MagicSelUI( const Vec2i &ItemDrawSize );
+
+	/// <summary>
+	/// メニュー項目の更新
+	/// </summary>
+	/// <param name="MagicUser">このキャラクタの現状に合わせて更新される</param>
 	void UpdateContent( const GameContent::PartyChar &MagicUser );
 
+	/// <summary>
+	/// メニューで選択可能な魔法が無い状態か否か
+	/// </summary>
+	/// <returns></returns>
 	bool NoAvailableMagic() const {	return m_Spell1st.empty() || m_Spell2nd.empty();	}
 
-	MagicSelUI &Set_OnIndicatedMagicChanged_Proc( OnIndicatedMagicChanged &Func ){	m_OnIndicatedMagicChanged=Func;	return *this;	}
-	MagicSelUI &Set_OnMagicSelected_Proc( OnMagicSelected &Func ){	m_OnMagicSelected=Func;	return *this;	}
+	/// <summary>
+	/// 現在のメニューカーソルに対応する魔法の情報を取得．
+	/// </summary>
+	/// <returns>魔法情報．ただしメニューが有効な魔法を指さない状況ではnullptrを返す</returns>
+	const GameContent::Magic *CurrIndicatedMagic();
+
+public:	//コールバックの設定
+
+	/// <summary>
+	/// Update() 内で選カーソルが指す対象が変化したときの処理を設定．
+	/// 設定した処理が返した値が Update() の戻り値となる．
+	/// </summary>
+	/// <param name="Func">処理</param>
+	/// <returns>*this</returns>
+	MagicSelUI &Set_OnIndicatedMagicChanged_Proc( const OnIndicatedMagicChanged &Func ){	m_OnIndicatedMagicChanged=Func;	return *this;	}
+
+	/// <summary>
+	/// Update() 内で選択操作が発生した際に呼ばれる．
+	/// 設定した処理が返した値が Update() の戻り値となる．
+	/// </summary>
+	/// <param name="Func">処理</param>
+	/// <returns>*this</returns>
+	MagicSelUI &Set_OnMagicSelected_Proc( const OnMagicSelected &Func ){	m_OnMagicSelected=Func;	return *this;	}
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;

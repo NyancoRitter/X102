@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClInclude Include="ActProc\ActEfficacy.h" />
     <ClInclude Include="ActProc\ActResult.h" />
+    <ClInclude Include="ActProc\AsICharacter.h" />
     <ClInclude Include="ActProc\ICharacter.h" />
     <ClInclude Include="ActProc\TgtRange.h" />
     <ClInclude Include="ActProc\TgtSpecifier.h" />
@@ -106,8 +107,10 @@
     <ClInclude Include="Common\DrawCharPanel.h" />
     <ClInclude Include="Common\MagicSelUI.h" />
     <ClInclude Include="Common\MoneyView.h" />
+    <ClInclude Include="Common\TgtSelection.h" />
     <ClInclude Include="DataPath.h" />
     <ClInclude Include="GameContent\AttackElement.h" />
+    <ClInclude Include="GameContent\EfficacyCalcFuncs.h" />
     <ClInclude Include="GameContent\ItemID.h" />
     <ClInclude Include="GameContent\Magic.h" />
     <ClInclude Include="GameContent\PartyChar.h" />
@@ -163,6 +166,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CampMenu\CampMenu.cpp" />
+    <ClCompile Include="CampMenu\CampMenu_ItemMagicProc.cpp" />
     <ClCompile Include="CampMenu\ItemPage.cpp" />
     <ClCompile Include="CampMenu\MagicPage.cpp" />
     <ClCompile Include="CampMenu\StatusPage.cpp" />
@@ -171,8 +175,10 @@
     <ClCompile Include="Common\DrawCharPanel.cpp" />
     <ClCompile Include="Common\MagicSelUI.cpp" />
     <ClCompile Include="Common\MoneyView.cpp" />
+    <ClCompile Include="Common\TgtSelection.cpp" />
     <ClCompile Include="DataPath.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameContent\Magic.cpp" />
     <ClCompile Include="GameContent\PartyChar.cpp" />
     <ClCompile Include="GUI\DrawFuncs.cpp" />
     <ClCompile Include="GUI\HandleMenuInput.cpp" />

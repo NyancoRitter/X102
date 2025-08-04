@@ -57,10 +57,13 @@ namespace GUI
 		virtual void OnGotFocus(){}
 
 		/// <summary>
-		/// Update()が呼ばれる対象ではなくなった際 （所属するStackに他要素がPushされた場合）に呼ばれる．
-		/// このオブジェクトが Stack から Pop された際には呼ばれない．
+		/// 所属するStackに他要素がPushされたことによって
+		/// Update()が呼ばれる対象ではなくなった際に呼ばれる．
 		/// </summary>
 		virtual void OnLostFocus(){}
+
+		/// <summary>このオブジェクトが Stack から Pop される直前に呼ばれる．</summary>
+		virtual void OnPrePopped(){}
 	};
 
 	/// <summary>
@@ -73,7 +76,7 @@ namespace GUI
 	{
 	public:
 		GUIStack() = default;
-		~GUIStack(){	clear();	}
+		~GUIStack(){	clear( false );	}	//※注：解体時には要素の OnPrePopped() は呼ばれない
 	private:
 		GUIStack( const GUIStack & ) = delete;
 		GUIStack &operator =( const GUIStack & ) = delete;
@@ -100,8 +103,17 @@ namespace GUI
 		}
 
 		bool empty() const {	return m_GUIs.empty();	}
-		void clear(){	m_GUIs.clear();	}
 		size_t size() const {	return m_GUIs.size();	}
+
+		/// <summary>スタックを空にする</summary>
+		/// <param name="Call_OnPrePopped">現存する要素の OnPrePopped() をコールするか否か</param>
+		void clear( bool Call_OnPrePopped )
+		{
+			if( Call_OnPrePopped )
+			{	for( auto &upGUI : m_GUIs )upGUI->OnPrePopped();	}
+
+			m_GUIs.clear();
+		}
 
 		/// <summary>最後に Push された物の Update() をコールする</summary>
 		/// <param name="Controller"></param>
@@ -144,6 +156,8 @@ namespace GUI
 		/// <param name="iTgt">削除対象</param>
 		void Remove( Iter iTgt )
 		{
+			(*iTgt)->OnPrePopped();
+
 			{//要素削除
 				bool TgtIsCurrent = ( iTgt == std::prev( m_GUIs.end() ) );
 				m_GUIs.erase( iTgt );
@@ -175,7 +189,7 @@ namespace GUI
 		virtual Flags<GUIResult> Update( const IController &Controller ) override {	return m_rGUI.Update(Controller);	}
 		virtual void OnGotFocus() override {	m_rGUI.OnGotFocus();	}
 		virtual void OnLostFocus() override {	m_rGUI.OnLostFocus();	}
-
+		virtual void OnPrePopped() override {	m_rGUI.OnPrePopped();	}
 		virtual Vec2i TopLeft() const override {	return m_rGUI.TopLeft();	}
 		virtual RefWrapper &TopLeft( const Vec2i &TL ) override {	m_rGUI.TopLeft(TL);	return *this;	}
 		virtual Vec2i Size() const override {	return m_rGUI.Size();	}

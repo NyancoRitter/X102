@@ -272,6 +272,15 @@
     <ClInclude Include="ActProc\TgtSpecifier.h">
       <Filter>Game\ActProc</Filter>
     </ClInclude>
+    <ClInclude Include="Common\TgtSelection.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="GameContent\EfficacyCalcFuncs.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\AsICharacter.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -372,6 +381,15 @@
     </ClCompile>
     <ClCompile Include="Common\MagicSelUI.cpp">
       <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\TgtSelection.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="GameContent\Magic.cpp">
+      <Filter>Game\GameContent</Filter>
+    </ClCompile>
+    <ClCompile Include="CampMenu\CampMenu_ItemMagicProc.cpp">
+      <Filter>Game\CampMenu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

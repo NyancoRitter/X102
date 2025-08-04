@@ -11,7 +11,7 @@ public:
 	ItemPage( CampMenu &Outer ) : m_Outer( Outer ) {}
 
 public:
-	virtual void OnSelectedCharChanged( const GameContent::PartyChar &Char ){}
+	virtual void OnSelectedCharChanged( int iCharOrder ) override {}
 	virtual bool CanEnter() const override {	return true;	}
 
 public:	// IGUI Impl

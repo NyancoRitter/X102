@@ -22,7 +22,7 @@ namespace Town
 	{	m_Stack.Push( std::make_unique<GUI::RefWrapper>( *m_upTownCenterUI ) );	}
 	
 	void TownScene::OnLeave()
-	{	m_Stack.clear();	}
+	{	m_Stack.clear( false );	}
 
 	Flags<SceneUpdateResult> TownScene::Update( const IController &Controller )
 	{

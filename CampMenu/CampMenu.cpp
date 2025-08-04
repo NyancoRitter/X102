@@ -36,12 +36,11 @@ CampMenu::CampMenu( PlayData &rPlayData )
 		{	upPage->TopLeft( TL );	}
 	}
 
-	m_LocalStack.Push(
-		std::make_unique<TopLVMenu>(
-			*this,
-			std::vector<std::wstring>{ L"Status", L"Item", L"Magic" }
-		)
+	m_upTopLVMenu = std::make_unique<TopLVMenu>(
+		*this,
+		std::vector<std::wstring>{ L"Status", L"Item", L"Magic" }
 	);
+	m_LocalStack.Push( std::make_unique< RefWrapper >( *m_upTopLVMenu )	);
 
 	OnTopLVMenuCursorMoved( 0,0 );
 }
@@ -92,9 +91,9 @@ void CampMenu::OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder )
 	if( m_iCurrChar != CharOrder )
 	{
 		m_iCurrChar = CharOrder;
-		const auto &SelectedChar = m_rPlayData.Char( Party[CharOrder] );
+
 		for( auto &upPage : m_Pages )
-		{	upPage->OnSelectedCharChanged( SelectedChar );	}
+		{	upPage->OnSelectedCharChanged( m_iCurrChar );	}
 	}
 
 	if( m_iCurrPage != CmdOrder )
@@ -113,3 +112,10 @@ void CampMenu::OnTopLVMenuSelected( int CharOrder, int CmdOrder )
 	}
 }
 
+//std::unique_ptr<IGUI> CampMenu::CreateTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback )
+//{	return m_upTopLVMenu->CreateTgtCharSelector( ForAll, Callback );	}
+
+void CampMenu::PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback )
+{
+	m_LocalStack.Push( m_upTopLVMenu->CreateTgtCharSelector( ForAll, Callback ) );
+}

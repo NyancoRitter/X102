@@ -2,11 +2,18 @@
 #include "StatusPage.h"
 #include <sstream>
 
+#include "PlayData/PlayData.h"
 #include "GameContent/PartyChar.h"
 #include "GameContent/Spell.h"
 #include "ResManage/BmpBank.h"
 #include "Parts/CMonoBmp.h"
 #include "Common/CharDrawColor.h"
+
+void CampMenu::StatusPage::OnSelectedCharChanged( int iCharOrder )
+{
+	const auto &PD = m_Outer.m_rPlayData;
+	m_pChar = &PD.Char( PD.CurrParty()[ iCharOrder ] );
+}
 
 void CampMenu::StatusPage::Paint_( HDC hdc ) const
 {

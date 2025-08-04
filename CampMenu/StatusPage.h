@@ -11,7 +11,7 @@ public:
 	StatusPage( CampMenu &Outer ) : m_Outer( Outer ) {}
 
 public:
-	virtual void OnSelectedCharChanged( const GameContent::PartyChar &Char ){	m_pChar = &Char;	}
+	virtual void OnSelectedCharChanged( int iCharOrder ) override;
 	virtual bool CanEnter() const override {	return false;	}
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override {	return GUI::GUIResult::None;	}

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <functional>
 #include "GUI/IGUI.h"
 //#include "GUI/Menu.h"
 //#include "GUI/MenuContent.h"
@@ -11,6 +12,8 @@
 //class CMonoBMP;
 
 class PlayData;
+class TgtSpecifier;
+namespace GameContent{	class Magic;	}
 
 /// <summary>
 /// キャンプメニュー
@@ -43,6 +46,25 @@ private:
 	void OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder );
 	void OnTopLVMenuSelected( int CharOrder, int CmdOrder );
 
+	/// <summary>
+	/// アイテムや魔法の使用対象キャラクタ選択用UIをUIスタックにプッシュ
+	/// </summary>
+	/// <param name="ForAll">対象が全員のものか否か</param>
+	/// <param name="Callback">選択用UIに渡すCallback（仕様は TgtSelection を参照 ）</param>
+	void PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback );
+
+	/// <summary>
+	/// 魔法の使用処理
+	/// * 使用者は暗黙的に現在されているキャラクタ( m_iCurrChar )となる．
+	/// * MP的に使えるか否か等のチェックもここで行われる
+	/// </summary>
+	/// <param name="Magic">使用する魔法</param>
+	/// <param name="iTgtOrder">使用対象キャラクタの位置．魔法効果範囲が単体である場合にのみ使用される</param>
+	void UseMagic( const GameContent::Magic &Magic, int iTgtOrder );
+
+	////
+	//PartyChar &ToChar( const TgtSpecifier &tgt );
+
 private:
 	PlayData &m_rPlayData;
 
@@ -51,6 +73,7 @@ private:
 
 	int m_iCurrChar = -1;
 	int m_iCurrPage = -1;
+	std::unique_ptr<TopLVMenu> m_upTopLVMenu;
 	std::unique_ptr< IPage > m_Pages[3];
 
 private:	//レイアウト用

@@ -12,8 +12,8 @@ public:
 	/// <summary>
 	/// 選択されているキャラクタが変わった際の更新処理
 	/// </summary>
-	/// <param name="Char">選択されたキャラクタ</param>
-	virtual void OnSelectedCharChanged( const GameContent::PartyChar &Char ) = 0;
+	/// <param name="iCharOrder">選択されたキャラクタの位置</param>
+	virtual void OnSelectedCharChanged( int iCharOrder ) = 0;
 
 	/// <summary>
 	/// このページを操作対象にできるか否か

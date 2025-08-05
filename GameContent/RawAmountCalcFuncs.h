@@ -1,8 +1,12 @@
 #pragma once
 #include <functional>
 #include <string>
-#include "ActProc/ICharacter.h"
+#include "ICharacter.h"
 #include "Rnd.h"
+
+//
+//魔法やアイテムの基本効果量計算手段と，その説明用文字列生成
+//
 
 namespace GameContent
 {

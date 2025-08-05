@@ -266,19 +266,22 @@
     <ClInclude Include="GameContent\Magic.h">
       <Filter>Game\GameContent</Filter>
     </ClInclude>
-    <ClInclude Include="ActProc\ICharacter.h">
-      <Filter>Game\ActProc</Filter>
-    </ClInclude>
-    <ClInclude Include="ActProc\TgtSpecifier.h">
+    <ClInclude Include="ActProc\CharSpecifier.h">
       <Filter>Game\ActProc</Filter>
     </ClInclude>
     <ClInclude Include="Common\TgtSelection.h">
       <Filter>Game\Common</Filter>
     </ClInclude>
-    <ClInclude Include="GameContent\EfficacyCalcFuncs.h">
+    <ClInclude Include="GameContent\RawAmountCalcFuncs.h">
       <Filter>Game\GameContent</Filter>
     </ClInclude>
-    <ClInclude Include="ActProc\AsICharacter.h">
+    <ClInclude Include="GameContent\ICharacter.h">
+      <Filter>Game\GameContent</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\EfficacySource.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
+    <ClInclude Include="ActProc\ActContext.h">
       <Filter>Game\ActProc</Filter>
     </ClInclude>
   </ItemGroup>
@@ -390,6 +393,9 @@
     </ClCompile>
     <ClCompile Include="CampMenu\CampMenu_ItemMagicProc.cpp">
       <Filter>Game\CampMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="ActProc\ActEfficacy.cpp">
+      <Filter>Game\ActProc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

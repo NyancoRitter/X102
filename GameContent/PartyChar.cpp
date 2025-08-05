@@ -85,7 +85,7 @@ namespace
 		std::array< MPDef, N_SecondSpell > m_MP2nd;
 		std::array<int, 4> m_DmgReducePercentage{0};
 		int m_PoisonRegistPercentage = 0;
-		int m_nMaxItem = 8;
+		int m_nMaxItem = 7;
 		//std::vector<ItemID> m_InitItems;
 		//SkillID m_Skill = -1;
 	};
@@ -93,13 +93,13 @@ namespace
 	//
 	const std::array< PartyCharDef, N_PARTY_CHAR_DEF > Defs{
 		//エイキンス
-		PartyCharDef( 60 ).BasicStats( 15, 1, 2 )
+		PartyCharDef( 60 ).BasicStats( 15, 1, 2 ).nMaxItem(5)
 		.DmgReducePercentage( { 75, 0, 0, -10 } ).PoisonResistPercentage( 5 )
 		.MP( FirstSpell::Poison, 3,1 )
 		.MP( SecondSpell::Recover, 3,1 ),
 
 		//ファナ
-		PartyCharDef( 32 ).BasicStats( 10, 8, 15 )
+		PartyCharDef( 32 ).BasicStats( 10, 8, 15 ).nMaxItem(6)
 		.DmgReducePercentage( { 35, 25, 10, 10 } ).PoisonResistPercentage( 50 )
 		.MP( FirstSpell::Single_LV1, 1,3, 8 )
 		.MP( FirstSpell::Single_LV2, 5,1, 15 )
@@ -145,7 +145,7 @@ namespace
 		.MP( SecondSpell::Thunder, 1,3, 5 ),
 
 		//アスレイ
-		PartyCharDef( 30 ).BasicStats( 5, 12, 10 )
+		PartyCharDef( 30 ).BasicStats( 5, 12, 10 ).nMaxItem(8)
 		.DmgReducePercentage( { 10, 65, 50, 65 } ).PoisonResistPercentage( 40 )
 		.MP( FirstSpell::Single_LV1, 1,5, 2 )
 		.MP( FirstSpell::Single_LV2, 6,1, 4 )
@@ -156,7 +156,7 @@ namespace
 		.MP( SecondSpell::Thunder, 1,6, 3 ),
 
 		//エナ・メア
-		PartyCharDef( 98 ).BasicStats( 6, 7, 12 ).nMaxItem(12)
+		PartyCharDef( 98 ).BasicStats( 6, 7, 12 ).nMaxItem(10)
 		.DmgReducePercentage( { 12, -30, 0, 30 } ).PoisonResistPercentage( 20 )
 		.MP( FirstSpell::All_LV1, 1,2, 4 )
 		.MP( FirstSpell::Poison, 10,1, 7 )
@@ -199,10 +199,10 @@ namespace GameContent
 		{	throw std::exception("Invalid Items.size()");	}
 	}
 
-	int PartyChar::MaxHP( int LV ) const {	return Defs[ (int)m_ID ].MaxHP( LV>0 ? LV : m_LV );	}
-	int PartyChar::STR( int LV ) const {	return Defs[ (int)m_ID ].STR( LV>0 ? LV : m_LV );	}
-	int PartyChar::MAG( int LV ) const {	return Defs[ (int)m_ID ].MAG( LV>0 ? LV : m_LV );	}
-	int PartyChar::AGI( int LV ) const {	return Defs[ (int)m_ID ].AGI( LV>0 ? LV : m_LV );	}
+	int PartyChar::MaxHP_at( int LV ) const {	return Defs[ (int)m_ID ].MaxHP( LV>0 ? LV : m_LV );	}
+	int PartyChar::STR_at( int LV ) const {	return Defs[ (int)m_ID ].STR( LV>0 ? LV : m_LV );	}
+	int PartyChar::MAG_at( int LV ) const {	return Defs[ (int)m_ID ].MAG( LV>0 ? LV : m_LV );	}
+	int PartyChar::AGI_at( int LV ) const {	return Defs[ (int)m_ID ].AGI( LV>0 ? LV : m_LV );	}
 	int PartyChar::MaxMP( FirstSpell Spell, int LV ) const {	return Defs[ (int)m_ID ].MaxMP( Spell, ( LV>0 ? LV : m_LV ) );	}
 	int PartyChar::MaxMP( SecondSpell Spell, int LV ) const {	return Defs[ (int)m_ID ].MaxMP( Spell, ( LV>0 ? LV : m_LV ) );	}
 

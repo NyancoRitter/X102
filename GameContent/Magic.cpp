@@ -1,6 +1,6 @@
 #include "Magic.h"
 #include "ActProc/ActEfficacy.h"
-#include "EfficacyCalcFuncs.h"
+#include "RawAmountCalcFuncs.h"
 #include <map>
 
 namespace

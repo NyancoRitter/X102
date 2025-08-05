@@ -88,12 +88,12 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ActProc\ActContext.h" />
     <ClInclude Include="ActProc\ActEfficacy.h" />
     <ClInclude Include="ActProc\ActResult.h" />
-    <ClInclude Include="ActProc\AsICharacter.h" />
-    <ClInclude Include="ActProc\ICharacter.h" />
+    <ClInclude Include="ActProc\EfficacySource.h" />
     <ClInclude Include="ActProc\TgtRange.h" />
-    <ClInclude Include="ActProc\TgtSpecifier.h" />
+    <ClInclude Include="ActProc\CharSpecifier.h" />
     <ClInclude Include="CampMenu\CampMenu.h" />
     <ClInclude Include="CampMenu\IPage.h" />
     <ClInclude Include="CampMenu\ItemPage.h" />
@@ -110,7 +110,8 @@
     <ClInclude Include="Common\TgtSelection.h" />
     <ClInclude Include="DataPath.h" />
     <ClInclude Include="GameContent\AttackElement.h" />
-    <ClInclude Include="GameContent\EfficacyCalcFuncs.h" />
+    <ClInclude Include="GameContent\RawAmountCalcFuncs.h" />
+    <ClInclude Include="GameContent\ICharacter.h" />
     <ClInclude Include="GameContent\ItemID.h" />
     <ClInclude Include="GameContent\Magic.h" />
     <ClInclude Include="GameContent\PartyChar.h" />
@@ -165,6 +166,7 @@
     <ClInclude Include="X102.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ActProc\ActEfficacy.cpp" />
     <ClCompile Include="CampMenu\CampMenu.cpp" />
     <ClCompile Include="CampMenu\CampMenu_ItemMagicProc.cpp" />
     <ClCompile Include="CampMenu\ItemPage.cpp" />

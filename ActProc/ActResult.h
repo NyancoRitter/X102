@@ -1,21 +1,24 @@
 #pragma once
 
 #include <variant>
-#include "TgtSpecifier.h"
+#include "CharSpecifier.h"
 
 //
 //アイテムや魔法を使う等，何らかの行動を行った結果，発生した効果
 //
 
-/// <summary>HPの変更(回復orダメージ)</summary>
+/// <summary>
+/// 発生した(回復orダメージ)の情報．
+/// （ただし実際にはHPが変化しなかった場合もあり得る）
+/// </summary>
 struct HPChanged
 {
-	HPChanged( TgtSpecifier TgtChar, int Amount, int PrevHP, int AfterHP )
+	HPChanged( CharSpecifier TgtChar, int Amount, int PrevHP, int AfterHP )
 		: TgtChar( TgtChar ), Amount( Amount ), PrevHP( PrevHP ), AfterHP( AfterHP )
 	{}
 
 	/// <summary>対象キャラクタ</summary>
-	TgtSpecifier TgtChar;
+	CharSpecifier TgtChar;
 
 	/// <summary>
 	/// 効果量（変化させようとした値）
@@ -34,23 +37,22 @@ struct HPChanged
 	int AfterHP;
 };
 
-/// <summary>毒状態になった</summary>
+/// <summary>キャラクタが毒状態になった旨を示す情報</summary>
 struct PoisonInfected
 {
-	PoisonInfected( TgtSpecifier TgtChar ) : TgtChar( TgtChar ) {}
+	PoisonInfected( CharSpecifier TgtChar ) : TgtChar( TgtChar ) {}
 
 	/// <summary>対象キャラクタ</summary>
-	TgtSpecifier TgtChar;
+	CharSpecifier TgtChar;
 };
 
-/// <summary>毒状態が解消された</summary>
-/// <typeparam name="TgtSpecifer">効果発生対象を示す型</typeparam>
+/// <summary>キャラクタの毒状態が解消された旨を示す情報</summary>
 struct PoisonCured
 {
-	PoisonCured( TgtSpecifier TgtChar ) : TgtChar( TgtChar ) {}
+	PoisonCured( CharSpecifier TgtChar ) : TgtChar( TgtChar ) {}
 
 	/// <summary>対象キャラクタ</summary>
-	TgtSpecifier TgtChar;
+	CharSpecifier TgtChar;
 };
 
 //------------------------------------

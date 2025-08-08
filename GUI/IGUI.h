@@ -97,7 +97,7 @@ namespace GUI
 			if( !m_GUIs.empty() )
 			{	m_GUIs.back()->OnLostFocus();	}
 
-			m_GUIs.push_back( std::move(upGUI) );
+			m_GUIs.emplace_back( std::move(upGUI) );
 			m_GUIs.back()->OnGotFocus();
 			return *this;
 		}

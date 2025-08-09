@@ -90,6 +90,7 @@
   <ItemGroup>
     <ClInclude Include="ActProc\ActContext.h" />
     <ClInclude Include="ActProc\ActEfficacy.h" />
+    <ClInclude Include="ActProc\ActEfficacyImpl.h" />
     <ClInclude Include="ActProc\ActResult.h" />
     <ClInclude Include="ActProc\EfficacySource.h" />
     <ClInclude Include="ActProc\TgtRange.h" />
@@ -166,7 +167,7 @@
     <ClInclude Include="X102.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ActProc\ActEfficacy.cpp" />
+    <ClCompile Include="ActProc\ActEfficacyImpl.cpp" />
     <ClCompile Include="CampMenu\CampMenu.cpp" />
     <ClCompile Include="CampMenu\CampMenu_ItemMagicProc.cpp" />
     <ClCompile Include="CampMenu\ItemPage.cpp" />

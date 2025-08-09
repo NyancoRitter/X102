@@ -47,7 +47,7 @@ public:
 public:	//コールバックの設定
 
 	/// <summary>
-	/// Update() 内で選カーソルが指す対象が変化したときの処理を設定．
+	/// Update() 内でカーソルが指す対象が変化したときの処理を設定．
 	/// 設定した処理が返した値が Update() の戻り値となる．
 	/// </summary>
 	/// <param name="Func">処理</param>

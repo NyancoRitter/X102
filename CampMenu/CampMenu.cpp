@@ -27,9 +27,14 @@ CampMenu::CampMenu( PlayData &rPlayData )
 	}
 
 	{//ÉyÅ[ÉW
-		m_Pages[0] = std::make_unique<StatusPage>( *this );
-		m_Pages[1] = std::make_unique<ItemPage>( *this );
-		m_Pages[2]= std::make_unique<MagicPage>( *this );
+		m_upStatusPage = std::make_unique<StatusPage>( *this );
+		m_Pages[0] = m_upStatusPage.get();
+
+		m_upItemPage = std::make_unique<ItemPage>( *this );
+		m_Pages[1] = m_upItemPage.get();
+
+		m_upMagicPage = std::make_unique<MagicPage>( *this );
+		m_Pages[2] = m_upMagicPage.get();
 
 		const auto TL = MainAreaRect.TopLeft() + Vec2i{ 16, 32 };
 		for( auto &upPage : m_Pages )
@@ -112,10 +117,8 @@ void CampMenu::OnTopLVMenuSelected( int CharOrder, int CmdOrder )
 	}
 }
 
-//std::unique_ptr<IGUI> CampMenu::CreateTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback )
-//{	return m_upTopLVMenu->CreateTgtCharSelector( ForAll, Callback );	}
-
 void CampMenu::PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback )
 {
 	m_LocalStack.Push( m_upTopLVMenu->CreateTgtCharSelector( ForAll, Callback ) );
 }
+

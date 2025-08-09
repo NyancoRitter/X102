@@ -12,8 +12,10 @@ class CampMenu::MagicPage final : public CampMenu::IPage
 public:
 	MagicPage( CampMenu &Outer );
 
+	//魔法が使用された際の更新
+	void UpdateOnMagicUsed( int iCurrCharOrder );
 public:
-	virtual void OnSelectedCharChanged( int iCharOrder ) override;
+	virtual void OnSelectedCharChanged( int iCharOrder ) override {	UpdateOnMagicUsed( iCharOrder );	}
 	virtual bool CanEnter() const override {	return !m_UI.NoAvailableMagic();	}
 
 public:	// IGUI Impl

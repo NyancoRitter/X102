@@ -22,6 +22,11 @@ public:
 	/// <returns></returns>
 	std::unique_ptr<IGUI> CreateTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback );
 
+	/// <summary>
+	/// キャラクタ選択メニューの表示を現パーティのデータに合わせて更新
+	/// </summary>
+	void UpdateCharSelMenuContent();
+
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
 	virtual void OnGotFocus() override;
@@ -32,8 +37,6 @@ public:	// IGUI Impl
 protected:
 	virtual void Paint_( HDC hdc ) const override;
 
-private:
-	void UpdateCharSelMenuContent();
 private:
 	CampMenu &m_Outer;
 

@@ -4,6 +4,7 @@
 #include "GUI/DrawFuncs.h"
 #include "GUI/Color.h"
 #include "GameContent/Magic.h"
+#include "GameContent/ICharacter.h"
 #include "PlayData/PlayData.h"
 
 using namespace GUI;
@@ -59,10 +60,11 @@ Flags<GUI::GUIResult> CampMenu::MagicPage::Update( const IController &Controller
 	return m_UI.Update( Controller );
 }
 
-void CampMenu::MagicPage::OnSelectedCharChanged( int iCharOrder )
+//魔法が使用された際の更新
+void CampMenu::MagicPage::UpdateOnMagicUsed( int iCurrCharOrder )
 {
 	const auto &PD = m_Outer.m_rPlayData;
-	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCharOrder ] ) );
+	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCurrCharOrder ] ) );
 }
 
 Flags<GUI::GUIResult> CampMenu::MagicPage::OnIndicatedMagicChanged()
@@ -83,17 +85,7 @@ Flags<GUI::GUIResult> CampMenu::MagicPage::OnMagicSelected()
 	const auto *pMagic = m_UI.CurrIndicatedMagic();
 	if( pMagic == nullptr )return GUIResult::None;
 
-	m_Outer.PushTgtCharSelector(
-		IsForAll( pMagic->Range() ),
-		[this,pMagic]( bool Selected, int iTgt )->Flags<GUI::GUIResult>
-		{
-			if( !Selected )return GUIResult::Finished;
-
-			m_Outer.UseMagic( *pMagic, iTgt );
-			return GUIResult::ReqRedraw;	//※同じ魔法を連続して使えるように，対象選択処理を続行
-		}
-	);
-
+	m_Outer.OnMagicSelected( *pMagic );
 	return GUIResult::ReqRedraw;
 }
 

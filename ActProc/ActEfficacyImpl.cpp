@@ -1,4 +1,5 @@
-#include "ActEfficacy.h"
+#include "ActEfficacyImpl.h"
+#include "ActContext.h"
 #include "GameContent/ICharacter.h"
 #include "Rnd.h"
 
@@ -27,11 +28,11 @@ std::vector< ActResult > RecoverHP::operator()(
 }
 
 
-std::vector< ActResult > CurePoison::operator()(
+std::vector< ActResult > CurePoison(
 	CharSpecifier Actor,
 	std::vector< CharSpecifier > Tgts,
 	const ActContext &Context
-	) const
+)
 {
 	std::vector< ActResult > Results;
 	for( auto Specifier : Tgts )

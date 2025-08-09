@@ -284,6 +284,9 @@
     <ClInclude Include="ActProc\ActContext.h">
       <Filter>Game\ActProc</Filter>
     </ClInclude>
+    <ClInclude Include="ActProc\ActEfficacyImpl.h">
+      <Filter>Game\ActProc</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -394,7 +397,7 @@
     <ClCompile Include="CampMenu\CampMenu_ItemMagicProc.cpp">
       <Filter>Game\CampMenu</Filter>
     </ClCompile>
-    <ClCompile Include="ActProc\ActEfficacy.cpp">
+    <ClCompile Include="ActProc\ActEfficacyImpl.cpp">
       <Filter>Game\ActProc</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,5 +1,5 @@
 #include "Magic.h"
-#include "ActProc/ActEfficacy.h"
+#include "ActProc/ActEfficacyImpl.h"
 #include "RawAmountCalcFuncs.h"
 #include <map>
 
@@ -98,7 +98,7 @@ namespace
 			Magic(
 				FirstSpell::Poison, SecondSpell::Recover,
 				TgtRange::SingleFriend,
-				CurePoison()
+				CurePoison
 			).Description( CurePoisonDescStr(true), L"‚±‚Ì–‚–@‚É‚æ‚é”­Š¾ì—p‚ğŒ™‚¤Ò‚à‘½‚¢" )
 		);
 	}

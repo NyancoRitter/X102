@@ -1,13 +1,10 @@
 #pragma once
 
-#include <functional>
 #include "GUI/IGUI.h"
-//#include "GUI/Menu.h"
-//#include "GUI/MenuContent.h"
-//#include "GUI/TextLinePainter.h"
-//#include "GUI/ImgPainter.h"
 #include "Common/MoneyView.h"
-//#include "Common/CharSelMenuContent.h"
+
+#include "ActProc/ActEfficacy.h"
+#include "ActProc/TgtRange.h"
 
 //class CMonoBMP;
 
@@ -53,17 +50,17 @@ private:
 	/// <param name="Callback">選択用UIに渡すCallback（仕様は TgtSelection を参照 ）</param>
 	void PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback );
 
-	/// <summary>
-	/// 魔法の使用処理
-	/// * 使用者は暗黙的に現在されているキャラクタ( m_iCurrChar )となる．
-	/// * MP的に使えるか否か等のチェックもここで行われる
-	/// </summary>
-	/// <param name="Magic">使用する魔法</param>
-	/// <param name="iTgtOrder">使用対象キャラクタの位置．魔法効果範囲が単体である場合にのみ使用される</param>
-	void UseMagic( const GameContent::Magic &Magic, int iTgtOrder );
+	//MagicPage で魔法が選択された際の処理
+	void OnMagicSelected( const GameContent::Magic &Magic );
 
-	////
-	//PartyChar &ToChar( const TgtSpecifier &tgt );
+	/// <summary>
+	/// 魔法/アイテム 共通の使用時効果処理
+	/// </summary>
+	/// <param name="Efficacy">効果</param>
+	/// <param name="Range">効果範囲</param>
+	/// <param name="iTgtOrder">用対象キャラクタの位置．Range が示す範囲が単体である場合にのみ使用される</param>
+	/// <returns>使用の成否．使用行動自体を棄却べき場合にはfalse．</returns>
+	bool Affect( const ActEfficacy &Efficacy, TgtRange Range, int iTgtOrder );
 
 private:
 	PlayData &m_rPlayData;
@@ -74,7 +71,10 @@ private:
 	int m_iCurrChar = -1;
 	int m_iCurrPage = -1;
 	std::unique_ptr<TopLVMenu> m_upTopLVMenu;
-	std::unique_ptr< IPage > m_Pages[3];
+	std::unique_ptr<StatusPage> m_upStatusPage;
+	std::unique_ptr<ItemPage> m_upItemPage;
+	std::unique_ptr<MagicPage> m_upMagicPage;
+	IPage *m_Pages[3];
 
 private:	//レイアウト用
 	//ページ表示領域の枠

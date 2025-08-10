@@ -25,7 +25,7 @@ namespace GUI::Menu
 	public:	// IMenuItem Impl
 		virtual COLORREF DrawColor() const override {	return m_Color;	}
 		virtual CharSelMenuItem &DrawColor( COLORREF Color ) override {	m_Color=Color;	return *this;	}
-		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const override;
+		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused, bool ShouldDrawCursor ) const override;
 
 	private:
 		GameContent::PartyCharID m_TgtChar;

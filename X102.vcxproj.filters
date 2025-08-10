@@ -18,9 +18,6 @@
     <Filter Include="Game">
       <UniqueIdentifier>{a24ac9ff-336c-4183-a83c-8deb3db6d7eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Cmd">
-      <UniqueIdentifier>{98fb09a0-4eae-4bfe-aff2-771631c88039}</UniqueIdentifier>
-    </Filter>
     <Filter Include="GUI">
       <UniqueIdentifier>{6abd95cf-86a5-43cd-a2b8-1657da885898}</UniqueIdentifier>
     </Filter>
@@ -100,12 +97,6 @@
     </ClInclude>
     <ClInclude Include="Parts\Flags.h">
       <Filter>Parts</Filter>
-    </ClInclude>
-    <ClInclude Include="Cmd\ICmd.h">
-      <Filter>Cmd</Filter>
-    </ClInclude>
-    <ClInclude Include="Cmd\CmdSeq.h">
-      <Filter>Cmd</Filter>
     </ClInclude>
     <ClInclude Include="Parts\Vec2D.h">
       <Filter>Parts</Filter>
@@ -287,6 +278,33 @@
     <ClInclude Include="ActProc\ActEfficacyImpl.h">
       <Filter>Game\ActProc</Filter>
     </ClInclude>
+    <ClInclude Include="Common\ValueImgPainter.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Misc\Cmd.h">
+      <Filter>Game\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\Effect.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\EffectList.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\EffectImpls.h">
+      <Filter>Game\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\IniLikeFile.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\SectionFileRead.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\Sound.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="ResManage\SoundBank.h">
+      <Filter>Game\ResManage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -399,6 +417,21 @@
     </ClCompile>
     <ClCompile Include="ActProc\ActEfficacyImpl.cpp">
       <Filter>Game\ActProc</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\ValueImgPainter.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Common\EffectImpls.cpp">
+      <Filter>Game\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="Game_Sound.cpp">
+      <Filter>Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Parts\IniLikeFile.cpp">
+      <Filter>Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="ResManage\SoundBank.cpp">
+      <Filter>Game\ResManage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

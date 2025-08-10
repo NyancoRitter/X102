@@ -74,12 +74,18 @@ MagicSelUI::MagicSelUI( const Vec2i &ItemDrawSize )
 	SwitchFocusTo( 0 );
 }
 
-void MagicSelUI::UpdateContent( const GameContent::PartyChar &MagicUser )
+void MagicSelUI::UpdateContent( const GameContent::PartyChar &MagicUser, bool ResetCursorPos )
 {
 	using namespace GameContent;
 
 	UpdateCont< FirstSpell, N_FirstSpell >( m_Spell1st, m_Content[0], MagicUser );
 	UpdateCont< SecondSpell, N_SecondSpell >( m_Spell2nd, m_Content[1], MagicUser );
+
+	if( ResetCursorPos )
+	{
+		for( auto &Cont : m_Content )Cont.CursorPos( 0 );
+		SwitchFocusTo( 0 );
+	}
 }
 
 void MagicSelUI::SwitchFocusTo( int iMenu )
@@ -98,16 +104,9 @@ MagicSelUI &MagicSelUI::TopLeft( const Vec2i &TL )
 	return *this;
 }
 
-void MagicSelUI::OnGotFocus()
+void MagicSelUI::CursorVisiblity( bool Visible )
 {
-	for( auto &Cont : m_Content )Cont.CursorPos( 0 );
-	SwitchFocusTo( 0 );
-}
-
-void MagicSelUI::OnLostFocus()
-{
-	//※カーソルが表示されないようにカーソル位置を無効値にセット
-	for( auto &Cont : m_Content )Cont.CursorPos( -1 );
+	for( auto &M : m_Menu )M.CursorVisible( Visible );
 }
 
 Vec2i MagicSelUI::Size() const

@@ -25,12 +25,11 @@ CampMenu::MagicPage::MagicPage( CampMenu &Outer )
 
 	m_UI.Set_OnIndicatedMagicChanged_Proc( [this]()->auto{	return OnIndicatedMagicChanged();	} );
 	m_UI.Set_OnMagicSelected_Proc( [this]()->auto{	return OnMagicSelected();	} );
+	m_UI.CursorVisiblity( false );
 }
 
 void CampMenu::MagicPage::OnGotFocus()
 {
-	m_UI.OnGotFocus();
-
 	const auto *pMagic = m_UI.CurrIndicatedMagic();
 	if( pMagic != nullptr )
 	{
@@ -39,9 +38,15 @@ void CampMenu::MagicPage::OnGotFocus()
 	}
 }
 
+void CampMenu::MagicPage::OnPushed()
+{
+	m_UI.CursorVisiblity( true );
+	OnGotFocus();
+}
+
 void CampMenu::MagicPage::OnPrePopped()
 {
-	m_UI.OnLostFocus();
+	m_UI.CursorVisiblity( false );
 	m_DescView.Visible( false );
 }
 
@@ -60,11 +65,17 @@ Flags<GUI::GUIResult> CampMenu::MagicPage::Update( const IController &Controller
 	return m_UI.Update( Controller );
 }
 
+void CampMenu::MagicPage::OnSelectedCharChanged( int iCharOrder )
+{
+	const auto &PD = m_Outer.m_rPlayData;
+	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCharOrder ] ), true );
+}
+
 //魔法が使用された際の更新
 void CampMenu::MagicPage::UpdateOnMagicUsed( int iCurrCharOrder )
 {
 	const auto &PD = m_Outer.m_rPlayData;
-	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCurrCharOrder ] ) );
+	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCurrCharOrder ] ), false );
 }
 
 Flags<GUI::GUIResult> CampMenu::MagicPage::OnIndicatedMagicChanged()

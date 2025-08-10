@@ -4,7 +4,6 @@
 #include "GlobalConst.h"
 #include "PlayData/PlayData.h"
 #include "Common/CharDrawColor.h"
-#include "Common/TgtSelection.h"
 
 using namespace GUI;
 using namespace GUI::Menu;
@@ -126,14 +125,4 @@ void CampMenu::TopLVMenu::UpdateCharSelMenuContent()
 	}
 
 	m_CharSelMenuContent.CursorPos( CursorPos );
-}
-
-//
-std::unique_ptr<IGUI> CampMenu::TopLVMenu::CreateTgtCharSelector( bool ForAll, const std::function< Flags<GUIResult>( bool, int ) > &Callback )
-{
-	std::vector<Rect> ItemRects;
-	for( int i=0; i<m_CharSelMenuContent.nItems(); ++i )
-	{	ItemRects.push_back( m_CharSelMenu.ItemDrawRect(i) );	}
-
-	return std::make_unique< TgtSelection >( ItemRects, ForAll, true, Callback );
 }

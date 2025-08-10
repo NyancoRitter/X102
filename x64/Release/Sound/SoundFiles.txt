@@ -1,0 +1,19 @@
+[BGM]
+//0～6はゲーム実装が使用
+BGM0 = cabe08.mid
+BGM1 = ctown03.mid
+BGM2 = cabe05.mid
+BGM3 = boss04.mid
+BGM4 = boss11.mid
+BGM5 = boss13.mid
+BGM6 = castle01.mid
+
+//7以降はイベントから使う用
+BGM7 = boss01.mid
+BGM8 = boss14.mid
+
+[SE]
+SE0 = se_etc_003.wav
+SE1 = se_hit_008.wav
+SE2 = se_jump_002.wav
+SE3 = se_powerup_009.wav

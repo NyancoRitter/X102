@@ -35,7 +35,7 @@ namespace GUI::Menu
 		GenericMenuItem( std::initializer_list<PartFunc> Parts );
 
 	public:	// IMenuItem Impl
-		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const override;
+		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused, bool m_bDrawCursor ) const override;
 		virtual COLORREF DrawColor() const override {	return m_Color;	}
 		virtual GenericMenuItem &DrawColor( COLORREF Color ) override {	m_Color = Color;	return *this;	}
 

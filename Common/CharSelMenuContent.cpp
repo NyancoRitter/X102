@@ -16,7 +16,7 @@ namespace GUI::Menu
 		, m_Color( Color::White )
 	{}
 
-	void CharSelMenuItem::Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const
+	void CharSelMenuItem::Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused, bool ShouldDrawCursor ) const
 	{
 		RECT Reg = ItemDrawReg.AsRECT();
 		if( IsAtCursorPos )
@@ -29,7 +29,7 @@ namespace GUI::Menu
 			ResManage::FaceBMP(m_TgtChar),
 			m_HP, m_MaxHP,
 			m_Color,
-			( IsAtCursorPos  ?  Color::MenuCursor( IsMenuFocused )  :  RGB(0,0,0) )
+			( IsAtCursorPos&&ShouldDrawCursor  ?  Color::MenuCursor( IsMenuFocused )  :  RGB(0,0,0) )
 		);
 	}
 

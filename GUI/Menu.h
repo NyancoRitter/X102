@@ -77,6 +77,10 @@ namespace GUI::Menu
 		bool WithFrame() const {	return m_bDrawFrame;	}
 		Menu &WithFrame( bool Enable ){	m_bDrawFrame = Enable;	return *this;	}
 
+		//カーソル描画の有無
+		bool CursorVisible() const {	return m_bDrawCursor;	}
+		Menu &CursorVisible( bool Visible ){	m_bDrawCursor=Visible;	return *this;	}
+
 		//メニューのフォーカス状態：描画具合に影響
 		bool IsFocused() const {	return m_bFocused;	}
 		Menu &IsFocused( bool Focused ){	m_bFocused = Focused;	return *this;	}
@@ -105,6 +109,7 @@ namespace GUI::Menu
 		int m_ItemSpacing = 0;
 		Vec2i m_OuterMargin;
 		bool m_bDrawFrame = false;
+		bool m_bDrawCursor = true;
 		bool m_bFocused = false;
 
 		int m_ItemAreaSpace = 0;

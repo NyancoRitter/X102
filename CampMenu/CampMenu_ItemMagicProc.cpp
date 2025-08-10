@@ -9,6 +9,8 @@
 
 #include "ActProc/ActEfficacyImpl.h"
 #include "ActProc/ActContext.h"
+#include "Common/EffectImpls.h"
+#include "ResManage/SoundBank.h"
 
 using namespace GameContent;
 
@@ -45,26 +47,35 @@ bool CampMenu::Affect( const ActEfficacy &Efficacy, TgtRange Range, int iTgtOrde
 		Results = Efficacy( CharSpecifier(m_iCurrChar), std::move(Tgts), UseCtxt{m_rPlayData} );
 	}
 
-	{//有効な効果が１つも生じていない場合は「使用を棄却（無かったことにする）」ためのチェック．
+	{//効果エフェクト
 		bool AnyValid = false;
 		for( const auto &R : Results )
 		{
 			if( const auto *p=std::get_if<HPChanged>( &R ); p )
 			{
-				if( p->PrevHP < p->AfterHP )
-				{	AnyValid = true;	break;	}
+				if( AnyValid  ||  ( p->PrevHP < p->AfterHP ) )
+				{
+					AnyValid = true;
+					const auto ViewRect = m_upTopLVMenu->CharViewRect( p->TgtChar.m_Order );
+					m_EffectList.PushBack( CreateHPRecovEffect( p->Amount, (ViewRect.TopLeft()+ViewRect.RightBottom())/2, 4 ) );
+				}
 			}
 			else if( const auto *p=std::get_if<PoisonCured>( &R ); p )
-			{	AnyValid = true;	break;	}
+			{
+				AnyValid = true;
+				m_EffectList.PushBack( CreatePoisonCuredEffect() );
+			}
 		}
+
+		//有効な効果が１つも生じていない場合は「使用を棄却（無かったことにする）」
 		if( !AnyValid )return false;
+
+		//※現実装では，決め打ちで効果音を鳴らす
+		ResManage::PlaySE( ResManage::SE::Cure );
 	}
 
 	//キャラクタ選択メニューの表示更新
 	m_upTopLVMenu->UpdateCharSelMenuContent();
-
-	//効果表示エフェクト発生
-
 	return true;
 }
 

@@ -66,10 +66,16 @@ public:	// Toyger::IContentPainter Impl
 public:	// ITopLV Imp;
 	virtual PlayData &CurrPlayData() override;
 	virtual void ChangeToTownScene() override;
+	
+	virtual bool ChangeBGM( int BGM_index ) override;
+	virtual void StopBMG() override;
+
 	virtual void ShowMsgBox( const std::wstring &Title, const std::wstring &Msg ) const override;
 
-
 private:
+	//音関係の準備
+	void SetupSound();
+
 	//引数が指すシーンをカレントシーンにする
 	void ChangeCurrSceneTo( IScene *pScene );
 

@@ -13,9 +13,9 @@ namespace GUI::Menu
 		, m_Color( Color::White )
 	{}
 
-	void GenericMenuItem::Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const
+	void GenericMenuItem::Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused, bool ShouldDrawCursor ) const
 	{
-		if( IsAtCursorPos )
+		if( ShouldDrawCursor && IsAtCursorPos )
 		{	DrawMenuCursor( hdc, ItemDrawReg, IsMenuFocused );	}
 
 		Rect RestReg = ItemDrawReg;

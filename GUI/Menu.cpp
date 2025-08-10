@@ -98,7 +98,7 @@ namespace GUI::Menu
 			int iItem = m_iDrawBegin + i;
 			if( iItem >= m_pContent->nItems() )break;
 
-			m_pContent->Item( iItem ).Draw( hdc, ItemRect, (iItem==iCursorPos), m_bFocused );
+			m_pContent->Item( iItem ).Draw( hdc, ItemRect, (iItem==iCursorPos), m_bFocused, m_bDrawCursor );
 			ItemRect.Offset( Offset );
 		}
 

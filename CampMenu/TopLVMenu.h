@@ -14,13 +14,14 @@ class CampMenu::TopLVMenu final : public IGUI
 public:
 	TopLVMenu( CampMenu &Outer, std::vector<std::wstring> CmdMenuItemStrs );
 
-	/// <summary>
-	/// アイテムや魔法の使用対象キャラクタ選択用UIを生成して返す
-	/// </summary>
-	/// <param name="ForAll">対象が全員のものか否か</param>
-	/// <param name="Callback">選択用UIに渡すCallback（仕様は TgtSelection を参照 ）</param>
-	/// <returns></returns>
-	std::unique_ptr<IGUI> CreateTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback );
+	///// <summary>
+	///// アイテムや魔法の使用対象キャラクタ選択用UIを生成して返す
+	///// </summary>
+	///// <param name="ForAll">対象が全員のものか否か</param>
+	///// <param name="Callback">選択用UIに渡すCallback（仕様は TgtSelection を参照 ）</param>
+	///// <returns></returns>
+	//std::unique_ptr<IGUI> CreateTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback );
+	Rect CharViewRect( int iOrder ) const {	return m_CharSelMenu.ItemDrawRect(iOrder);	}
 
 	/// <summary>
 	/// キャラクタ選択メニューの表示を現パーティのデータに合わせて更新

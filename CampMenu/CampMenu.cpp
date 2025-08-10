@@ -8,6 +8,7 @@
 #include "GUI/Color.h"
 
 #include "PlayData/PlayData.h"
+#include "Common/TgtSelection.h"
 
 #include "TopLVMenu.h"
 #include "StatusPage.h"
@@ -66,13 +67,20 @@ void CampMenu::Paint_( HDC hdc ) const
 		for( const auto &upPage : m_Pages )
 		{	upPage->Paint( hdc );	}
 	}
+
+	m_EffectList.Paint( hdc );
 }
 
 //çXêV
 Flags<GUIResult> CampMenu::Update( const IController &Controller )
 {
-	Flags<GUIResult> Ret;
+	if( !m_EffectList.empty() )
+	{
+		m_EffectList.Update();
+		return GUIResult::ReqRedraw;
+	}
 
+	Flags<GUIResult> Ret;
 	if( m_LocalStack.Update( Controller ) )
 	{	Ret |= GUIResult::ReqRedraw;	}
 	
@@ -119,6 +127,9 @@ void CampMenu::OnTopLVMenuSelected( int CharOrder, int CmdOrder )
 
 void CampMenu::PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback )
 {
-	m_LocalStack.Push( m_upTopLVMenu->CreateTgtCharSelector( ForAll, Callback ) );
-}
+	std::vector<Rect> ItemRects;
+	for( int i=0; i<(int)m_rPlayData.CurrParty().size(); ++i )
+	{	ItemRects.push_back( m_upTopLVMenu->CharViewRect(i) );	}
 
+	m_LocalStack.Push( std::make_unique< TgtSelection >( ItemRects, ForAll, true, Callback ) );
+}

@@ -3,7 +3,7 @@
 #include <vector>
 
 /// <summary>
-/// std::vector<T_Data> を用途に合わせてしか使えなくしたもの
+/// std::vector<T_Data> を特定用途に合わせてしか使えなくしたもの
 /// 
 /// * データ最大個数に制限
 /// * 操作に制限
@@ -28,14 +28,6 @@ public: //保有 vector への単純な処理移譲
 
 	const T_Data &operator[]( size_t index ) const {	return m_Vec[index];	}
 	T_Data &operator[]( size_t index ){	return m_Vec[index];	}
-
-	//using Iter = typename std::vector<T_Data>::iterator;
-	//using cIter = typename std::vector<T_Data>::const_iterator;
-
-	//Iter begin(){	return m_Vec.begin();	}
-	//cIter begin() const {	return m_Vec.begin();	}
-	//Iter end(){	return m_Vec.end();	}
-	//cIter end() const {	return m_Vec.end();	}
 
 	auto begin()->auto{	return m_Vec.begin();	}
 	auto begin() const ->auto{	return m_Vec.begin();	}

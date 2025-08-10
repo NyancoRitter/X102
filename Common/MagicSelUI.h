@@ -30,7 +30,14 @@ public:
 	/// メニュー項目の更新
 	/// </summary>
 	/// <param name="MagicUser">このキャラクタの現状に合わせて更新される</param>
-	void UpdateContent( const GameContent::PartyChar &MagicUser );
+	/// <param name="ResetCursorPos">カーソル位置をリセットするか否か</param>
+	void UpdateContent( const GameContent::PartyChar &MagicUser, bool ResetCursorPos );
+
+	/// <summary>
+	/// カーソル表示の有無
+	/// </summary>
+	/// <param name="Visible">表示するか否か</param>
+	void CursorVisiblity( bool Visible );
 
 	/// <summary>
 	/// メニューで選択可能な魔法が無い状態か否か
@@ -64,8 +71,7 @@ public:	//コールバックの設定
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
-	virtual void OnGotFocus() override;
-	virtual void OnLostFocus() override;
+
 	virtual Vec2i TopLeft() const override {	return m_Menu[0].TopLeft();	}
 	virtual MagicSelUI &TopLeft( const Vec2i &TL ) override;
 	virtual Vec2i Size() const override;

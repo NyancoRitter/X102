@@ -2,7 +2,7 @@
 
 #include "GUI/IGUI.h"
 #include "Common/MoneyView.h"
-
+#include "Common/EffectList.h"
 #include "ActProc/ActEfficacy.h"
 #include "ActProc/TgtRange.h"
 
@@ -75,6 +75,8 @@ private:
 	std::unique_ptr<ItemPage> m_upItemPage;
 	std::unique_ptr<MagicPage> m_upMagicPage;
 	IPage *m_Pages[3];
+
+	EffectList m_EffectList;
 
 private:	//レイアウト用
 	//ページ表示領域の枠

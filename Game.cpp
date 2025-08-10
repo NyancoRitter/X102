@@ -87,6 +87,9 @@ bool Game::Initialize()
 	m_rWnd.SetViewContentSize( GlobalConst::GC_W, GlobalConst::GC_H );
 	ChangeViewMagRate( 1 );
 
+	//‰¹ŠÖŒW€”õ
+	SetupSound();
+
 	//(‰¼)
 	m_upPlayData = std::make_unique<PlayData>();
 

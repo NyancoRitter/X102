@@ -29,6 +29,7 @@ namespace GUI::Menu
 		/// <param name="ItemDrawReg">項目描画範囲</param>
 		/// <param name="IsAtCursorPos">この項目がカーソル位置にあるか否か</param>
 		/// <param name="IsMenuFocused">所属メニューがフォーカス状態か否か</param>
-		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused ) const = 0;
+		/// <param name="ShouldDrawCursor">この項目がカーソル位置にある場合，カーソルを描画すべきか否か</param>
+		virtual void Draw( HDC hdc, const Rect &ItemDrawReg, bool IsAtCursorPos, bool IsMenuFocused, bool ShouldDrawCursor ) const = 0;
 	};
 }

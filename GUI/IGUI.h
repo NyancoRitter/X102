@@ -51,8 +51,8 @@ namespace GUI
 		virtual Flags<GUIResult> Update( const IController &Controller ) = 0;
 
 		/// <summary>
-		/// Update()が呼ばれる対象になった際
-		/// （所属するStackの他の要素がPopされた結果としてそうなった場合，あるいは自身がStackにPushされた場合）に呼ばれる．
+		/// 所属するStackの他の要素がPopされた結果として
+		/// Update()が呼ばれる対象になった際に呼ばれる．
 		/// </summary>
 		virtual void OnGotFocus(){}
 
@@ -61,6 +61,9 @@ namespace GUI
 		/// Update()が呼ばれる対象ではなくなった際に呼ばれる．
 		/// </summary>
 		virtual void OnLostFocus(){}
+
+		/// <summary>このオブジェクトが Stack に Push された際に呼ばれる．</summary>
+		virtual void OnPushed(){	OnGotFocus();	}
 
 		/// <summary>このオブジェクトが Stack から Pop される直前に呼ばれる．</summary>
 		virtual void OnPrePopped(){}
@@ -98,7 +101,7 @@ namespace GUI
 			{	m_GUIs.back()->OnLostFocus();	}
 
 			m_GUIs.emplace_back( std::move(upGUI) );
-			m_GUIs.back()->OnGotFocus();
+			m_GUIs.back()->OnPushed();
 			return *this;
 		}
 
@@ -189,6 +192,7 @@ namespace GUI
 		virtual Flags<GUIResult> Update( const IController &Controller ) override {	return m_rGUI.Update(Controller);	}
 		virtual void OnGotFocus() override {	m_rGUI.OnGotFocus();	}
 		virtual void OnLostFocus() override {	m_rGUI.OnLostFocus();	}
+		virtual void OnPushed() override {	m_rGUI.OnPushed();	}
 		virtual void OnPrePopped() override {	m_rGUI.OnPrePopped();	}
 		virtual Vec2i TopLeft() const override {	return m_rGUI.TopLeft();	}
 		virtual RefWrapper &TopLeft( const Vec2i &TL ) override {	m_rGUI.TopLeft(TL);	return *this;	}

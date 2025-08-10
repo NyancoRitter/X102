@@ -14,13 +14,15 @@ public:
 
 	//魔法が使用された際の更新
 	void UpdateOnMagicUsed( int iCurrCharOrder );
-public:
-	virtual void OnSelectedCharChanged( int iCharOrder ) override {	UpdateOnMagicUsed( iCharOrder );	}
+
+public:	// IPage Impl
+	virtual void OnSelectedCharChanged( int iCharOrder ) override;
 	virtual bool CanEnter() const override {	return !m_UI.NoAvailableMagic();	}
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
 	virtual void OnGotFocus() override;
+	virtual void OnPushed() override;
 	virtual void OnPrePopped() override;
 	virtual Vec2i TopLeft() const override {	return m_UI.TopLeft();	}
 	virtual MagicPage &TopLeft( const Vec2i &TL ) override {	m_UI.TopLeft(TL);	return *this;	}

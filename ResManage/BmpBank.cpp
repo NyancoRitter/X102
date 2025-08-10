@@ -32,6 +32,18 @@ namespace ResManage
 		return Imgs[ (int)ID ];
 	}
 
+	const CMonoBMP &BMP( ItemImg ID )
+	{
+		static auto Imgs = MonoBmpHolder::Create(
+			DataPath::ImgDirU16(),
+			{
+				L"Potion.bmp", L"Potion2.bmp", L"Crystal.bmp",
+				L"Sword.bmp", L"SwordL.bmp", L"Mace.bmp", L"Axe.bmp", L"Wand.bmp"
+			} 
+		);
+		return Imgs[ (int)ID ];
+	}
+
 	const CMonoBMP &FaceBMP( GameContent::PartyCharID ID )
 	{
 		static auto Imgs = MonoBmpHolder::Create(

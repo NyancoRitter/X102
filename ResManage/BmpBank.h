@@ -27,6 +27,13 @@ namespace ResManage
 		ShopStaff
 	};
 
+	/// <summary>アイテム用アイコン画像ID．値は0から始まる連番とする</summary>
+	enum class ItemImg
+	{
+		Potion, Antidote, Crystal,
+		Sword, SwordL, Mace, Axe, Wand
+	};
+
 	//------------------------------------
 	//モノクロBMPへの参照を取得
 
@@ -35,6 +42,7 @@ namespace ResManage
 	const CMonoBMP &BMP( GameContent::AttackElement Elem );
 	const CMonoBMP &BMP( GameContent::FirstSpell Spell );
 	const CMonoBMP &BMP( GameContent::SecondSpell Spell );
+	const CMonoBMP &BMP( ItemImg ID );
 
 	const CMonoBMP &FaceBMP( GameContent::PartyCharID ID );
 }

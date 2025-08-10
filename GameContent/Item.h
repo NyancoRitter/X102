@@ -4,6 +4,7 @@
 #include "ActProc/TgtRange.h"
 #include "ActProc/ActEfficacy.h"
 #include <string>
+#include "ResManage/BmpBank.h"
 
 namespace GameContent
 {
@@ -60,6 +61,10 @@ namespace GameContent
 		int ActSpdPercentage() const {	return m_ActSpdPer;	}
 		Item &ActSpdPercentage( int Per ){	m_ActSpdPer=Per;	return *this;	}
 
+		//‰æ‘œ
+		const CMonoBMP &Img() const {	return ResManage::BMP( m_ImgID );	}
+		Item &ImgID( ResManage::ItemImg ID ){	m_ImgID=ID;	return *this;	}
+
 	private:
 		std::wstring m_Name;
 		//ItemID m_ID;
@@ -71,5 +76,7 @@ namespace GameContent
 		int m_Price = 0;
 		int m_ActSpdPer = 100;
 		bool m_CanUseOnlyOnce = false;
+
+		ResManage::ItemImg m_ImgID = ResManage::ItemImg::Potion;
 	};
 }

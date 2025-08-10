@@ -99,18 +99,22 @@ void CampMenu::OnMagicSelected( const GameContent::Magic &Magic )
 		{
 			if( !Selected )return GUI::GUIResult::Finished;
 
-			if( Affect( Magic.Efficacy(), Magic.Range(), iTgt ) )
-			{
-				//MP消費
-				const auto Spell = Magic.Spell();
-				m_rPlayData.Char( m_rPlayData.CurrParty()[m_iCurrChar] ).DecMP( Spell.first, Spell.second );
+			if( !Affect( Magic.Efficacy(), Magic.Range(), iTgt ) )
+			{	return GUI::GUIResult::ReqRedraw;	}
 
-				//MagicPage表示更新
-				m_upMagicPage->UpdateOnMagicUsed( m_iCurrChar );
-			}
+			//MP消費
+			const auto Spell = Magic.Spell();
+			auto &User = m_rPlayData.Char( m_rPlayData.CurrParty()[m_iCurrChar] );
+			User.DecMP( Spell.first, Spell.second );
 
-			//※同じ魔法を連続して使えるように，対象選択処理を続行
-			return GUI::GUIResult::ReqRedraw;
+			//MagicPage表示更新
+			m_upMagicPage->UpdateOnMagicUsed( m_iCurrChar );
+
+			//※MP残量がある場合には同じ魔法を連続して使えるように対象選択処理を続行
+			if( User.MP( Spell.first )<=0  ||  User.MP( Spell.second )<=0 )
+			{	return GUI::GUIResult::Finished;	}
+			else
+			{	return GUI::GUIResult::ReqRedraw;	}
 		}
 	);
 }

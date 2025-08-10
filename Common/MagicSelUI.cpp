@@ -47,7 +47,7 @@ namespace
 					Text( NameStr(spell) ),
 					Text( std::to_wstring(MP) + L"/" + std::to_wstring(MaxMP) ).AlignRight()
 				} 
-			).DrawColor( MP>=0  ?  Color::White  :  Color::GrayOut );
+			).DrawColor( MP>0  ?  Color::White  :  Color::GrayOut );
 		}
 		TgtCont.CursorPos( PrevCursorPos );
 

@@ -60,8 +60,8 @@ namespace GameContent
 		double operator()( const ICharacter &C ) const 
 		{	return C.STR() * ( m_HighConditionFunc(C)  ?  m_PerHigh  :  m_PerLow ) /100.0;	}
 
-		static std::wstring PowStr( int PerLow, int PerHigh )
-		{	return L"(STR x " + PerStr(PerLow) + L" or " + PerStr(PerHigh) + L")";	}
+		static std::wstring PowStr( int PerLow, int PerHigh, const std::wstring &HighConditionStr )
+		{	return L"(STR x " + PerStr(PerLow) + L" or " + PerStr(PerHigh) + L") : ã≠ë≈ó¶=" + HighConditionStr;	}
 	};
 
 	//MAGàÀë∂à–óÕÅiî{ó¶å≈íËÅj
@@ -87,16 +87,16 @@ namespace GameContent
 		static std::wstring PowStr( int STR_Per, int MAG_Per ){	return L"(STR x " + PerStr(STR_Per) + L"  Å{  MAG x " + PerStr(MAG_Per) + L")";	}
 	};
 
-	//å≈íËà–óÕ
-	class Const
-	{
-		int m_Val;
-	public:
-		Const( int Val ) : m_Val(Val) {}
-		double operator()( const ICharacter & ) const {	return m_Val;	}
+	////å≈íËà–óÕ
+	//class Const
+	//{
+	//	int m_Val;
+	//public:
+	//	Const( int Val ) : m_Val(Val) {}
+	//	double operator()( const ICharacter & ) const {	return m_Val;	}
 
-		static std::wstring PowStr(int Val){	return std::to_wstring(Val);	}
-	};
+	//	static std::wstring PowStr(int Val){	return std::to_wstring(Val);	}
+	//};
 
 	//---------------------------------
 

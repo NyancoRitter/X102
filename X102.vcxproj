@@ -113,6 +113,7 @@
     <ClInclude Include="Common\ValueImgPainter.h" />
     <ClInclude Include="DataPath.h" />
     <ClInclude Include="GameContent\AttackElement.h" />
+    <ClInclude Include="GameContent\Item.h" />
     <ClInclude Include="GameContent\RawAmountCalcFuncs.h" />
     <ClInclude Include="GameContent\ICharacter.h" />
     <ClInclude Include="GameContent\ItemID.h" />
@@ -190,6 +191,7 @@
     <ClCompile Include="Common\ValueImgPainter.cpp" />
     <ClCompile Include="DataPath.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="GameContent\Item.cpp" />
     <ClCompile Include="GameContent\Magic.cpp" />
     <ClCompile Include="GameContent\PartyChar.cpp" />
     <ClCompile Include="Game_Sound.cpp" />

@@ -24,8 +24,6 @@ public:	// IGUI Impl
 	virtual void OnGotFocus() override;
 	virtual void OnPushed() override;
 	virtual void OnPrePopped() override;
-	virtual Vec2i TopLeft() const override {	return m_UI.TopLeft();	}
-	virtual MagicPage &TopLeft( const Vec2i &TL ) override {	m_UI.TopLeft(TL);	return *this;	}
 protected:
 	virtual void Paint_( HDC hdc ) const override;
 
@@ -38,7 +36,6 @@ private:
 private:
 	CampMenu &m_Outer;
 
-	Vec2i m_TopLeft;
 	MagicSelUI m_UI;
 	GUI::TextLinePainter m_DescView;
 

@@ -2,24 +2,26 @@
 
 #include "IPage.h"
 
+#include "GUI/Menu.h"
+#include "GUI/GenericMenuContent.h"
+
 /// <summary>
 /// キャンプ画面 - アイテムUI
 /// </summary>
 class CampMenu::ItemPage final : public CampMenu::IPage
 {
 public:
-	ItemPage( CampMenu &Outer ) : m_Outer( Outer ) {}
+	ItemPage( CampMenu &Outer );
 
 public:
-	virtual void OnSelectedCharChanged( int iCharOrder ) override {}
+	virtual void OnSelectedCharChanged( int iCharOrder ) override;
 	virtual bool CanEnter() const override {	return true;	}
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
 	virtual void OnGotFocus() override;
 	virtual void OnLostFocus() override;
-	virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
-	virtual ItemPage &TopLeft( const Vec2i &TL ) override {	m_TopLeft=TL;	return *this;	}
+	virtual void OnPrePopped() override;
 protected:
 	virtual void Paint_( HDC hdc ) const override;
 
@@ -27,6 +29,11 @@ private:
 
 private:
 	CampMenu &m_Outer;
+	bool m_FocusState = false;
 
-	Vec2i m_TopLeft;
+	std::vector< int > m_CharItems;
+	std::vector< int > m_StockItems;
+
+	GUI::Menu::Menu m_Menu[2];
+	GUI::Menu::GenericMenuContent<true> m_Content[2];
 };

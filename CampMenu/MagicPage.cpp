@@ -26,6 +26,7 @@ CampMenu::MagicPage::MagicPage( CampMenu &Outer )
 	m_UI.Set_OnIndicatedMagicChanged_Proc( [this]()->auto{	return OnIndicatedMagicChanged();	} );
 	m_UI.Set_OnMagicSelected_Proc( [this]()->auto{	return OnMagicSelected();	} );
 	m_UI.CursorVisiblity( false );
+	m_UI.TopLeft( CampMenu::MainAreaRect.TopLeft() + Vec2i{ 16, 32 } );
 }
 
 void CampMenu::MagicPage::OnGotFocus()

@@ -17,14 +17,10 @@ public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override {	return GUI::GUIResult::None;	}
 	//virtual void OnGotFocus() override;
 	//virtual void OnLostFocus() override;
-	virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
-	virtual StatusPage &TopLeft( const Vec2i &TL ) override {	m_TopLeft=TL;	return *this;	}
 protected:
 	virtual void Paint_( HDC hdc ) const override;
 
 private:
 	CampMenu &m_Outer;
-
-	Vec2i m_TopLeft;
 	const GameContent::PartyChar *m_pChar = nullptr;
 };

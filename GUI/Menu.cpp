@@ -96,9 +96,17 @@ namespace GUI::Menu
 		for( int i=0; i<nSpc; ++i )
 		{
 			int iItem = m_iDrawBegin + i;
-			if( iItem >= m_pContent->nItems() )break;
-
-			m_pContent->Item( iItem ).Draw( hdc, ItemRect, (iItem==iCursorPos), m_bFocused, m_bDrawCursor );
+			if( iItem < m_pContent->nItems() )
+			{
+				m_pContent->Item( iItem ).Draw( hdc, ItemRect, (iItem==iCursorPos), m_bFocused, m_bDrawCursor );
+			}
+			else
+			{
+				RECT rect = ItemRect.AsRECT();
+				SetTextColor( hdc, Color::GrayOut );
+				DrawTextW( hdc, L"---", -1, &rect,  DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_CENTER );
+			}
+			
 			ItemRect.Offset( Offset );
 		}
 

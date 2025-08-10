@@ -22,22 +22,23 @@ void CampMenu::StatusPage::Paint_( HDC hdc ) const
 	
 	if( !m_pChar )return;
 
+	const auto TL = CampMenu::MainAreaRect.TopLeft() + Vec2i{ 16, 32 };
 	constexpr int LineH = 24;
 	constexpr int ImgStretchRate = 2;
 
 	const auto ID = m_pChar->ID();
 
 	const auto &FaceImg = FaceBMP( ID );
-	FaceImg.StretchBlt( hdc, m_TopLeft[0], m_TopLeft[1], ImgStretchRate, ImgStretchRate, CharDrawColor( m_pChar->HP(), m_pChar->PoisonInfected() ) );
+	FaceImg.StretchBlt( hdc, TL[0], TL[1], ImgStretchRate, ImgStretchRate, CharDrawColor( m_pChar->HP(), m_pChar->PoisonInfected() ) );
 
 	SetTextColor( hdc, GUI::Color::White );
 	SetBkMode( hdc, TRANSPARENT );
 
 	{//Name, LV, BadStatus
 		RECT rect;
-		rect.left = m_TopLeft[0];
+		rect.left = TL[0];
 		rect.right = rect.left + FaceImg.GetW()*ImgStretchRate;
-		rect.top = m_TopLeft[1] + FaceImg.GetH()*ImgStretchRate + 12;
+		rect.top = TL[1] + FaceImg.GetH()*ImgStretchRate + 12;
 		rect.bottom = rect.top + LineH;
 		//Name
 		DrawText( hdc, NameStr(ID).c_str(), -1, &rect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_LEFT );
@@ -56,9 +57,9 @@ void CampMenu::StatusPage::Paint_( HDC hdc ) const
 
 	//
 	RECT StatusRect;
-	StatusRect.left = m_TopLeft[0] + 40 + FaceImg.GetW()*ImgStretchRate;
+	StatusRect.left = TL[0] + 40 + FaceImg.GetW()*ImgStretchRate;
 	StatusRect.right = StatusRect.left + 128;
-	StatusRect.top = m_TopLeft[1];
+	StatusRect.top = TL[1];
 	StatusRect.bottom = StatusRect.top + LineH;
 
 	SetTextColor( hdc, GUI::Color::White );

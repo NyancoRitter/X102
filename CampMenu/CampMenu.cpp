@@ -36,10 +36,6 @@ CampMenu::CampMenu( PlayData &rPlayData )
 
 		m_upMagicPage = std::make_unique<MagicPage>( *this );
 		m_Pages[2] = m_upMagicPage.get();
-
-		const auto TL = MainAreaRect.TopLeft() + Vec2i{ 16, 32 };
-		for( auto &upPage : m_Pages )
-		{	upPage->TopLeft( TL );	}
 	}
 
 	m_upTopLVMenu = std::make_unique<TopLVMenu>(

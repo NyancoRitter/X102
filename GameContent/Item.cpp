@@ -410,6 +410,7 @@ namespace GameContent
 
 	//--------------------------
 
+	const Item &Item::Definition( ItemID ID ){	return *Definition( (int)ID );	}
 	const Item *Item::Definition( int ID ){	return Inst.FromID(ID);	}
 	int Item::ID_from_Name( const std::wstring &Name ){	return Inst.ID_from_Name( Name );	}
 }

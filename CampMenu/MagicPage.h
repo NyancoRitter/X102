@@ -21,7 +21,6 @@ public:	// IPage Impl
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
-	virtual void OnGotFocus() override;
 	virtual void OnPushed() override;
 	virtual void OnPrePopped() override;
 protected:

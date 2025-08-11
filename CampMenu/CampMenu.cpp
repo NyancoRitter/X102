@@ -91,19 +91,14 @@ void CampMenu::OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder )
 	const auto Party = m_rPlayData.CurrParty();
 	if( CmdOrder<0 || CharOrder<0 || Party.empty() )
 	{
-		for( auto &upPage : m_Pages )
-		{	upPage->Visible( false );	}
-
+		for( auto &upPage : m_Pages ){	upPage->Visible( false );	}
 		return;
 	}
 
-	if( m_iCurrChar != CharOrder )
-	{
-		m_iCurrChar = CharOrder;
+	m_iCurrChar = CharOrder;
 
-		for( auto &upPage : m_Pages )
-		{	upPage->OnSelectedCharChanged( m_iCurrChar );	}
-	}
+	for( auto &upPage : m_Pages )
+	{	upPage->OnSelectedCharChanged( m_iCurrChar );	}
 
 	if( m_iCurrPage != CmdOrder )
 	{

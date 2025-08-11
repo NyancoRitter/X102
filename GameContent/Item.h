@@ -28,6 +28,9 @@ namespace GameContent
 
 	public:
 		/// <summary>アイテム定義を参照</summary>
+		static const Item &Definition( ItemID ID );
+
+		/// <summary>アイテム定義を参照</summary>
 		/// <param name="ID"></param>
 		/// <returns>不正なID値を指定した場合にはnullptrが返される</returns>
 		static const Item *Definition( int ID );

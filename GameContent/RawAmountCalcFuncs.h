@@ -114,5 +114,5 @@ namespace GameContent
 
 	//毒回復効果説明用文字列
 	inline std::wstring CurePoisonDescStr( bool SingleTgt )
-	{	return ( SingleTgt ? L"[単; 解毒" : L"[全; 解毒" );	}
+	{	return ( SingleTgt ? L"[単; 解毒]" : L"[全; 解毒]" );	}
 }

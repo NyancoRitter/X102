@@ -2,6 +2,7 @@
 #include <cmath>
 #include <algorithm>
 #include "AttackElement.h"
+#include "ItemID.h"
 
 namespace
 {
@@ -26,7 +27,7 @@ namespace
 		//アイテム最大保有個数
 		PartyCharDef &nMaxItem( int n ){	m_nMaxItem=n;	return *this;	}
 
-		//PartyCharDef &InitItems( const std::vector<ItemID> &Items ){	m_InitItems=Items;	return *this;	}
+		PartyCharDef &InitItems( const std::vector<ItemID> &Items ){	m_InitItems=Items;	return *this;	}
 		//PartyCharDef &Skill( SkillID ID ){	m_Skill=ID;	return *this;	}
 
 	public:
@@ -41,7 +42,9 @@ namespace
 		//
 		int DmgReducePercentage( AttackElement Elem ) const {	return m_DmgReducePercentage[(int)Elem];	}
 		int PoisonRegistPercentage() const {	return m_PoisonRegistPercentage;	}
+
 		int nMaxItem() const {	return m_nMaxItem;	}
+		const std::vector<ItemID> &InitItems() const {	return m_InitItems;	}
 
 	private:
 		/// <summary>
@@ -86,7 +89,7 @@ namespace
 		std::array<int, 4> m_DmgReducePercentage{0};
 		int m_PoisonRegistPercentage = 0;
 		int m_nMaxItem = 7;
-		//std::vector<ItemID> m_InitItems;
+		std::vector<ItemID> m_InitItems;
 		//SkillID m_Skill = -1;
 	};
 
@@ -96,7 +99,8 @@ namespace
 		PartyCharDef( 60 ).BasicStats( 15, 1, 2 ).nMaxItem(5)
 		.DmgReducePercentage( { 75, 0, 0, -10 } ).PoisonResistPercentage( 5 )
 		.MP( FirstSpell::Poison, 3,1 )
-		.MP( SecondSpell::Recover, 3,1 ),
+		.MP( SecondSpell::Recover, 3,1 )
+		,//.InitItems( { ItemID::BattleAxe } ),
 
 		//ファナ
 		PartyCharDef( 32 ).BasicStats( 10, 8, 15 ).nMaxItem(6)
@@ -106,7 +110,8 @@ namespace
 		.MP( FirstSpell::All_LV1, 10,1, 18 )
 		.MP( FirstSpell::All_LV2, 30,1 )
 		.MP( SecondSpell::Recover, 1,3, 12 )
-		.MP( SecondSpell::Fire, 1,2, 9 ),
+		.MP( SecondSpell::Fire, 1,2, 9 )
+		.InitItems( { ItemID::BastardSword, ItemID::ShortSword, ItemID::Potion_LV0 } ),
 
 		//ヴィスマト
 		PartyCharDef( 44 ).BasicStats( 8, 10, 12 )
@@ -117,7 +122,8 @@ namespace
 		.MP( FirstSpell::Poison, 1,8, 6 )
 		.MP( SecondSpell::Fire, 1,3, 7 )
 		.MP( SecondSpell::Ice, 1,3, 7 )
-		.MP( SecondSpell::Thunder, 1,3, 7),
+		.MP( SecondSpell::Thunder, 1,3, 7)
+		.InitItems( { ItemID::ShortSword } ),
 
 		//リーベル
 		PartyCharDef( 42 ).BasicStats( 7, 10, 6 )
@@ -128,7 +134,8 @@ namespace
 		.MP( FirstSpell::All_LV1, 1,2, 5 )
 		.MP( FirstSpell::All_LV2, 20,1, 4 )
 		.MP( FirstSpell::Poison, 1,6, 10 )
-		.MP( SecondSpell::Recover, 1,77, 50 ),
+		.MP( SecondSpell::Recover, 1,77, 50 )
+		.InitItems( { ItemID::Mace } ),
 
 		//イリィ
 		PartyCharDef( 18 ).BasicStats( 1, 15, 5 )
@@ -142,7 +149,8 @@ namespace
 		.MP( SecondSpell::Recover, 1,7, 5 )
 		.MP( SecondSpell::Fire, 1,2, 6 )
 		.MP( SecondSpell::Ice, 1,15, 3 )
-		.MP( SecondSpell::Thunder, 1,3, 5 ),
+		.MP( SecondSpell::Thunder, 1,3, 5 )
+		.InitItems( { ItemID::IryWand, ItemID::HandMadePotion, ItemID::HandMadePotion } ),
 
 		//アスレイ
 		PartyCharDef( 30 ).BasicStats( 5, 12, 10 ).nMaxItem(8)
@@ -153,7 +161,8 @@ namespace
 		.MP( FirstSpell::All_LV2, 8,1, 7 )
 		.MP( SecondSpell::Fire, 1,7, 3 )
 		.MP( SecondSpell::Ice, 12,1, 10 )
-		.MP( SecondSpell::Thunder, 1,6, 3 ),
+		.MP( SecondSpell::Thunder, 1,6, 3 )
+		.InitItems( { ItemID::MagicWand, ItemID::Potion_LV1, ItemID::Potion_LV1 } ),
 
 		//エナ・メア
 		PartyCharDef( 98 ).BasicStats( 6, 7, 12 ).nMaxItem(10)
@@ -161,7 +170,8 @@ namespace
 		.MP( FirstSpell::All_LV1, 1,2, 4 )
 		.MP( FirstSpell::Poison, 10,1, 7 )
 		.MP( SecondSpell::Ice, 3,1, 5 )
-		.MP( SecondSpell::Thunder, 1,1, 4 ),
+		.MP( SecondSpell::Thunder, 1,1, 4 )
+		.InitItems( { ItemID::ShortSword, ItemID::IceCrystal } ),
 	};
 }
 
@@ -176,6 +186,9 @@ namespace GameContent
 		const auto &Def = Defs[ (int)ID ];
 		m_HP = MaxHP();
 		FullRecoverMP();
+
+		if( !m_Items.Assign( Def.InitItems() ) )
+		{	throw std::exception("Invalid Items.size()");	}
 	}
 		
 	PartyChar::PartyChar(

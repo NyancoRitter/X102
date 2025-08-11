@@ -29,20 +29,17 @@ CampMenu::MagicPage::MagicPage( CampMenu &Outer )
 	m_UI.TopLeft( CampMenu::MainAreaRect.TopLeft() + Vec2i{ 16, 32 } );
 }
 
-void CampMenu::MagicPage::OnGotFocus()
+
+void CampMenu::MagicPage::OnPushed()
 {
+	m_UI.CursorVisiblity( true );
+
 	const auto *pMagic = m_UI.CurrIndicatedMagic();
 	if( pMagic != nullptr )
 	{
 		UpdateDescView( *pMagic );
 		m_DescView.Visible( true );
 	}
-}
-
-void CampMenu::MagicPage::OnPushed()
-{
-	m_UI.CursorVisiblity( true );
-	OnGotFocus();
 }
 
 void CampMenu::MagicPage::OnPrePopped()

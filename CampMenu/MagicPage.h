@@ -6,17 +6,18 @@
 
 /// <summary>
 /// キャンプ画面 - 魔法UI
+/// * 操作に応じたデータ更新が必要な場合，対応する CampMenu のメソッドを呼ぶ（このクラスが直接的にデータを更新することはしない）
 /// </summary>
 class CampMenu::MagicPage final : public CampMenu::IPage
 {
 public:
 	MagicPage( CampMenu &Outer );
 
-	//魔法が使用された際の更新
-	void UpdateOnMagicUsed( int iCurrCharOrder );
+	//魔法が使用された際のUI更新
+	void UpdateOnMagicUsed();
 
 public:	// IPage Impl
-	virtual void OnSelectedCharChanged( int iCharOrder ) override;
+	virtual void OnSelectedCharChanged() override;
 	virtual bool CanEnter() const override {	return !m_UI.NoAvailableMagic();	}
 
 public:	// IGUI Impl

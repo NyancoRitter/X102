@@ -10,7 +10,11 @@
 
 class PlayData;
 class TgtSpecifier;
-namespace GameContent{	class Magic;	}
+namespace GameContent
+{
+	class PartyChar;
+	class Magic;
+}
 
 /// <summary>
 /// キャンプメニュー
@@ -40,18 +44,60 @@ private:
 	class ItemPage;
 	class MagicPage;
 
+	/// <summary>現在選択されているキャラクタのデータ参照用．</summary>
+	/// <returns>該当なしの状態ではnullptrを返す</returns>
+	GameContent::PartyChar *CurrSelChar();
+
+	//--- for TopLVMenu
 	void OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder );
 	void OnTopLVMenuSelected( int CharOrder, int CmdOrder );
 
+	//--- for MagicPage
+
+	/// <summary>MagicPage で魔法が選択された際の処理</summary>
+	/// <param name="Magic">
+	/// 選択された魔法．
+	/// 使用できない魔法を指定した場合には何もしない．
+	/// （この場面で使えない魔法である場合や，現在のキャラクタのMP的に使えない場合等）
+	/// </param>
+	void OnMagicSelected( const GameContent::Magic &Magic );
+
+	//--- for ItemPage
+
+	/// <summary>ItemPage でアイテムが選択された際の処理</summary>
+	/// <param name="iOrder">
+	/// 選択されたアイテムの（現在のキャラクタの持ち物内での）index．
+	/// 範囲外等の有効でない値を渡した場合には何もしない．
+	/// </param>
+	void OnItemSelected( int iOrder );
+
+	/// <summary>（持ち物整理用処理）引数で指定されたキャラクタ所持品の位置を末尾に回す</summary>
+	/// <param name="iOrder">対象アイテムの（現在のキャラクタの持ち物内での）index</param>
+	/// <returns>成否．範囲外等の有効でない値を指定した場合には何もせずにfalseを返す</returns>
+	bool MoveBackCharItem( int iOrder );
+
+	/// <summary>（持ち物整理用処理）引数で指定されたStock内アイテムの位置を末尾に回す</summary>
+	/// <param name="iOrder">対象アイテムの（Stock内での）index</param>
+	/// <returns>成否．範囲外等の有効でない値を指定した場合には何もせずにfalseを返す</returns>
+	bool MoveBackStockItem( int iOrder );
+
+	/// <summary>キャラクタの所持品をStockに移動する</summary>
+	///  <param name="iOrder">対象アイテムの（現在のキャラクタの持ち物内での）index</param>
+	/// <returns>成否．範囲外等の有効でない値を指定した場合には何もせずにfalseを返す</returns>
+	bool MoveItemFromCharToStock( int iOrder );
+
+	/// <summary>Stock内のアイテムをキャラクタ所持品に移動する</summary>
+	///  <param name="iOrder">対象アイテムの（Stock内での）index</param>
+	/// <returns>成否．範囲外等の有効でない値を指定した場合には何もせずにfalseを返す</returns>
+	bool MoveItemFromStockToChar( int iOrder );
+
+private:
 	/// <summary>
 	/// アイテムや魔法の使用対象キャラクタ選択用UIをUIスタックにプッシュ
 	/// </summary>
 	/// <param name="ForAll">対象が全員のものか否か</param>
 	/// <param name="Callback">選択用UIに渡すCallback（仕様は TgtSelection を参照 ）</param>
 	void PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback );
-
-	//MagicPage で魔法が選択された際の処理
-	void OnMagicSelected( const GameContent::Magic &Magic );
 
 	/// <summary>
 	/// 魔法/アイテム 共通の使用時効果処理

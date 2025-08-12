@@ -63,17 +63,17 @@ Flags<GUI::GUIResult> CampMenu::MagicPage::Update( const IController &Controller
 	return m_UI.Update( Controller );
 }
 
-void CampMenu::MagicPage::OnSelectedCharChanged( int iCharOrder )
+void CampMenu::MagicPage::OnSelectedCharChanged()
 {
-	const auto &PD = m_Outer.m_rPlayData;
-	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCharOrder ] ), true );
+	const auto *pChar = m_Outer.CurrSelChar();
+	if( !pChar )return;
+	m_UI.UpdateContent( *pChar, true );
 }
 
 //魔法が使用された際の更新
-void CampMenu::MagicPage::UpdateOnMagicUsed( int iCurrCharOrder )
+void CampMenu::MagicPage::UpdateOnMagicUsed()
 {
-	const auto &PD = m_Outer.m_rPlayData;
-	m_UI.UpdateContent( PD.Char( PD.CurrParty()[ iCurrCharOrder ] ), false );
+	m_UI.UpdateContent( *m_Outer.CurrSelChar(), false );
 }
 
 Flags<GUI::GUIResult> CampMenu::MagicPage::OnIndicatedMagicChanged()

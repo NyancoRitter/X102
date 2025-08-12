@@ -73,11 +73,11 @@ public:	//項目操作
 	/// <param name="index">対象index</param>
 	/// <returns>
 	/// 成否．
-	/// データが空の場合や，指定indexが末尾要素を指す場合には何もせずにfalseを返す．
+	/// データが空の場合や，指定indexが末尾要素あるいは範囲外を指す場合には何もせずにfalseを返す．
 	/// </returns>
 	bool MoveItemToBack( int index )
 	{
-		if( empty() || index==(int)size()-1 )return false;
+		if( empty() || index<0 || index>=(int)size()-1 )return false;
 
 		T_Data Tgt = m_Vec[index];
 		RemoveAt( index );

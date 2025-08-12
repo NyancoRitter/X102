@@ -12,8 +12,7 @@ public:
 	/// <summary>
 	/// 選択されているキャラクタが変わった際の更新処理
 	/// </summary>
-	/// <param name="iCharOrder">選択されたキャラクタの位置</param>
-	virtual void OnSelectedCharChanged( int iCharOrder ) = 0;
+	virtual void OnSelectedCharChanged() = 0;
 
 	/// <summary>
 	/// このページを操作対象にできるか否か

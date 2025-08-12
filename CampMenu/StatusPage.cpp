@@ -9,27 +9,22 @@
 #include "Parts/CMonoBmp.h"
 #include "Common/CharDrawColor.h"
 
-void CampMenu::StatusPage::OnSelectedCharChanged( int iCharOrder )
-{
-	const auto &PD = m_Outer.m_rPlayData;
-	m_pChar = &PD.Char( PD.CurrParty()[ iCharOrder ] );
-}
-
 void CampMenu::StatusPage::Paint_( HDC hdc ) const
 {
 	using namespace ResManage;
 	using namespace GameContent;
 	
-	if( !m_pChar )return;
+	const auto *pChar = m_Outer.CurrSelChar();
+	if( !pChar )return;
 
 	const auto TL = CampMenu::MainAreaRect.TopLeft() + Vec2i{ 16, 32 };
 	constexpr int LineH = 24;
 	constexpr int ImgStretchRate = 2;
 
-	const auto ID = m_pChar->ID();
+	const auto ID = pChar->ID();
 
 	const auto &FaceImg = FaceBMP( ID );
-	FaceImg.StretchBlt( hdc, TL[0], TL[1], ImgStretchRate, ImgStretchRate, CharDrawColor( m_pChar->HP(), m_pChar->PoisonInfected() ) );
+	FaceImg.StretchBlt( hdc, TL[0], TL[1], ImgStretchRate, ImgStretchRate, CharDrawColor( pChar->HP(), pChar->PoisonInfected() ) );
 
 	SetTextColor( hdc, GUI::Color::White );
 	SetBkMode( hdc, TRANSPARENT );
@@ -45,9 +40,9 @@ void CampMenu::StatusPage::Paint_( HDC hdc ) const
 		//LV
 		OffsetRect( &rect, 0, LineH );
 		DrawText( hdc, L"LV", -1, &rect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_LEFT );
-		DrawText( hdc, std::to_wstring(m_pChar->LV()).c_str(), -1, &rect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
+		DrawText( hdc, std::to_wstring(pChar->LV()).c_str(), -1, &rect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
 		//BadStatus
-		if( m_pChar->PoisonInfected() )
+		if( pChar->PoisonInfected() )
 		{
 			OffsetRect( &rect, 0, LineH );
 			SetTextColor( hdc, CharColor_PoisonInfected );
@@ -66,19 +61,19 @@ void CampMenu::StatusPage::Paint_( HDC hdc ) const
 	{//HP
 		DrawText( hdc, L"HP", -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_LEFT );
 		std::wstringstream SS;
-		SS << m_pChar->HP() << L" / " << m_pChar->MaxHP();
+		SS << pChar->HP() << L" / " << pChar->MaxHP();
 		DrawText( hdc, SS.str().c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );	
 	}
 	{//STR, MAG, AGI
 		OffsetRect( &StatusRect, 0, LineH + 12 );
 		DrawText( hdc, L"STR", -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_LEFT );
-		DrawText( hdc, std::to_wstring(m_pChar->STR()).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
+		DrawText( hdc, std::to_wstring(pChar->STR()).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
 		OffsetRect( &StatusRect, 0, LineH );
 		DrawText( hdc, L"MAG", -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_LEFT );
-		DrawText( hdc, std::to_wstring(m_pChar->MAG()).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
+		DrawText( hdc, std::to_wstring(pChar->MAG()).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
 		OffsetRect( &StatusRect, 0, LineH );
 		DrawText( hdc, L"AGI", -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_LEFT );
-		DrawText( hdc, std::to_wstring(m_pChar->AGI()).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
+		DrawText( hdc, std::to_wstring(pChar->AGI()).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
 	}
 
 	{//ëÆê´ëœê´
@@ -93,7 +88,7 @@ void CampMenu::StatusPage::Paint_( HDC hdc ) const
 			BMP( Elem ).BitBlt( hdc, StatusRect.left, StatusRect.top + ( (LineH - IconSize)/2 ) );
 			SetTextColor( hdc, GUI::Color::White );
 			SetBkMode( hdc, TRANSPARENT );
-			DrawText( hdc, ( std::to_wstring( m_pChar->DmgReducePercentage( Elem ) ) + L"%" ).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
+			DrawText( hdc, ( std::to_wstring( pChar->DmgReducePercentage( Elem ) ) + L"%" ).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
 		}
 	}
 
@@ -107,7 +102,7 @@ void CampMenu::StatusPage::Paint_( HDC hdc ) const
 		BMP( FirstSpell::Poison ).BitBlt( hdc, StatusRect.left, StatusRect.top + ( (LineH - IconSize)/2 ) );
 		SetTextColor( hdc, GUI::Color::White );
 		SetBkMode( hdc, TRANSPARENT );
-		DrawText( hdc, ( std::to_wstring( m_pChar->PoisonResistPercentage() ) + L"%" ).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
+		DrawText( hdc, ( std::to_wstring( pChar->PoisonResistPercentage() ) + L"%" ).c_str(), -1, &StatusRect, DT_NOCLIP|DT_SINGLELINE|DT_VCENTER|DT_RIGHT );
 	}
 #if false
 	{//ÉXÉLÉã

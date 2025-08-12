@@ -100,7 +100,7 @@ namespace
 		.DmgReducePercentage( { 75, 0, 0, -10 } ).PoisonResistPercentage( 5 )
 		.MP( FirstSpell::Poison, 3,1 )
 		.MP( SecondSpell::Recover, 3,1 )
-		,//.InitItems( { ItemID::BattleAxe } ),
+		.InitItems( { ItemID::BattleAxe } ),
 
 		//ƒtƒ@ƒi
 		PartyCharDef( 32 ).BasicStats( 10, 8, 15 ).nMaxItem(6)

@@ -205,17 +205,17 @@ namespace GameContent
 			.ImgID( ResManage::ItemImg::Potion )
 			.Price(1).ActSpdPercentage(150)
 		);
-		Register( ItemID::Potion_LV0,
+		Register( ItemID::Potion_LV1,
 			Potion( 18, L"クオト・キアの薬", L"効能は低いが独特の甘味が人気" )
 			.ImgID( ResManage::ItemImg::Potion )
 			.Price(3).ActSpdPercentage(150)
 		);
-		Register( ItemID::Potion_LV0,
+		Register( ItemID::Potion_LV2,
 			Potion( 36, L"ミルト・キアの薬", L"値段と効果のバランスが良い回復薬" )
 			.ImgID( ResManage::ItemImg::Potion )
 			.Price(8).ActSpdPercentage(150)
 		);
-		Register( ItemID::Potion_LV0,
+		Register( ItemID::Potion_LV3,
 			Potion( 72, L"エルド・キアの薬", L"効果の信頼性が高いが非常に値が張る" )
 			.ImgID( ResManage::ItemImg::Potion )
 			.Price(20).ActSpdPercentage(150)
@@ -278,7 +278,7 @@ namespace GameContent
 			.Price(380)
 		);
 
-		Register( ItemID::HP_Sword,
+		Register( ItemID::AuraBlade,
 			Item(
 				L"オーラブレード", TgtRange::AllEnemy,
 				Attack( []( const ICharacter &C )->auto{	return std::vector<double>{ C.HP() * 0.2 };	}, EfficacySource::Weapon )
@@ -300,7 +300,7 @@ namespace GameContent
 			.ImgID( ResManage::ItemImg::Wand )
 			.Price(6).ActSpdPercentage( 300 )
 		);
-		Register( ItemID::IryWand,
+		Register( ItemID::MagicWand,
 			STR_MAG_Weapon( 50, 25, L"魔導士の杖", L"使用者の魔力を打撃力に変換する杖" )
 			.ImgID( ResManage::ItemImg::Wand )
 			.Price(20)

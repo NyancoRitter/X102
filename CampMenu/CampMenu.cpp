@@ -50,6 +50,13 @@ CampMenu::CampMenu( PlayData &rPlayData )
 CampMenu::~CampMenu() = default;
 
 //
+GameContent::PartyChar *CampMenu::CurrSelChar()
+{
+	if( m_iCurrChar<0 )return nullptr;
+	return &m_rPlayData.Char( m_rPlayData.CurrParty()[m_iCurrChar] );
+}
+
+//
 void CampMenu::Paint_( HDC hdc ) const
 {
 	FillRectReg( hdc, Rect( 0,0, GlobalConst::GC_W, GlobalConst::GC_H ), RGB(0,0,0) );
@@ -98,7 +105,7 @@ void CampMenu::OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder )
 	m_iCurrChar = CharOrder;
 
 	for( auto &upPage : m_Pages )
-	{	upPage->OnSelectedCharChanged( m_iCurrChar );	}
+	{	upPage->OnSelectedCharChanged();	}
 
 	if( m_iCurrPage != CmdOrder )
 	{

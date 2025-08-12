@@ -20,7 +20,7 @@ namespace GameContent
 		Flamberge,
 		BastardSword,
 		TwoHandedSword,
-		HP_Sword,
+		AuraBlade,
 		SilverSword,
 
 		//

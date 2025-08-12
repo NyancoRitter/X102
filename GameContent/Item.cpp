@@ -234,7 +234,7 @@ namespace GameContent
 		);
 
 		Register( ItemID::Antidote,
-			Item( L"", TgtRange::SingleFriend, CurePoison )
+			Item( L"ピゾナ・キアの薬", TgtRange::SingleFriend, CurePoison )
 			.Description( L"[単; 毒を回復]", L"とてもにがいことで有名な解毒薬" )
 			.ImgID( ResManage::ItemImg::Antidote )
 			.Price(6).CanUseOnlyOnce( true )

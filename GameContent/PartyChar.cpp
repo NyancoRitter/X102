@@ -100,7 +100,7 @@ namespace
 		.DmgReducePercentage( { 75, 0, 0, -10 } ).PoisonResistPercentage( 5 )
 		.MP( FirstSpell::Poison, 3,1 )
 		.MP( SecondSpell::Recover, 3,1 )
-		.InitItems( { ItemID::BattleAxe } ),
+		.InitItems( { ItemID::BattleAxe, ItemID::Antidote } ),
 
 		//ファナ
 		PartyCharDef( 32 ).BasicStats( 10, 8, 15 ).nMaxItem(6)
@@ -123,7 +123,7 @@ namespace
 		.MP( SecondSpell::Fire, 1,3, 7 )
 		.MP( SecondSpell::Ice, 1,3, 7 )
 		.MP( SecondSpell::Thunder, 1,3, 7)
-		.InitItems( { ItemID::ShortSword } ),
+		.InitItems( { ItemID::ShortSword, ItemID::ThunderCrystal } ),
 
 		//リーベル
 		PartyCharDef( 42 ).BasicStats( 7, 10, 6 )
@@ -162,7 +162,7 @@ namespace
 		.MP( SecondSpell::Fire, 1,7, 3 )
 		.MP( SecondSpell::Ice, 12,1, 10 )
 		.MP( SecondSpell::Thunder, 1,6, 3 )
-		.InitItems( { ItemID::MagicWand, ItemID::Potion_LV1, ItemID::Potion_LV1 } ),
+		.InitItems( { ItemID::MagicWand, ItemID::Potion_LV1 } ),
 
 		//エナ・メア
 		PartyCharDef( 98 ).BasicStats( 6, 7, 12 ).nMaxItem(10)
@@ -171,7 +171,7 @@ namespace
 		.MP( FirstSpell::Poison, 10,1, 7 )
 		.MP( SecondSpell::Ice, 3,1, 5 )
 		.MP( SecondSpell::Thunder, 1,1, 4 )
-		.InitItems( { ItemID::ShortSword, ItemID::IceCrystal } ),
+		.InitItems( { ItemID::ShortSword, ItemID::IceCrystal, ItemID::Potion_LV2 } ),
 	};
 }
 

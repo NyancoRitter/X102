@@ -6,6 +6,8 @@
 #include "GUI/TextLinePainter.h"
 #include "GUI/ImgPainter.h"
 #include "Common/MoneyView.h"
+#include "Common/CharSelMenuContent.h"
+#include "Common/EffectList.h"
 
 namespace Town
 {
@@ -39,11 +41,14 @@ namespace Town
 		void Save();
 		void Stay( int Price );
 
+		void UpdateCharViewContent();
+
 	private:
 		TownScene &m_Outer;
 
 		//
 		GUI::GUIStack m_LocalStack;
+		EffectList m_EffectList;
 
 		//表示物
 		GUI::TextLinePainter m_Header;
@@ -53,5 +58,9 @@ namespace Town
 		//メニュー
 		GUI::Menu::Menu m_Menu;
 		GUI::Menu::GenericMenuContent<true> m_MenuContent;
+
+		//※キャラクタの表示用に Menu を流用
+		GUI::Menu::Menu m_PartyView;
+		GUI::Menu::CharSelMenuContent<false> m_PartyViewCont;
 	};
 }

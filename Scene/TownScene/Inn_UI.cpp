@@ -12,6 +12,9 @@
 #include "PlayData/PlayData.h"
 
 #include "ResManage/BmpBank.h"
+#include "Common/CharDrawColor.h"
+#include "Common/EffectImpls.h"
+#include "ResManage/SoundBank.h"
 
 using namespace GUI;
 
@@ -20,6 +23,7 @@ namespace Town
 	TownScene::Inn_UI::Inn_UI( TownScene &Outer )
 		: m_Outer( Outer )
 		, m_MenuContent( Vec2i{96,32} )
+		, m_PartyViewCont( Vec2i() )
 	{
 		//表示物セットアップ
 		const PlayData &PD = m_Outer.CurrPlayData();
@@ -32,6 +36,14 @@ namespace Town
 		{//所持金表示
 			m_MoneyView.TopLeft( Vec2i{ GlobalConst::GC_W-(Padding+m_MoneyView.Size()[0]), m_Header.BoundingRect().Bottom()+Padding } );
 			m_MoneyView.SetMoney( PD.Money() );
+		}
+		{//キャラクタ表示
+			UpdateCharViewContent();
+
+			m_PartyView.SetContent( &m_PartyViewCont )
+				.ItemSpacing( 8 )
+				.TopLeft( { 0, GlobalConst::GC_H - m_PartyView.Size()[1] - Padding } )
+				.XCenter( GlobalConst::GC_W );
 		}
 		{//メニュー
 			using namespace GUI::Menu;
@@ -65,12 +77,26 @@ namespace Town
 
 			m_StaffText = L"休んでいくニャ？";
 		}
-
-		
 	}
 
 	TownScene::Inn_UI::~Inn_UI() = default;
 
+	//
+	void TownScene::Inn_UI::UpdateCharViewContent()
+	{
+		const PlayData &PD = m_Outer.CurrPlayData();
+		m_PartyViewCont.Clear();
+
+		for( auto CharID : PD.CurrParty() )
+		{
+			const auto &Char = PD.Char( CharID );
+			m_PartyViewCont.Add( CharID )
+				.HPInfo( Char.HP(), Char.MaxHP() )
+				.DrawColor( CharDrawColor( Char.HP(), Char.PoisonInfected() ) );
+		}
+	}
+
+	//
 	void TownScene::Inn_UI::Paint_( HDC hdc ) const
 	{
 		FillRectReg( hdc, Rect( 0,0, GlobalConst::GC_W, GlobalConst::GC_H ), RGB(0,0,0) );
@@ -94,16 +120,26 @@ namespace Town
 		DrawFrame( hdc, m_Header.BoundingRect(), Color::White );
 		m_Header.Paint( hdc );
 
-		//所持金
+		//所持金, パーティ表示
 		m_MoneyView.Paint( hdc );
+		m_PartyView.Paint( hdc );
 		
 		//UI
 		m_LocalStack.Paint( hdc );
+
+		//エフェクト
+		m_EffectList.Paint( hdc );
 	}
 
 	//更新
 	Flags<GUIResult> TownScene::Inn_UI::Update( const IController &Controller )
 	{
+		if( !m_EffectList.empty() )
+		{
+			m_EffectList.Update();
+			return GUIResult::ReqRedraw;
+		}
+
 		if( Controller.OpenPartyMenu() )
 		{	m_Outer.Push_CampMenu_UI();	return GUIResult::ReqRedraw;	}
 
@@ -211,10 +247,23 @@ namespace Town
 	/// <param name="Price">宿泊料．所持金から減らすべき値．</param>
 	void TownScene::Inn_UI::Stay( int Price )
 	{
-		//TODO : 回復処理
+		auto &PD = m_Outer.CurrPlayData();
+
+		ResManage::PlaySE( ResManage::SE::Cure );
+
+		//回復処理と表示更新
+		auto Results = PD.ProcOfINN();
+		for( const auto &result : Results )
+		{
+			if( const auto *p=std::get_if<HPChanged>( &result );	(p && p->Amount>0) )
+			{
+				auto BB = m_PartyView.ItemDrawRect( p->TgtChar.m_Order );
+				m_EffectList.PushBack( CreateHPRecovEffect( p->Amount, ( BB.TopLeft()+BB.RightBottom() )/2, 0 ) );
+			}
+		}
+		UpdateCharViewContent();
 
 		//所持金を減らす
-		auto &PD = m_Outer.CurrPlayData();
 		PD.AddMoney( -Price );
 		const int Money = PD.Money();
 		m_MoneyView.SetMoney( Money );
@@ -226,7 +275,13 @@ namespace Town
 
 	//宿泊料の決定
 	int TownScene::Inn_UI::DecidePrice() const
-	{	//TODO : 実装
-		return 77;
+	{
+		const auto &PD = m_Outer.CurrPlayData();
+
+		int SumLV = 0;
+		for( auto CharID : PD.CurrParty() )
+		{	SumLV += PD.Char( CharID ).LV();	}
+
+		return std::max( (int)PD.CurrParty().size(), SumLV/2 );
 	}
 }

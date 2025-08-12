@@ -15,7 +15,7 @@ PlayData::PlayData()
 {
 	//Test Code
 	SetupParty( { PartyCharID::AKINS, PartyCharID::IRY, PartyCharID::ENA_MEA } );
-	Char( PartyCharID::AKINS ).ChangeHP( -100 );
+	Char( PartyCharID::AKINS ).ChangeHP( -1000 );
 	Char( PartyCharID::ENA_MEA ).InfectPoison();
 }
 

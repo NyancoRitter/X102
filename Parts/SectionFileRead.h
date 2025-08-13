@@ -72,13 +72,18 @@ namespace SectionFile
 		virtual bool ParseLine( const std::string &LineStr, SectionData_T &SecData, int LineNo ) = 0;
 
 	public:
-		//ファイル読込
-		//	成功時には rDstData に読込結果を格納して true を返す．
-		//	false を返す場合， rDstData の内容は保証されない．
-		bool Load( const std::string &rFilePathName, FileData &rDstData )
+		/// <summary>
+		/// ファイル読込
+		/// * 成功時には rDstData に読込結果を格納して true を返す．
+		/// * false を返す場合， rDstData の内容は保証されない．
+		/// </summary>
+		/// <param name="rFilePathNameU8">ファイルパス (UTF8)</param>
+		/// <param name="rDstData">結果受け取り</param>
+		/// <returns>成否</returns>
+		bool Load( const std::string &rFilePathNameU8, FileData &rDstData )
 		{
 			m_LastLineStr.clear();
-			std::ifstream File( /*rFilePathName.c_str()*/std::filesystem::u8path(rFilePathName) );
+			std::ifstream File( std::filesystem::u8path(rFilePathNameU8) );
 			if( !File.is_open() ){	m_LastLineNum = -1;	return false;	}
 
 			SectionData_T NoSecParams;	//セクション名の無い(いきなり書かれている)行の一時格納用

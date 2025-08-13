@@ -78,7 +78,7 @@ namespace Town
 	//更新
 	Flags<GUIResult> TownScene::TownCenter_UI::Update( const IController &Controller )
 	{
-		if( Controller.OpenPartyMenu() )
+		if( Controller.OpenCampMenu() )
 		{	m_Outer.Push_CampMenu_UI( nullptr );	return GUIResult::ReqRedraw;	}
 
 		using namespace GUI::Menu;
@@ -98,7 +98,7 @@ namespace Town
 				case 0:	m_Outer.Push_Inn_UI();	return GUIResult::ReqRedraw;	break;
 				case 1:	m_Outer.Push_Pub_UI();	return GUIResult::ReqRedraw;	break;
 				case 2:	m_Outer.Push_Shop_UI();	return GUIResult::ReqRedraw;	break;
-				case 3:	m_Outer.GoTo_Maze();	return GUIResult::ReqRedraw;	break;
+				case 3:	if( TransToMazeScene() ){	return GUIResult::ReqRedraw;	}	break;
 				default:	break;
 				}
 			}
@@ -109,5 +109,12 @@ namespace Town
 		}
 
 		return GUIResult::None;
+	}
+
+	//
+	bool TownScene::TownCenter_UI::TransToMazeScene()
+	{//TODO : パーティ未編成あるいは全滅状態ならば棄却する
+		m_Outer.GoTo_Maze();
+		return true;
 	}
 }

@@ -87,6 +87,17 @@ public:	//--- その他 ------------------------------------------------
 	/// <returns>発生した回復効果</returns>
 	std::vector< ActResult > ProcOfINN();
 
+	/// <summary>
+	/// 迷宮内のドアを通過できるか否か
+	/// </summary>
+	/// <param name="DoorLockLV">
+	/// ドアの鍵LV(0～)．
+	/// 0は鍵のかかっていないドア．
+	/// 1以上は鍵のLVを示す．
+	/// </param>
+	/// <returns>通過できるか否か</returns>
+	bool CanMoveThrough( int DoorLockLV ) const;
+
 	//===============================================================
 private:
 	

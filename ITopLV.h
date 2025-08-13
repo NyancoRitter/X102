@@ -31,6 +31,7 @@ public:
 public:	//ƒV[ƒ“‘JˆÚ
 
 	virtual void ChangeToTownScene() = 0;
+	virtual void ChangeToMazeScene() = 0;
 
 
 public:	//BGM

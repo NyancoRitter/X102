@@ -112,7 +112,7 @@ namespace MazeDataImpl
 
 		//色
 		double m_Dist2t_Coeff;	//（詳細情報が残っていない．Near->Far で暗くなっていく描画色を決める数式内の部分式の値）
-		double m_BrightnessRate;	//描画色に乗じられる係数．
+		double m_BrightnessRate = 1.0;	//描画色に乗じられる係数．
 
 		//Draw() でワイヤーフレームオブジェクトを描画するか否かの設定
 		bool m_bDrawWireFrameObj = true;

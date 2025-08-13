@@ -44,6 +44,8 @@ namespace Town
 		/// </summary>
 		void SetImgToOutskirts();
 
+		bool TransToMazeScene();
+
 	private:
 		TownScene &m_Outer;
 

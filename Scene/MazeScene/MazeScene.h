@@ -1,0 +1,101 @@
+#pragma once
+
+#include "IScene.h"
+#include "GUI/IGUI.h"
+#include "MazeDataImpl/FloorData.h"
+#include "MazeDataImpl/Win32MazeRenderer.h"
+#include <string>
+
+class ITopLV;
+class PlayData;
+
+namespace Maze
+{
+	/// <summary>
+	/// 迷路探索シーン
+	/// </summary>
+	class MazeScene final : public IScene
+	{
+	public:
+		MazeScene( ITopLV &rTopLV, const std::string &MazeFilePathU8 );
+
+	public:	//IMazeScene
+		virtual void OnEnter() override;
+		virtual void OnLeave() override;
+		virtual Flags<SceneUpdateResult> Update( const IController &Controller ) override;
+		virtual void Draw( HDC hdc ) override;
+
+	private:
+		void OpenCampMenu();
+
+		bool BeginWalk( MazeDataImpl::Direction Dir );
+		void BeginTurn( bool ToRight );
+		bool Inspect();
+
+		//bool StartEventProc( Event::EventTrigger Trigger );
+		void RandomEncount();
+		void Encount( const std::vector<unsigned int> &EnemyIDs, bool IsEscapableBattle );
+		void DrawPosInfo( HDC hdc, const RECT &Rect );
+
+		//void PlayMazeBGM();
+
+	private:
+#if 0
+		//※移動と旋回処理は頻繁に使うので同一インスタンスを使い回す
+		WalkEffect m_WalkEffect;
+		TurnEffect m_TurnEffect;
+
+		//各種エフェクトの速度
+		static inline const int ms_nAnimFrame_Walk = 8;
+		static inline const int ms_nAnimFrame_Turn = 8;
+		static inline const int ms_nAnimFrame_Ladder = 40;
+#endif
+
+	private:
+		//迷路探索中操作
+		class UsualUpdater : public GUI::IGUI
+		{
+		private:
+			MazeScene &m_Outer;
+		public:
+			UsualUpdater( MazeScene &Outer ) : m_Outer(Outer) {}
+		public:	//GUI::IGUI
+			virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override {	return m_Outer.UsualUpdate(Controller);	}
+			//virtual void OnGotFocus() override {	m_Outer.m_bShowPosInfo = true;	}
+			//virtual void OnLostFocus() override {	m_Outer.m_bShowPosInfo = false;	}
+			virtual Vec2i TopLeft() const override {	return Vec2i();	}	//未使用
+			virtual IPainter &TopLeft( const Vec2i &TL ) override {	return *this;	}	//未使用
+			virtual Vec2i Size() const override {	return Vec2i();	}	//未使用
+		protected:
+			virtual void Paint_( HDC hdc ) const override {	m_Outer.UsualPaint(hdc);	}
+		};
+
+		void UsualPaint( HDC hdc );
+		Flags<GUI::GUIResult> UsualUpdate( const IController &Controller );
+
+	private:
+		ITopLV &m_rTopLV;
+		GUI::GUIStack m_Stack;
+		MazeDataImpl::Win32MazeRenderer m_Renderer;
+
+		UsualUpdater m_UsualUpdater;
+		bool m_ShouldBackToTown = false;
+
+		//マップデータ
+		std::vector< MazeDataImpl::FloorData > m_MazeMap;
+		Vec2i m_StartPos;	//迷宮のスタートマス
+		MazeDataImpl::Direction m_StartDir = MazeDataImpl::Direction::EAST;	//スタート時の向き（初期化値は特に意味無し）
+
+		//現在位置等
+		Vec2i m_CurrPos;	//現在位置
+		MazeDataImpl::Direction m_CurrDir = MazeDataImpl::Direction::EAST;	//現在の向き（初期化値は特に意味無し）
+		int m_CurrFloor = 0;	//現在何階にいるか(0-based)
+		//int m_EncountPercentage = 0;	//エンカウント率[%]
+		bool m_bShowPosInfo = true;
+
+#ifdef _DEBUG
+		//デバッグ用
+		bool m_TestModeFlag = false;
+#endif
+	};
+}

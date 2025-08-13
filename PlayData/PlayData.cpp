@@ -65,3 +65,8 @@ std::vector< ActResult > PlayData::ProcOfINN()
 
 	return Results;
 }
+
+bool PlayData::CanMoveThrough( int DoorLockLV ) const
+{//TODO : Impl
+	return true;
+}

@@ -47,7 +47,13 @@ namespace
 
 	//R,G,BÇÇªÇÍÇºÇÍrateî{ÇµÇΩêFÇçÏÇÈ
 	inline COLORREF Color( BYTE R, BYTE G, BYTE B, double rate )
-	{	return RGB( (int)(R * rate + 0.5), (int)(G * rate + 0.5), (int)(B * rate + 0.5) );	}
+	{	
+		return RGB(
+			std::min( (int)(R * rate + 0.5), 255 ),
+			std::min( (int)(G * rate + 0.5), 255 ), 
+			std::min( (int)(B * rate + 0.5), 255 )
+		);
+	}
 
 	inline COLORREF Color( COLORREF Src, double rate )
 	{	return Color( (BYTE)GetRValue(Src), (BYTE)GetGValue(Src), (BYTE)GetBValue(Src), rate );	}
@@ -96,8 +102,8 @@ namespace
 	constexpr COLORREF DoorColors[N_DoorColor] = {
 		RGB(128,86,64),
 		RGB(16,28,164),
-		RGB(12,164,28),
-		RGB(96,96,128)
+		RGB(8,160,24),
+		RGB(180,0,0)
 	};
 }
 
@@ -106,7 +112,7 @@ namespace
 namespace MazeDataImpl
 {
 	Win32MazeRenderer::Win32MazeRenderer( int ImgW, int ImgH, double HorizonalFOV_rad, double Far )
-		: m_ImgW(ImgW), m_ImgH(ImgH), m_hRenderTgtDC(NULL), m_BrightnessRate(1.0)
+		: m_ImgW(ImgW), m_ImgH(ImgH), m_hRenderTgtDC(NULL)
 	{
 		double PinholeCam_f = 0.5*ImgW / tan(HorizonalFOV_rad*0.5);
 		m_PinholeCam.SetIPVals( (ImgW-1)*0.5, (ImgH-1)*0.5, PinholeCam_f );

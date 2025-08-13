@@ -97,7 +97,7 @@ namespace Town
 	//çXêV
 	Flags<GUIResult> TownScene::Shop_UI::Update( const IController &Controller )
 	{
-		if( Controller.OpenPartyMenu() )
+		if( Controller.OpenCampMenu() )
 		{	m_Outer.Push_CampMenu_UI( nullptr );	return GUIResult::ReqRedraw;	}
 
 		Flags<GUIResult> Ret = ( m_LocalStack.Update( Controller )  ?  GUIResult::ReqRedraw  :  GUIResult::None );

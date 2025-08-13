@@ -67,7 +67,7 @@ namespace
 
 	inline unsigned char DoorOrNone( char c )
 	{
-		if( '0'<=c || c<='9' )
+		if( '0'<=c && c<='9' )
 		{	return (unsigned char)EdgeAttr::DOOR + (c-'0');	}
 		else
 		{	return (unsigned char)EdgeAttr::NONE;	}
@@ -111,15 +111,15 @@ namespace
 
 namespace MazeDataImpl
 {
-	std::vector< FloorData > LoadMazeMapFile( const std::string &MazeFilePathName, Vec2i &StartPos, Direction &StartDir )
+	std::vector< FloorData > LoadMazeMapFile( const std::string &MazeFilePathNameU8, Vec2i &StartPos, Direction &StartDir )
 	{
 		MapFileLoader::FileData Data;
 		{
 			MapFileLoader Loader;
-			if( !Loader.Load( MazeFilePathName, Data ) )
+			if( !Loader.Load( MazeFilePathNameU8, Data ) )
 			{
 				if( Loader.GetLastLineNum()<0 )
-				{	throw std::runtime_error( u8"File Open Err : " +  MazeFilePathName );	}
+				{	throw std::runtime_error( u8"File Open Err : " +  MazeFilePathNameU8 );	}
 				else
 				{	throw std::runtime_error( u8"Err at Line " + std::to_string( Loader.GetLastLineNum() ) + u8":\r\n" + Loader.GetLastLineStr() );	}
 			}

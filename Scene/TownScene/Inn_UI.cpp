@@ -140,7 +140,7 @@ namespace Town
 			return GUIResult::ReqRedraw;
 		}
 
-		if( Controller.OpenPartyMenu() )
+		if( Controller.OpenCampMenu() )
 		{	m_Outer.Push_CampMenu_UI( nullptr );	return GUIResult::ReqRedraw;	}
 
 		Flags<GUIResult> Ret = ( m_LocalStack.Update( Controller )  ?  GUIResult::ReqRedraw  :  GUIResult::None );

@@ -8,7 +8,7 @@ namespace Toyger{ class IWnd; }
 using InputState = Toyger::IInputState<uint8_t>;
 
 class IScene;
-namespace Town{	class TownScene;	}
+class ITownScene;
 
 class PlayData;
 
@@ -65,7 +65,9 @@ public:	// Toyger::IContentPainter Impl
 
 public:	// ITopLV Imp;
 	virtual PlayData &CurrPlayData() override;
+
 	virtual void ChangeToTownScene() override;
+	virtual void ChangeToMazeScene() override;
 	
 	virtual bool ChangeBGM( int BGM_index ) override;
 	virtual void StopBMG() override;
@@ -91,5 +93,6 @@ private:
 
 	//
 	IScene *m_pCurrScene = nullptr;	//カレントシーン
-	std::unique_ptr< Town::TownScene > m_upTownScene;	//テスト用
+	std::unique_ptr< ITownScene > m_upTownScene;
+	std::unique_ptr< IScene > m_upMazeScene;
 };

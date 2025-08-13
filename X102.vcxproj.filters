@@ -57,6 +57,9 @@
     <Filter Include="Game\MazeDataImpl">
       <UniqueIdentifier>{ad939a08-14d4-4576-bc47-7bff4f83c5a5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\Scene\MazeScene">
+      <UniqueIdentifier>{3ce03be5-9bd2-4890-bb57-2a02b24d8662}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -359,6 +362,9 @@
     <ClInclude Include="Parts\CvtStr2T.h">
       <Filter>Parts</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\MazeScene\MazeScene.h">
+      <Filter>Game\Scene\MazeScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -507,6 +513,9 @@
     </ClCompile>
     <ClCompile Include="Parts\CvtStr2T.cpp">
       <Filter>Parts</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MazeScene\MazeScene.cpp">
+      <Filter>Game\Scene\MazeScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

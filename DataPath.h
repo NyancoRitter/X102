@@ -18,21 +18,20 @@ namespace DataPath
 	/// <returns>UTF16．末尾にパス区切り記号 (/) が付いた文字列</returns>
 	inline std::wstring ImgDirU16(){	return ExeDirU16() + L"IMG/";	}
 
+	/// <summary>
+	/// データファイル
+	///   * マップデータファイル
+	///   * イベント定義ファイル
+	///   * イベントスクリプトファイル
+	/// を配置すべきディレクトリのパス
+	/// </summary>
+	/// <returns>末尾にパス区切り記号 (/) が付いた文字列<</returns>
+	inline std::string DataFileDirU8(){	return ExeDirU8() + u8"Data/";	}
+	
+	/// <summary>マップデータファイルのパス</summary>
+	/// <returns>UTF8</returns>
+	inline std::string MazeMapFilePathU8(){	return DataFileDirU8() + u8"MazeData.dat";	}
 
-	//
-	///// <summary>
-	///// データファイル
-	/////   * マップデータファイル
-	/////   * イベント定義ファイル
-	/////   * イベントスクリプトファイル
-	///// を配置すべきディレクトリのパス
-	///// </summary>
-	///// <returns>末尾にパス区切り記号 (/) が付いた文字列<</returns>
-	//std::string DataFileDirU8();
-	//
-	///// <summary>マップデータファイルのパス</summary>
-	///// <returns>UTF8</returns>
-	//std::string MazeMapFilePathU8();
 	//
 	///// <summary>イベント定義ファイルのパス</summary>
 	///// <returns>UTF8</returns>

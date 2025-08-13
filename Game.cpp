@@ -4,9 +4,11 @@
 #include "GlobalConst.h"
 #include "Toyger/Toyger_IWnd.h"
 #include "IController.h"
-
-#include "Scene/TownScene/TownScene.h"
+#include "IScene.h"
 #include "PlayData/PlayData.h"
+
+#include <stdexcept>
+#include "Parts/CvtUTF.h"
 
 //===============================================
 
@@ -31,8 +33,8 @@ namespace
 		//選択，キャンセル
 		virtual bool Select() const override {	return Toyger::PosEdge( m_rInput, 'Z' );	}
 		virtual bool Cancel() const override {	return Toyger::PosEdge( m_rInput, 'X' );	}
-		//パーティメニューを開く
-		virtual bool OpenPartyMenu() const override {	return Toyger::PosEdge( m_rInput, 'C' ) || Toyger::PosEdge( m_rInput, 'M' );	}
+		//キャンプメニューを開く
+		virtual bool OpenCampMenu() const override {	return Toyger::PosEdge( m_rInput, 'C' ) || Toyger::PosEdge( m_rInput, 'M' );	}
 
 		//アイテムの　キャラクタ←→ストック　移動
 		virtual bool MoveItem() const override {	return Toyger::PosEdge( m_rInput, 'S' );	}
@@ -42,10 +44,17 @@ namespace
 		//テキスト送り
 		virtual bool ToNextText() const override {	return Select() || Cancel();	}
 		//迷路内移動
+#if 0
 		virtual bool MoveFront() const override {	return Toyger::Pressed( m_rInput, VK_UP );	}
 		virtual bool MoveBack() const override {	return Toyger::Pressed( m_rInput, VK_DOWN );	}
 		virtual bool TurnLeft() const override {	return Toyger::Pressed( m_rInput, VK_LEFT );	}
 		virtual bool TurnRight() const override {	return Toyger::Pressed( m_rInput, VK_RIGHT );	}
+#else
+		virtual bool MoveFront() const override {	return Toyger::PosEdge( m_rInput, VK_UP );	}
+		virtual bool MoveBack() const override {	return Toyger::PosEdge( m_rInput, VK_DOWN );	}
+		virtual bool TurnLeft() const override {	return Toyger::PosEdge( m_rInput, VK_LEFT );	}
+		virtual bool TurnRight() const override {	return Toyger::PosEdge( m_rInput, VK_RIGHT );	}
+#endif
 		//迷路内で調べる
 		virtual bool Inspect() const override {	return Select();	}
 	};
@@ -165,12 +174,32 @@ void Game::ChangeCurrSceneTo( IScene *pScene )
 	m_pCurrScene->OnEnter();
 }
 
+//
 void Game::ChangeToTownScene()
 {
 	if( !m_upTownScene )
-	{	m_upTownScene = std::make_unique< Town::TownScene >( *this );	}
+	{	m_upTownScene = ITownScene::Create( *this );	}
 
 	ChangeCurrSceneTo( m_upTownScene.get() );
+}
+
+//
+void Game::ChangeToMazeScene()
+{
+	if( !m_upMazeScene )
+	{
+		try
+		{//このタイミングで迷路データLoad
+			m_upMazeScene = CreateMazeScene( *this );
+		}
+		catch( std::runtime_error &ex )
+		{
+			ShowMsgBox( L"迷路データ読込エラー", Cvt_UTF8_to_UTF16( ex.what() ) );
+			return;
+		}
+	}
+
+	ChangeCurrSceneTo( m_upMazeScene.get() );
 }
 
 //メッセージボックス表示

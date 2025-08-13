@@ -8,6 +8,9 @@
 #include "ITopLV.h"
 #include "CampMenu/CampMenu.h"
 
+std::unique_ptr<ITownScene> ITownScene::Create( ITopLV &rTopLV )
+{	return std::make_unique< Town::TownScene >( rTopLV );	}
+
 namespace Town
 {
 
@@ -48,9 +51,7 @@ namespace Town
 		TgtStack.Push( std::make_unique<CampMenu>( CurrPlayData() ) );
 	}
 
-	void TownScene::GoTo_Maze()
-	{
-	}
-
+	void TownScene::GoTo_Maze(){	m_rTopLV.ChangeToMazeScene();	}
 	PlayData &TownScene::CurrPlayData(){	return m_rTopLV.CurrPlayData();	}
+	void TownScene::SetImgToOutskirts(){	m_upTownCenterUI->SetImgToOutskirts();	}
 }

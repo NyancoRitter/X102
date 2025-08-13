@@ -51,6 +51,12 @@
     <Filter Include="Game\ActProc">
       <UniqueIdentifier>{4b408cbe-76f7-4460-9acc-fc663475d3c9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Game\MazeRendering">
+      <UniqueIdentifier>{44b0cd7f-91fe-43da-af65-5b5b111e441f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\MazeDataImpl">
+      <UniqueIdentifier>{ad939a08-14d4-4576-bc47-7bff4f83c5a5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
@@ -311,6 +317,48 @@
     <ClInclude Include="Scene\TownScene\PartyEditUI.h">
       <Filter>Game\Scene\TownScene</Filter>
     </ClInclude>
+    <ClInclude Include="MazeRendering\IMazeData.h">
+      <Filter>Game\MazeRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeRendering\MazeRendering.h">
+      <Filter>Game\MazeRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeRendering\PinholeCamera.h">
+      <Filter>Game\MazeRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeRendering\RenderProp.h">
+      <Filter>Game\MazeRendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\Mat3x3.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\Vec3D.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeDataImpl\MazeDataDefs.h">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeDataImpl\Win32MazeRenderer.h">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeDataImpl\WireFrameObj.h">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeDataImpl\Direction.h">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeDataImpl\FloorData.h">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\UC2DIndexVector.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
+    <ClInclude Include="MazeDataImpl\LoadMazeDataFile.h">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClInclude>
+    <ClInclude Include="Parts\CvtStr2T.h">
+      <Filter>Parts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -444,6 +492,21 @@
     </ClCompile>
     <ClCompile Include="Scene\TownScene\PartyEditUI.cpp">
       <Filter>Game\Scene\TownScene</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeRendering\MazeRendering.cpp">
+      <Filter>Game\MazeRendering</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeDataImpl\Win32MazeRenderer.cpp">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeDataImpl\WireFrameObj.cpp">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="MazeDataImpl\LoadMazeDataFile.cpp">
+      <Filter>Game\MazeDataImpl</Filter>
+    </ClCompile>
+    <ClCompile Include="Parts\CvtStr2T.cpp">
+      <Filter>Parts</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

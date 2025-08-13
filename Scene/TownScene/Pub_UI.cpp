@@ -11,6 +11,7 @@
 #include "PlayData/PlayData.h"
 
 #include "ResManage/BmpBank.h"
+#include "PartyEditUI.h"
 
 using namespace GUI;
 
@@ -98,7 +99,7 @@ namespace Town
 	Flags<GUIResult> TownScene::Pub_UI::Update( const IController &Controller )
 	{
 		if( Controller.OpenPartyMenu() )
-		{	m_Outer.Push_CampMenu_UI();	return GUIResult::ReqRedraw;	}
+		{	m_Outer.Push_CampMenu_UI( &m_LocalStack );	return GUIResult::ReqRedraw;	}
 
 		Flags<GUIResult> Ret = ( m_LocalStack.Update( Controller )  ?  GUIResult::ReqRedraw  :  GUIResult::None );
 		if( m_LocalStack.empty() ){	Ret |= GUIResult::Finished;	}
@@ -124,11 +125,25 @@ namespace Town
 			{
 				switch( m_MenuContent.CursorPos() )
 				{
-				case 0:		break;
-				case 1:		break;
-				case 2:	m_Outer.Push_Inn_UI();	return ( GUIResult::ReqRedraw | GUIResult::Finished );	break;
-				case 3:	return ( GUIResult::ReqRedraw | GUIResult::Finished );	break;
-				default:	break;
+				case 0:	//パーティ編成
+					{
+						auto upUI = std::make_unique<PartyEditUI>( m_Outer.CurrPlayData() );
+						upUI->XCenter( GlobalConst::GC_W ).YCenter( GlobalConst::GC_H );
+						m_LocalStack.Push( std::move(upUI) );
+						return GUIResult::ReqRedraw;
+					}
+					break;
+				case 1:	//LV UP
+					break;
+				case 2:	//酒場へ
+					m_Outer.Push_Inn_UI();
+					return ( GUIResult::ReqRedraw | GUIResult::Finished );
+					break;
+				case 3:	//出る
+					return ( GUIResult::ReqRedraw | GUIResult::Finished );
+					break;
+				default:
+					break;
 				}
 			}
 			break;

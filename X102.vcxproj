@@ -160,6 +160,7 @@
     <ClInclude Include="Rnd.h" />
     <ClInclude Include="Scene\IScene.h" />
     <ClInclude Include="Scene\TownScene\Inn_UI.h" />
+    <ClInclude Include="Scene\TownScene\PartyEditUI.h" />
     <ClInclude Include="Scene\TownScene\Pub_UI.h" />
     <ClInclude Include="Scene\TownScene\Shop_UI.h" />
     <ClInclude Include="Scene\TownScene\TownCenter_UI.h" />
@@ -210,6 +211,7 @@
     <ClCompile Include="ResManage\MonoBmpHolder.cpp" />
     <ClCompile Include="ResManage\SoundBank.cpp" />
     <ClCompile Include="Scene\TownScene\Inn_UI.cpp" />
+    <ClCompile Include="Scene\TownScene\PartyEditUI.cpp" />
     <ClCompile Include="Scene\TownScene\Pub_UI.cpp" />
     <ClCompile Include="Scene\TownScene\Shop_UI.cpp" />
     <ClCompile Include="Scene\TownScene\TownCenter_UI.cpp" />

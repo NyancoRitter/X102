@@ -67,31 +67,33 @@ bool CampMenu::Affect( const ActEfficacy &Efficacy, TgtRange Range, int iTgtOrde
 		Results = Efficacy( CharSpecifier(m_iCurrChar), std::move(Tgts), UseCtxt{m_rPlayData} );
 	}
 
-	{//効果エフェクト
+	{//有効な効果が１つも生じていない場合は「使用を棄却（無かったことにする）」
 		bool AnyValid = false;
 		for( const auto &R : Results )
 		{
 			if( const auto *p=std::get_if<HPChanged>( &R ); p )
 			{
-				if( AnyValid  ||  ( p->PrevHP < p->AfterHP ) )
-				{
-					AnyValid = true;
-					const auto ViewRect = m_upTopLVMenu->CharViewRect( p->TgtChar.m_Order );
-					m_EffectList.PushBack( CreateHPRecovEffect( p->Amount, (ViewRect.TopLeft()+ViewRect.RightBottom())/2, 4 ) );
-				}
+				if( ( p->PrevHP < p->AfterHP ) )
+				{	AnyValid = true;	break;	}
 			}
 			else if( const auto *p=std::get_if<PoisonCured>( &R ); p )
+			{	AnyValid = true;	break;	}
+		}
+		if( !AnyValid )return false;
+	}
+
+	{//効果エフェクト
+		//※現実装では，決め打ちで回復時用効果音を鳴らす
+		ResManage::PlaySE( ResManage::SE::Cure );
+
+		for( const auto &R : Results )
+		{
+			if( const auto *p=std::get_if<HPChanged>( &R ); p )
 			{
-				AnyValid = true;
-				m_EffectList.PushBack( CreatePoisonCuredEffect() );
+				const auto ViewRect = m_upTopLVMenu->CharViewRect( p->TgtChar.m_Order );
+				m_EffectList.PushBack( CreateHPRecovEffect( p->Amount, (ViewRect.TopLeft()+ViewRect.RightBottom())/2, 4 ) );
 			}
 		}
-
-		//有効な効果が１つも生じていない場合は「使用を棄却（無かったことにする）」
-		if( !AnyValid )return false;
-
-		//※現実装では，決め打ちで効果音を鳴らす
-		ResManage::PlaySE( ResManage::SE::Cure );
 	}
 
 	//キャラクタ選択メニューの表示更新
@@ -105,10 +107,13 @@ void CampMenu::OnMagicSelected( const GameContent::Magic &Magic )
 	const auto *pUser = CurrSelChar();
 	if( !pUser )return;
 
+	//使用者がHP的に行動不能でないかをチェック
+	if( pUser->HP()<=0 )return;
+
 	//ここでは味方を対象とする魔法しか使えない
 	if( !IsForFriend( Magic.Range() ) )return;
 
-	{	//MP残量チェック
+	{//MP残量チェック
 		const auto Spell = Magic.Spell();
 		if( pUser->MP( Spell.first )<=0  ||  pUser->MP( Spell.second )<=0 )return;
 	}

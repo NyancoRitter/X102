@@ -79,7 +79,7 @@ namespace Town
 	Flags<GUIResult> TownScene::TownCenter_UI::Update( const IController &Controller )
 	{
 		if( Controller.OpenPartyMenu() )
-		{	m_Outer.Push_CampMenu_UI();	return GUIResult::ReqRedraw;	}
+		{	m_Outer.Push_CampMenu_UI( nullptr );	return GUIResult::ReqRedraw;	}
 
 		using namespace GUI::Menu;
 

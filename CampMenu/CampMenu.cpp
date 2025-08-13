@@ -117,10 +117,10 @@ void CampMenu::OnTopLVMenuCursorMoved( int CharOrder, int CmdOrder )
 
 void CampMenu::OnTopLVMenuSelected( int CharOrder, int CmdOrder )
 {
+	if( m_rPlayData.CurrParty().empty() )return;
+
 	if( m_Pages[CmdOrder]->CanEnter() )
-	{
-		m_LocalStack.Push( std::make_unique<GUI::RefWrapper>( *m_Pages[CmdOrder] ) );
-	}
+	{	m_LocalStack.Push( std::make_unique<GUI::RefWrapper>( *m_Pages[CmdOrder] ) );	}
 }
 
 void CampMenu::PushTgtCharSelector( bool ForAll, const std::function< Flags<GUI::GUIResult>( bool, int ) > &Callback )

@@ -308,6 +308,9 @@
     <ClInclude Include="GameContent\Item.h">
       <Filter>Game\GameContent</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\TownScene\PartyEditUI.h">
+      <Filter>Game\Scene\TownScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -438,6 +441,9 @@
     </ClCompile>
     <ClCompile Include="GameContent\Item.cpp">
       <Filter>Game\GameContent</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\TownScene\PartyEditUI.cpp">
+      <Filter>Game\Scene\TownScene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

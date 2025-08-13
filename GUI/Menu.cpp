@@ -22,16 +22,24 @@ namespace GUI::Menu
 	Menu &Menu::UpdateScrollState()
 	{
 		const int nSpc = ActualItemAreaSpace();
-		if( !m_pContent  ||  m_pContent->nItems()<=nSpc )
-		{	m_iDrawBegin = 0;	return *this;	}
 
+		if( !m_pContent  ||  m_pContent->nItems()<=nSpc )
+		{//スクロール不要
+			m_iDrawBegin = 0;
+			return *this;
+		}
+
+		//スクロール位置調整
 		int iCursorPos = m_pContent->CursorPos();
 		if( iCursorPos < 0 )
 		{	m_iDrawBegin = 0;	}
-		else if( iCursorPos<m_iDrawBegin )
+		else if( iCursorPos<m_iDrawBegin )	//カーソル上移動時
 		{	m_iDrawBegin = iCursorPos;	}
-		else if( m_iDrawBegin+nSpc <= iCursorPos )
+		else if( m_iDrawBegin+nSpc <= iCursorPos )	//カーソル下移動時
 		{	m_iDrawBegin = iCursorPos - (nSpc-1);	}
+
+		if( m_iDrawBegin+nSpc-1 >= m_pContent->nItems() )	//項目数減少時
+		{	m_iDrawBegin = m_pContent->nItems() - nSpc;	}
 
 		return *this;
 	}
@@ -117,7 +125,7 @@ namespace GUI::Menu
 			{
 				HPEN OldPen = SelectPen( hdc, GetStockPen( BLACK_PEN ) );
 				HBRUSH OldBrush = SelectBrush( hdc, GetStockBrush( DC_BRUSH ) );
-				SetDCPenColor( hdc, Color::White );
+				SetDCBrushColor( hdc, Color::White );
 
 				constexpr int EdgeLength = 12;
 				if( CanScrollToDecDir )

@@ -34,8 +34,11 @@ namespace Town
 		void Push_Inn_UI();
 		void Push_Pub_UI();
 		void Push_Shop_UI();
-		void Push_CampMenu_UI();
 		void GoTo_Maze();
+
+		//キャンプメニューを開く：引数スタックに積む．
+		//ただし引数が nullptr である場合には，このオブジェクトが所有するスタックに積む．
+		void Push_CampMenu_UI( GUI::GUIStack *pStack );
 
 	public:
 		ITopLV &m_rTopLV;

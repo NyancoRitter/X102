@@ -42,7 +42,11 @@ namespace Town
 	void TownScene::Push_Inn_UI(){	m_Stack.Push( std::make_unique<Inn_UI>( *this ) );	}
 	void TownScene::Push_Pub_UI(){	m_Stack.Push( std::make_unique<Pub_UI>( *this ) );	}
 	void TownScene::Push_Shop_UI(){	m_Stack.Push( std::make_unique<Shop_UI>( *this ) );	}
-	void TownScene::Push_CampMenu_UI(){	m_Stack.Push( std::make_unique<CampMenu>( CurrPlayData() ) );	}
+	void TownScene::Push_CampMenu_UI( GUI::GUIStack *pStack )
+	{
+		auto &TgtStack = ( pStack ? *pStack : m_Stack );
+		TgtStack.Push( std::make_unique<CampMenu>( CurrPlayData() ) );
+	}
 
 	void TownScene::GoTo_Maze()
 	{

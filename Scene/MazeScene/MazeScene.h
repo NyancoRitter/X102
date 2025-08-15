@@ -5,12 +5,17 @@
 #include "MazeDataImpl/FloorData.h"
 #include "MazeDataImpl/Win32MazeRenderer.h"
 #include <string>
+#include <memory>
+#include "Common/EffectList.h"
 
 class ITopLV;
 class PlayData;
 
 namespace Maze
 {
+	class WalkEffect;
+	class TurnEffect;
+
 	/// <summary>
 	/// 迷路探索シーン
 	/// </summary>
@@ -40,16 +45,14 @@ namespace Maze
 		//void PlayMazeBGM();
 
 	private:
-#if 0
 		//※移動と旋回処理は頻繁に使うので同一インスタンスを使い回す
-		WalkEffect m_WalkEffect;
-		TurnEffect m_TurnEffect;
+		std::unique_ptr<WalkEffect> m_upWalkEffect;
+		std::unique_ptr<TurnEffect> m_upTurnEffect;
 
 		//各種エフェクトの速度
 		static inline const int ms_nAnimFrame_Walk = 8;
 		static inline const int ms_nAnimFrame_Turn = 8;
 		static inline const int ms_nAnimFrame_Ladder = 40;
-#endif
 
 	private:
 		//迷路探索中操作
@@ -63,9 +66,6 @@ namespace Maze
 			virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override {	return m_Outer.UsualUpdate(Controller);	}
 			//virtual void OnGotFocus() override {	m_Outer.m_bShowPosInfo = true;	}
 			//virtual void OnLostFocus() override {	m_Outer.m_bShowPosInfo = false;	}
-			virtual Vec2i TopLeft() const override {	return Vec2i();	}	//未使用
-			virtual IPainter &TopLeft( const Vec2i &TL ) override {	return *this;	}	//未使用
-			virtual Vec2i Size() const override {	return Vec2i();	}	//未使用
 		protected:
 			virtual void Paint_( HDC hdc ) const override {	m_Outer.UsualPaint(hdc);	}
 		};
@@ -76,6 +76,7 @@ namespace Maze
 	private:
 		ITopLV &m_rTopLV;
 		GUI::GUIStack m_Stack;
+		EffectList m_EffectList;
 		MazeDataImpl::Win32MazeRenderer m_Renderer;
 
 		UsualUpdater m_UsualUpdater;

@@ -26,11 +26,6 @@ namespace Town
 
 		virtual void OnGotFocus() override {	this->Visible(true);	}
 		virtual void OnLostFocus() override {	this->Visible(false);	}
-
-		virtual Vec2i TopLeft() const override {	return Vec2i();	}	//¦g‚í‚È‚¢‚Ì‚ÅDummyÀ‘•
-		virtual TownCenter_UI &TopLeft( const Vec2i &TL ) override {	return *this;	}	//¦g‚í‚È‚¢‚Ì‚ÅDummyÀ‘•
-		virtual Vec2i Size() const override {	return Vec2i();	}	//¦g‚í‚È‚¢‚Ì‚ÅDummyÀ‘•
-
 	protected:
 		virtual void Paint_( HDC hdc ) const override;
 

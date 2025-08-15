@@ -36,11 +36,6 @@ namespace GUI::Menu
 
 		virtual void OnGotFocus() override {	m_rMenu.IsFocused(true);	}
 		virtual void OnLostFocus() override {	m_rMenu.IsFocused(false);	}
-
-		virtual Vec2i TopLeft() const override {	return m_rMenu.TopLeft();	}
-		virtual MenuAsGUI &TopLeft( const Vec2i &TL ) override {	m_rMenu.TopLeft(TL);	return *this;	}
-		virtual Vec2i Size() const override {	return m_rMenu.Size();	}
-
 	protected:
 		virtual void Paint_( HDC hdc ) const override {	m_rMenu.Paint( hdc );	}
 

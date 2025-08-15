@@ -129,6 +129,7 @@
     <ClInclude Include="GUI\IMenuItem.h" />
     <ClInclude Include="GUI\ImgPainter.h" />
     <ClInclude Include="GUI\IPainter.h" />
+    <ClInclude Include="GUI\IRectReg.h" />
     <ClInclude Include="GUI\MenuAsGUI.h" />
     <ClInclude Include="GUI\SimpleSelection.h" />
     <ClInclude Include="GUI\TextLinePainter.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Rnd.h" />
     <ClInclude Include="Scene\IScene.h" />
     <ClInclude Include="Scene\MazeScene\MazeScene.h" />
+    <ClInclude Include="Scene\MazeScene\MoveEffect.h" />
     <ClInclude Include="Scene\TownScene\Inn_UI.h" />
     <ClInclude Include="Scene\TownScene\PartyEditUI.h" />
     <ClInclude Include="Scene\TownScene\Pub_UI.h" />

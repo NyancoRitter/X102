@@ -194,13 +194,8 @@ namespace GUI
 		virtual void OnLostFocus() override {	m_rGUI.OnLostFocus();	}
 		virtual void OnPushed() override {	m_rGUI.OnPushed();	}
 		virtual void OnPrePopped() override {	m_rGUI.OnPrePopped();	}
-		virtual Vec2i TopLeft() const override {	return m_rGUI.TopLeft();	}
-		virtual RefWrapper &TopLeft( const Vec2i &TL ) override {	m_rGUI.TopLeft(TL);	return *this;	}
-		virtual Vec2i Size() const override {	return m_rGUI.Size();	}
-
 	protected:
 		virtual void Paint_( HDC hdc ) const override {	m_rGUI.Paint(hdc);	}
-
 	private:
 		IGUI &m_rGUI;
 	};

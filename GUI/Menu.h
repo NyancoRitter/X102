@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IPainter.h"
+#include "IRectReg.h"
 #include "HandleMenuInput.h"
 
 namespace GUI::Menu
@@ -12,24 +13,22 @@ namespace GUI::Menu
 	///   当然，対象の寿命に関する注意が必要．
 	/// * 描画のための各種設定を保持．
 	/// </summary>
-	class Menu : public IPainter
+	class Menu : public IPainter, public IRectReg
 	{
 	public:
 		/// <summary>ctor</summary>
 		/// <param name="pContent">描画対象</param>
 		Menu( IMenuContent *pContent = nullptr ){	SetContent( pContent );	}
 
-	public:	// IPainter Impl
+	public:	// IRectReg Impl
 		virtual Vec2i TopLeft() const override{	return m_TopLeft;	}
 		virtual Menu &TopLeft( const Vec2i &TL ) override {	m_TopLeft = TL;	return *this;	}
 
 		/// <summary>描画範囲サイズ．</summary>
-		/// <returns>
-		/// サイズ．ただし SetContent() で有効な描画対象を指定していない状態では不定．
-		/// </returns>
+		/// <returns>サイズ．ただし SetContent() で有効な描画対象を指定していない状態では不定．</returns>
 		virtual Vec2i Size() const override;
 
-	protected:
+	protected:	// IPainter Impl
 		/// <summary>
 		/// 描画．ただし SetContent() で有効な描画対象を指定していない状態では何もしない．
 		/// </summary>

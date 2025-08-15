@@ -365,6 +365,12 @@
     <ClInclude Include="Scene\MazeScene\MazeScene.h">
       <Filter>Game\Scene\MazeScene</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\MazeScene\MoveEffect.h">
+      <Filter>Game\Scene\MazeScene</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\IRectReg.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">

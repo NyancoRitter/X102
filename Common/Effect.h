@@ -3,7 +3,10 @@
 #include <functional>
 #include <list>
 
-//アニメーション等の表示用
+/// <summary>
+/// 何からの入力無しの更新ができるもの．
+/// 物によっては何かを描画する(アニメーション等の表示用)．
+/// </summary>
 class IEffect
 {
 public:

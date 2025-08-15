@@ -1,6 +1,7 @@
 #pragma once
 
 #include "IPainter.h"
+#include "IRectReg.h"
 
 class CMonoBMP;
 
@@ -10,7 +11,7 @@ namespace GUI
 	/// <summary>
 	/// モノクロ画像を描画する
 	/// </summary>
-	class MonoImgPainter : public IPainter
+	class MonoImgPainter : public IPainter, public IRectReg
 	{
 	public:
 		/// <summary>ctor</summary>
@@ -39,15 +40,13 @@ namespace GUI
 		/// <returns>*this</returns>
 		MonoImgPainter &TransBit0Part( bool Trans ){	m_TransBit0Part=Trans;	return *this;	}
 
-	public:	// IPainter Impl
+	public:	// IRectReg Impl
 		virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
 		virtual MonoImgPainter &TopLeft( const Vec2i &TL ) override  {	m_TopLeft=TL;	return *this;	}
 
 		//描画対象画像のサイズを返す．ただし画像が設定されていない状況では(0,0)を返す．
 		virtual Vec2i Size() const override;
-	protected:
-		/// <summary>描画処理．画像が設定されていない場合には何もしない</summary>
-		/// <param name="hdc">描画対象</param>
+	protected:	// IPainter Impl
 		virtual void Paint_( HDC hdc ) const override;
 
 	private:

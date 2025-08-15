@@ -29,10 +29,6 @@ public:
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
 	//virtual void OnGotFocus() override;
-
-	virtual Vec2i TopLeft() const override {	return Vec2i();	}	//Å¶égÇÌÇ»Ç¢ÇÃÇ≈Dummyé¿ëï
-	virtual CampMenu &TopLeft( const Vec2i &TL ) override {	return *this;	}	//Å¶égÇÌÇ»Ç¢ÇÃÇ≈Dummyé¿ëï
-	virtual Vec2i Size() const override {	return Vec2i();	}	//Å¶égÇÌÇ»Ç¢ÇÃÇ≈Dummyé¿ëï
 protected:
 	virtual void Paint_( HDC hdc ) const override;
 

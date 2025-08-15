@@ -17,6 +17,7 @@
 
 #include "CampMenu/CampMenu.h"
 #include "MazeDataImpl/LoadMazeDataFile.h"
+#include "MoveEffect.h"
 
 using namespace GUI;
 using namespace MazeDataImpl;
@@ -41,6 +42,9 @@ namespace Maze
 	{
 		//ファイルから迷路データをLoad（失敗時は例外送出）
 		m_MazeMap = LoadMazeMapFile( MazeFilePathU8, m_StartPos, m_StartDir );
+
+		m_upWalkEffect = std::make_unique<WalkEffect>( m_Renderer );
+		m_upTurnEffect = std::make_unique<TurnEffect>( m_Renderer );
 	}
 
 	//
@@ -52,26 +56,28 @@ namespace Maze
 		m_ShouldBackToTown = false;
 		
 		m_Renderer.ResetCamera( m_StartPos, m_StartDir );
-		m_Renderer.SetBrightnessRate( /*0*/1.0 );
+		m_Renderer.SetBrightnessRate( 0 );
 
-		m_Stack.clear( false );
-		m_Stack.Push( std::make_unique<RefWrapper>( m_UsualUpdater ) );
+		
 		//m_bShowPosInfo = false;
 
-		//m_EffectList.clear();
+		m_EffectList.clear();
 		//{
 		//	auto spPainter = std::make_shared< UI::FramedTextPainter >( GC_W-4, 40 );
 		//	spPainter->Text( u8"=== ENTERING THE MAZE OF PALMETINA ===" ).TopLeft( {0,2} ).XCenter( GC_W );
 		//	constexpr int Wait = 12;
 		//	m_EffectList.Push_Front( std::make_shared<UI::DispForCertainPeriod>( spPainter, ms_nAnimFrame_Ladder+Wait, Wait ) );
 		//}
-		//m_EffectList.Push_Back( LadderEffect::DownFromCeil( m_Renderer, ms_nAnimFrame_Ladder ) );
-		//m_EffectList.Push_Back( std::make_unique<UI::SimpleTask>( [&f=m_bShowPosInfo]()->bool{	f=true;	return false;	} ) );
+		m_EffectList.PushBack( LadderEffect::DownFromCeil( m_Renderer, ms_nAnimFrame_Ladder ) );
+		//m_EffectList.PushBack( std::make_unique<UI::SimpleTask>( [&f=m_bShowPosInfo]()->bool{	f=true;	return false;	} ) );
+
+		m_Stack.clear( false );
+		m_Stack.Push( std::make_unique<RefWrapper>( m_UsualUpdater ) );
 	}
 
 	void MazeScene::OnLeave()
 	{
-		//m_EffectList.clear();
+		m_EffectList.clear();
 		m_Stack.clear( false );
 	}
 
@@ -80,15 +86,12 @@ namespace Maze
 	{
 		//bool NeedToRedraw = false;
 
-		////エフェクト処理
-		//if( !m_EffectList.empty() )
-		//{
-		//	m_EffectList.Update();
-		//	NeedToRedraw = true;
-
-		//	if( m_EffectList.SuppressSubsequents() )
-		//	{	return NeedToRedraw;	}
-		//}
+		//エフェクト処理
+		if( !m_EffectList.empty() )
+		{
+			m_EffectList.Update();
+			return SceneUpdateResult::ReqRedraw;
+		}
 
 		//町に戻る処理
 		if( m_ShouldBackToTown )

@@ -2,6 +2,7 @@
 
 #include "GUI/IGUI.h"
 #include "GUI/Menu.h"
+#include "GUI/IRectReg.h"
 #include "Common/CharSelMenuContent.h"
 
 class PlayData;
@@ -15,20 +16,20 @@ namespace Town
 	/// 
 	/// Žg‚¢‰ñ‚³‚ê‚È‚¢‚±‚Æ‚ª‘O’ñ‚ÌŽÀ‘•‚É‚È‚Á‚Ä‚¢‚é
 	/// </summary>
-	class PartyEditUI : public GUI::IGUI
+	class PartyEditUI : public GUI::IGUI, public GUI::IRectReg
 	{
 	public:
 		PartyEditUI( PlayData &rPlayData );
 
 	public:	// IGUI Impl
 		virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
-		virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
-		virtual PartyEditUI &TopLeft( const Vec2i &TL ) override;
-		virtual Vec2i Size() const override;
-
 		virtual void OnGotFocus() override;
 	protected:
 		virtual void Paint_( HDC hdc ) const override;
+	public:	// IRectReg Impl
+		virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
+		virtual PartyEditUI &TopLeft( const Vec2i &TL ) override;
+		virtual Vec2i Size() const override;
 
 	private:
 		void SwitchFocusTo( int iMenu );

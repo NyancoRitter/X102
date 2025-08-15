@@ -1,22 +1,23 @@
 #pragma once
 
 #include "GUI/IPainter.h"
+#include "GUI/IRectReg.h"
 #include <vector>
 #include <memory>
 class CMonoBMP;
 
 //画像を用いて数値を表示する
-class ValueImgPainter : public GUI::IPainter
+class ValueImgPainter : public GUI::IPainter, public GUI::IRectReg
 {
 public:
 	//ctor. 表示値を指定して構築
 	ValueImgPainter( unsigned int val );
 
-public:	//IPainter Impl
+public:	//IRectReg Impl
 	virtual ValueImgPainter &TopLeft( const Vec2i &Pos ) override {	m_TopLeft=Pos;	return *this;	}
 	virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
 	virtual Vec2i Size() const override;
-protected:
+protected:	//IPainter Impl
 	virtual void Paint_( HDC hdc ) const override;
 
 public:

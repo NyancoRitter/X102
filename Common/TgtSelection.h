@@ -59,9 +59,6 @@ namespace GUI
 
 	public:	// IGUI Impl
 		virtual Flags<GUIResult> Update( const IController &Controller ) override;
-		virtual Vec2i TopLeft() const override {	return m_ItemRects.front().TopLeft();	}
-		virtual TgtSelection &TopLeft( const Vec2i &TL ) override {	return *this;	}	//Å¶ã@î\ÇµÇ»Ç¢
-		virtual Vec2i Size() const override {	return Vec2i();	}	//Å¶égÇÌÇ»Ç¢ÇÃÇ≈Dummyé¿ëï
 	protected:
 		virtual void Paint_( HDC hdc ) const override;
 

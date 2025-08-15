@@ -1,5 +1,6 @@
 #pragma once
 #include "IPainter.h"
+#include "IRectReg.h"
 #include <vector>
 #include <string>
 
@@ -9,7 +10,7 @@ namespace GUI
 	/// <summary>
 	/// テキストを何行か表示する
 	/// </summary>
-	class TextLinePainter : public IPainter
+	class TextLinePainter : public IPainter, public IRectReg
 	{
 	public:
 		//ctor
@@ -72,13 +73,11 @@ namespace GUI
 		/// <returns>*this</returns>
 		TextLinePainter &SetColor( COLORREF col ){	m_Color = col;	return *this;	}
 
-	public:	// IPainter Impl
+	public:	// IRectReg Impl
 		virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
 		virtual TextLinePainter &TopLeft( const Vec2i &TL ) override  {	m_TopLeft=TL;	return *this;	}
 		virtual Vec2i Size() const override {	return Vec2i{ m_LineW, m_LineH*(int)m_TextLinesU16.size() };	}
-	protected:
-		/// <summary>描画処理</summary>
-		/// <param name="hdc">描画対象</param>
+	protected:	// IPainter Impl
 		virtual void Paint_( HDC hdc ) const override;
 
 	private:

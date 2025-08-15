@@ -4,6 +4,7 @@
 #include <functional>
 #include "GameContent/Spell.h"
 #include "GUI/IGUI.h"
+#include "GUI/IRectReg.h"
 
 #include "GUI/Menu.h"
 #include "GUI/GenericMenuContent.h"
@@ -17,7 +18,7 @@ namespace GameContent
 /// <summary>
 /// 魔法選択用 UI
 /// </summary>
-class MagicSelUI final : public GUI::IGUI
+class MagicSelUI final : public GUI::IGUI, public GUI::IRectReg
 {
 public:
 	using OnIndicatedMagicChanged = std::function< Flags<GUI::GUIResult>() >;
@@ -71,12 +72,12 @@ public:	//コールバックの設定
 
 public:	// IGUI Impl
 	virtual Flags<GUI::GUIResult> Update( const IController &Controller ) override;
-
+protected:
+	virtual void Paint_( HDC hdc ) const override;
+public:	// IRectReg Impl
 	virtual Vec2i TopLeft() const override {	return m_Menu[0].TopLeft();	}
 	virtual MagicSelUI &TopLeft( const Vec2i &TL ) override;
 	virtual Vec2i Size() const override;
-protected:
-	virtual void Paint_( HDC hdc ) const override;
 
 private:
 	void SwitchFocusTo( int iMenu );

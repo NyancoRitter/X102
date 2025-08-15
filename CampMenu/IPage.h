@@ -19,9 +19,4 @@ public:
 	/// </summary>
 	/// <returns></returns>
 	virtual bool CanEnter() const = 0;
-
-public:	// IGUI Impl
-	virtual Vec2i TopLeft() const override {	return Vec2i{};	}	//¦g‚í‚È‚¢‚Ì‚ÅDummyÀ‘•
-	virtual IPainter &TopLeft( const Vec2i &TL ){	return *this;	}	//¦g‚í‚È‚¢‚Ì‚ÅDummyÀ‘•
-	virtual Vec2i Size() const override {	return Vec2i{};	}	//¦g‚í‚È‚¢‚Ì‚ÅDummyÀ‘•
 };

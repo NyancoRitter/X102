@@ -5,6 +5,7 @@
 #include "IGUI.h"
 #include "GenericMenuContent.h"
 #include "Menu.h"
+#include "IRectReg.h"
 
 namespace GUI::Menu
 {
@@ -15,7 +16,7 @@ namespace GUI::Menu
 	/// 1行のテキストの下に（横線を挟んで）単純な選択メニューを表示する．
 	///		<remarks>ちょっとした Yes/No みたいなのを出す用</remarks>
 	/// </summary>
-	class SimpleSelection : public IGUI
+	class SimpleSelection : public IGUI, public IRectReg
 	{
 	public:
 		SimpleSelection( const std::wstring &MsgText, const Vec2i &ItemDrawSize )
@@ -72,12 +73,12 @@ namespace GUI::Menu
 		virtual Flags<GUIResult> Update( const IController &Controller ) override;
 		virtual void OnGotFocus() override;
 		virtual void OnLostFocus() override;
-	
+	protected:
+		virtual void Paint_( HDC hdc ) const override;
+	public:	// IRectReg Impl
 		virtual Vec2i TopLeft() const override {	return m_TopLeft;	}
 		virtual SimpleSelection &TopLeft( const Vec2i &TL ) override {	m_TopLeft=TL;	UpdateMenuPos();	return *this;	}
 		virtual Vec2i Size() const override;
-	protected:
-		virtual void Paint_( HDC hdc ) const override;
 
 	private:
 		void UpdateMenuPos();

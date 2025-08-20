@@ -2,11 +2,9 @@
 
 #include "GUI/IGUI.h"
 #include "Common/MoneyView.h"
-#include "Common/EffectList.h"
+#include "Common/Effect.h"
 #include "ActProc/ActEfficacy.h"
 #include "ActProc/TgtRange.h"
-
-//class CMonoBMP;
 
 class PlayData;
 class TgtSpecifier;
@@ -108,6 +106,8 @@ private:
 	PlayData &m_rPlayData;
 
 	GUI::GUIStack m_LocalStack;
+	CmdSequence<> m_Effects;
+	PainterSeq m_EffectsPainter;
 	MoneyView m_MoneyView;
 
 	int m_iCurrChar = -1;
@@ -118,11 +118,8 @@ private:
 	std::unique_ptr<MagicPage> m_upMagicPage;
 	IPage *m_Pages[3];
 
-	EffectList m_EffectList;
-
 private:	//レイアウト用
 	//ページ表示領域の枠
 	static const Rect MainAreaRect;
-
 };
 

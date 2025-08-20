@@ -13,7 +13,7 @@
 
 #include "ResManage/BmpBank.h"
 #include "Common/CharDrawColor.h"
-#include "Common/EffectImpls.h"
+#include "Common/Effect.h"
 #include "ResManage/SoundBank.h"
 
 using namespace GUI;
@@ -128,22 +128,30 @@ namespace Town
 		m_LocalStack.Paint( hdc );
 
 		//エフェクト
-		m_EffectList.Paint( hdc );
+		m_EffectsPainter.Paint( hdc );
 	}
 
 	//更新
 	Flags<GUIResult> TownScene::Inn_UI::Update( const IController &Controller )
 	{
-		if( !m_EffectList.empty() )
+		bool NeedToRedraw = false;
+
+		if( !m_Effects.empty() )
 		{
-			m_EffectList.Update();
-			return GUIResult::ReqRedraw;
+			const auto result = UpdateCmdSeq( m_Effects );
+
+			if( result.Has( CmdResult::ReqRedraw ) )
+			{	NeedToRedraw = true;	}
+
+			if( result.Has( CmdResult::SuppressSubsequents ) )
+			{	return ( NeedToRedraw  ?  GUIResult::ReqRedraw  :  GUIResult::None );	}
 		}
 
 		if( Controller.OpenCampMenu() )
 		{	m_Outer.Push_CampMenu_UI( nullptr );	return GUIResult::ReqRedraw;	}
 
-		Flags<GUIResult> Ret = ( m_LocalStack.Update( Controller )  ?  GUIResult::ReqRedraw  :  GUIResult::None );
+		Flags<GUIResult> Ret = ( NeedToRedraw  ?  GUIResult::ReqRedraw  :  GUIResult::None );
+		if( m_LocalStack.Update( Controller ) ){	Ret |= GUIResult::ReqRedraw;	}
 		if( m_LocalStack.empty() ){	Ret |= GUIResult::Finished;	}
 		return Ret;
 	}
@@ -258,17 +266,17 @@ namespace Town
 			if( const auto *p=std::get_if<HPChanged>( &result );	(p && p->Amount>0) )
 			{
 				auto BB = m_PartyView.ItemDrawRect( p->TgtChar.m_Order );
-				m_EffectList.PushBack( CreateHPRecovEffect( p->Amount, ( BB.TopLeft()+BB.RightBottom() )/2, 0 ) );
+				m_Effects.emplace_back( CreateHPRecovEffect( m_EffectsPainter, p->Amount, ( BB.TopLeft()+BB.RightBottom() )/2, 16, 0 ) );
 			}
 		}
-		UpdateCharViewContent();
+		m_Effects.emplace_back( WaitCmd<>( 6 ) );
+		m_Effects.emplace_back( [this]()->Flags<CmdResult>{  UpdateCharViewContent();  return CmdResult::Finished;  } );
 
 		//所持金を減らす
 		PD.AddMoney( -Price );
 		const int Money = PD.Money();
 		m_MoneyView.SetMoney( Money );
 
-		//
 		if( Money < 0 )
 		{	m_StaffText = L"ツケにしとくニャ…";	}
 	}

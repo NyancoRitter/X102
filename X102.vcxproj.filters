@@ -296,12 +296,6 @@
     <ClInclude Include="Common\Effect.h">
       <Filter>Game\Common</Filter>
     </ClInclude>
-    <ClInclude Include="Common\EffectList.h">
-      <Filter>Game\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="Common\EffectImpls.h">
-      <Filter>Game\Common</Filter>
-    </ClInclude>
     <ClInclude Include="Parts\IniLikeFile.h">
       <Filter>Parts</Filter>
     </ClInclude>
@@ -370,6 +364,9 @@
     </ClInclude>
     <ClInclude Include="GUI\IRectReg.h">
       <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Common\PainterSeq.h">
+      <Filter>Game\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -487,7 +484,7 @@
     <ClCompile Include="Common\ValueImgPainter.cpp">
       <Filter>Game\Common</Filter>
     </ClCompile>
-    <ClCompile Include="Common\EffectImpls.cpp">
+    <ClCompile Include="Common\Effect.cpp">
       <Filter>Game\Common</Filter>
     </ClCompile>
     <ClCompile Include="Game_Sound.cpp">

@@ -47,6 +47,7 @@ CampMenu::CampMenu( PlayData &rPlayData )
 	OnTopLVMenuCursorMoved( 0,0 );
 }
 
+//
 CampMenu::~CampMenu() = default;
 
 //
@@ -56,7 +57,7 @@ GameContent::PartyChar *CampMenu::CurrSelChar()
 	return &m_rPlayData.Char( m_rPlayData.CurrParty()[m_iCurrChar] );
 }
 
-//
+//描画
 void CampMenu::Paint_( HDC hdc ) const
 {
 	FillRectReg( hdc, Rect( 0,0, GlobalConst::GC_W, GlobalConst::GC_H ), RGB(0,0,0) );
@@ -71,19 +72,21 @@ void CampMenu::Paint_( HDC hdc ) const
 		{	upPage->Paint( hdc );	}
 	}
 
-	m_EffectList.Paint( hdc );
+	//エフェクト
+	m_EffectsPainter.Paint( hdc );
 }
 
 //更新
 Flags<GUIResult> CampMenu::Update( const IController &Controller )
 {
-	if( !m_EffectList.empty() )
+	Flags<GUIResult> Ret;
+
+	if( !m_Effects.empty() )
 	{
-		m_EffectList.Update();
-		return GUIResult::ReqRedraw;
+		if( UpdateCmdSeq( m_Effects ).Has( CmdResult::ReqRedraw ) ){	Ret |= GUIResult::ReqRedraw;	}
+		if( !m_Effects.empty() )return Ret | GUIResult::ReqRedraw;
 	}
 
-	Flags<GUIResult> Ret;
 	if( m_LocalStack.Update( Controller ) )
 	{	Ret |= GUIResult::ReqRedraw;	}
 	

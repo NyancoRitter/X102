@@ -1,13 +1,10 @@
 #pragma once
 
-#if 0
 #include "Parts/Flags.h"
 #include <functional>
 #include <list>
 
-/// <summary>
-/// Cmd の戻り値用ビットフラグ
-/// </summary>
+/// <summary>Cmd の戻り値用ビットフラグ</summary>
 enum class CmdResult : unsigned int
 {
 	/// <summary>特に無し</summary>
@@ -42,25 +39,48 @@ using CmdSequence = std::list< Cmd<Args...> >;
 /// <typeparam name="...Args"></typeparam>
 /// <param name="TgtSeq">対象のシーケンス</param>
 /// <param name="...args">Cmdへの引数</param>
-/// <returns>再描画が必要か否か</returns>
+/// <returns>
+/// * 誰かが ReqRedraw を返した場合， ReqRedraw を含む
+/// * 誰かが SuppressSubsequents を返してきたことによってreturnする場合，SuppressSubsequents を含む
+/// </returns>
 template< class ...Args >
-bool Update( CmdSequence<Args...> &TgtSeq, Args... args )
+Flags<CmdResult> UpdateCmdSeq( CmdSequence<Args...> &TgtSeq, Args... args )
 {
-	bool NeedToRedraw = false;
+	Flags<CmdResult> Ret = CmdResult::None;
 
 	auto i=TgtSeq.begin();
 	while( i!=TgtSeq.end() )
 	{
 		const auto Result = (*i)( args... );
-		if( Result.Has( CmdResult::ReqRedraw ) ){	NeedToRedraw = true;	}
+		if( Result.Has( CmdResult::ReqRedraw ) ){	Ret |= CmdResult::ReqRedraw;	}
 
 		if( Result.Has( CmdResult::Finished ) ){	i = TgtSeq.erase(i);	}
 		else{	i++;	}
 
 		if( Result.Has( CmdResult::SuppressSubsequents ) )
-		{	break;	}
+		{	return Ret | CmdResult::SuppressSubsequents;	}
 	}
 
-	return NeedToRedraw;
+	return Ret;
 }
-#endif
+
+/// <summary> 
+/// ウェイト．
+/// operator() が指定回数だけ CmdResult::SuppressSubsequents を返す．
+/// それ以降は CmdResult::Finished を返す．
+/// </summary>
+template< class ...Args >
+class WaitCmd
+{
+public:
+	WaitCmd( int Period ) : m_nRest( Period ) {}
+
+	Flags<CmdResult> operator()( Args... args )
+	{
+		if( m_nRest<=0 )return CmdResult::Finished;
+		--m_nRest;
+		return CmdResult::SuppressSubsequents;
+	}
+private:
+	int m_nRest;
+};

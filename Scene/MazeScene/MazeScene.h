@@ -6,15 +6,15 @@
 #include "MazeDataImpl/Win32MazeRenderer.h"
 #include <string>
 #include <memory>
-#include "Common/EffectList.h"
+#include "Misc/Cmd.h"
 
 class ITopLV;
 class PlayData;
 
 namespace Maze
 {
-	class WalkEffect;
-	class TurnEffect;
+	//class WalkEffect;
+	//class TurnEffect;
 
 	/// <summary>
 	/// 迷路探索シーン
@@ -44,15 +44,7 @@ namespace Maze
 
 		//void PlayMazeBGM();
 
-	private:
-		//※移動と旋回処理は頻繁に使うので同一インスタンスを使い回す
-		std::unique_ptr<WalkEffect> m_upWalkEffect;
-		std::unique_ptr<TurnEffect> m_upTurnEffect;
-
-		//各種エフェクトの速度
-		static inline const int ms_nAnimFrame_Walk = 8;
-		static inline const int ms_nAnimFrame_Turn = 8;
-		static inline const int ms_nAnimFrame_Ladder = 40;
+	
 
 	private:
 		//迷路探索中操作
@@ -76,11 +68,11 @@ namespace Maze
 	private:
 		ITopLV &m_rTopLV;
 		GUI::GUIStack m_Stack;
-		EffectList m_EffectList;
+		CmdSequence<> m_CmdSeq;
+
 		MazeDataImpl::Win32MazeRenderer m_Renderer;
 
 		UsualUpdater m_UsualUpdater;
-		bool m_ShouldBackToTown = false;
 
 		//マップデータ
 		std::vector< MazeDataImpl::FloorData > m_MazeMap;
@@ -91,12 +83,17 @@ namespace Maze
 		Vec2i m_CurrPos;	//現在位置
 		MazeDataImpl::Direction m_CurrDir = MazeDataImpl::Direction::EAST;	//現在の向き（初期化値は特に意味無し）
 		int m_CurrFloor = 0;	//現在何階にいるか(0-based)
-		//int m_EncountPercentage = 0;	//エンカウント率[%]
+		int m_EncountPercentage = 0;	//エンカウント率[%]
 		bool m_bShowPosInfo = true;
 
 #ifdef _DEBUG
 		//デバッグ用
 		bool m_TestModeFlag = false;
 #endif
+	private:
+		//各種エフェクトの速度
+		static inline const int ms_nAnimFrame_Walk = 8;
+		static inline const int ms_nAnimFrame_Turn = 8;
+		static inline const int ms_nAnimFrame_Ladder = 40;
 	};
 }

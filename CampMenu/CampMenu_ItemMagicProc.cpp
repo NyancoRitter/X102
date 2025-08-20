@@ -11,7 +11,7 @@
 
 #include "ActProc/ActEfficacyImpl.h"
 #include "ActProc/ActContext.h"
-#include "Common/EffectImpls.h"
+#include "Common/Effect.h"
 #include "ResManage/SoundBank.h"
 
 using namespace GameContent;
@@ -91,7 +91,7 @@ bool CampMenu::Affect( const ActEfficacy &Efficacy, TgtRange Range, int iTgtOrde
 			if( const auto *p=std::get_if<HPChanged>( &R ); p )
 			{
 				const auto ViewRect = m_upTopLVMenu->CharViewRect( p->TgtChar.m_Order );
-				m_EffectList.PushBack( CreateHPRecovEffect( p->Amount, (ViewRect.TopLeft()+ViewRect.RightBottom())/2, 4 ) );
+				m_Effects.emplace_back( CreateHPRecovEffect( m_EffectsPainter, p->Amount, (ViewRect.TopLeft()+ViewRect.RightBottom())/2, 16, 4 ) );
 			}
 		}
 	}

@@ -44,17 +44,10 @@ namespace
 		//ƒeƒLƒXƒg‘—‚è
 		virtual bool ToNextText() const override {	return Select() || Cancel();	}
 		//–À˜H“àˆÚ“®
-#if 0
 		virtual bool MoveFront() const override {	return Toyger::Pressed( m_rInput, VK_UP );	}
 		virtual bool MoveBack() const override {	return Toyger::Pressed( m_rInput, VK_DOWN );	}
 		virtual bool TurnLeft() const override {	return Toyger::Pressed( m_rInput, VK_LEFT );	}
 		virtual bool TurnRight() const override {	return Toyger::Pressed( m_rInput, VK_RIGHT );	}
-#else
-		virtual bool MoveFront() const override {	return Toyger::PosEdge( m_rInput, VK_UP );	}
-		virtual bool MoveBack() const override {	return Toyger::PosEdge( m_rInput, VK_DOWN );	}
-		virtual bool TurnLeft() const override {	return Toyger::PosEdge( m_rInput, VK_LEFT );	}
-		virtual bool TurnRight() const override {	return Toyger::PosEdge( m_rInput, VK_RIGHT );	}
-#endif
 		//–À˜H“à‚Å’²‚×‚é
 		virtual bool Inspect() const override {	return Select();	}
 	};

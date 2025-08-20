@@ -7,7 +7,8 @@
 #include "GUI/ImgPainter.h"
 #include "Common/MoneyView.h"
 #include "Common/CharSelMenuContent.h"
-#include "Common/EffectList.h"
+#include "Common/PainterSeq.h"
+#include "Misc/Cmd.h"
 
 namespace Town
 {
@@ -45,7 +46,8 @@ namespace Town
 
 		//
 		GUI::GUIStack m_LocalStack;
-		EffectList m_EffectList;
+		CmdSequence<> m_Effects;
+		PainterSeq m_EffectsPainter;
 
 		//•\Ž¦•¨
 		GUI::TextLinePainter m_Header;

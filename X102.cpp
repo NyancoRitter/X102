@@ -58,8 +58,7 @@ namespace
 		constexpr double MaxWait_ms = 33;
 		double Wait_ms = 1.0;
 		CTimeMeasure CTM;
-		bool ShouldQuit = false;
-		do
+		while( true )
 		{
 			CTM.Start();
 			if( ::MsgWaitForMultipleObjects( 0, NULL, FALSE, (DWORD)std::round(Wait_ms), QS_ALLINPUT ) == WAIT_FAILED )
@@ -83,7 +82,7 @@ namespace
 				InputSt.ToNextStep();
 				Wait_ms = std::max( 1.0, MaxWait_ms - CTM.End() );
 			}
-		}while( !ShouldQuit );
+		}
 		
 		return 0;
 	}

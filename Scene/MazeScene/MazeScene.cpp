@@ -3,11 +3,10 @@
 #include "ITopLV.h"
 
 #include <sstream>
-//#include "CreateMazeScene.h"
 
 #include "IController.h"
 #include "GlobalConst.h"
-//#include "Rnd.h"
+#include "Rnd.h"
 
 #include "PlayData/PlayData.h"
 #include "DataPath.h"
@@ -42,9 +41,6 @@ namespace Maze
 	{
 		//ファイルから迷路データをLoad（失敗時は例外送出）
 		m_MazeMap = LoadMazeMapFile( MazeFilePathU8, m_StartPos, m_StartDir );
-
-		m_upWalkEffect = std::make_unique<WalkEffect>( m_Renderer );
-		m_upTurnEffect = std::make_unique<TurnEffect>( m_Renderer );
 	}
 
 	//
@@ -53,23 +49,23 @@ namespace Maze
 		m_CurrFloor = 0;
 		m_CurrPos = m_StartPos;
 		m_CurrDir = m_StartDir;
-		m_ShouldBackToTown = false;
 		
 		m_Renderer.ResetCamera( m_StartPos, m_StartDir );
+
+		m_bShowPosInfo = false;
 		m_Renderer.SetBrightnessRate( 0 );
-
+		m_CmdSeq.clear();
+		m_CmdSeq.emplace_back( LadderEffect::DownFromCeil( m_Renderer, ms_nAnimFrame_Ladder ) );
+		m_CmdSeq.emplace_back( [this]()->Flags<CmdResult>{	m_bShowPosInfo=true;	return CmdResult::Finished|CmdResult::ReqRedraw;	}	);
 		
-		//m_bShowPosInfo = false;
 
-		m_EffectList.clear();
 		//{
 		//	auto spPainter = std::make_shared< UI::FramedTextPainter >( GC_W-4, 40 );
 		//	spPainter->Text( u8"=== ENTERING THE MAZE OF PALMETINA ===" ).TopLeft( {0,2} ).XCenter( GC_W );
 		//	constexpr int Wait = 12;
 		//	m_EffectList.Push_Front( std::make_shared<UI::DispForCertainPeriod>( spPainter, ms_nAnimFrame_Ladder+Wait, Wait ) );
 		//}
-		m_EffectList.PushBack( LadderEffect::DownFromCeil( m_Renderer, ms_nAnimFrame_Ladder ) );
-		//m_EffectList.PushBack( std::make_unique<UI::SimpleTask>( [&f=m_bShowPosInfo]()->bool{	f=true;	return false;	} ) );
+
 
 		m_Stack.clear( false );
 		m_Stack.Push( std::make_unique<RefWrapper>( m_UsualUpdater ) );
@@ -77,34 +73,27 @@ namespace Maze
 
 	void MazeScene::OnLeave()
 	{
-		m_EffectList.clear();
 		m_Stack.clear( false );
 	}
 
 	//Update
 	Flags<SceneUpdateResult> MazeScene::Update( const IController &Controller )
 	{
-		//bool NeedToRedraw = false;
+		Flags<SceneUpdateResult> Ret;
 
-		//エフェクト処理
-		if( !m_EffectList.empty() )
+		//CmdSeq
+		if( !m_CmdSeq.empty() )
 		{
-			m_EffectList.Update();
-			return SceneUpdateResult::ReqRedraw;
-		}
-
-		//町に戻る処理
-		if( m_ShouldBackToTown )
-		{
-			m_rTopLV.ChangeToTownScene();
-			return SceneUpdateResult::ReqRedraw;
+			const auto result = UpdateCmdSeq( m_CmdSeq );
+			if( result.Has( CmdResult::ReqRedraw ) ){	Ret |= SceneUpdateResult::ReqRedraw;	}
+			if( result.Has( CmdResult::SuppressSubsequents ) ){	return Ret;	}
 		}
 
 		//入力を処理
 		if( m_Stack.Update( Controller ) )
-		{	return SceneUpdateResult::ReqRedraw;	}
+		{	Ret |= SceneUpdateResult::ReqRedraw;	}
 
-		return SceneUpdateResult::None;
+		return Ret;
 	}
 
 	//通常の入力処理
@@ -132,16 +121,15 @@ namespace Maze
 		return GUIResult::None;
 	}
 
-	//Paint
+	//描画
 	void MazeScene::Draw( HDC hdc )
 	{
 		FillRectReg( hdc, Rect( 0,0, GlobalConst::GC_W, GlobalConst::GC_H ), RGB(0,0,0) );
 
 		m_Stack.Paint( hdc );
-		//m_EffectList.Paint(hdc);
 	}
 
-	//迷路の描画
+	//通常時の迷路描画
 	void MazeScene::UsualPaint( HDC hdc )
 	{
 		m_Renderer.Draw( hdc, m_MazeMap[m_CurrFloor] );
@@ -216,7 +204,7 @@ namespace Maze
 #ifdef _DEBUG
 		if( !m_TestModeFlag )
 #endif
-		{
+		{//移動可否チェック
 			auto Edge = m_MazeMap[ m_CurrFloor ].GetEdgeAttr( To, OppositeDirOf(Dir) );
 			if( Edge == (int)EdgeAttr::WALL )return false;
 			if( Edge >= (int)EdgeAttr::DOOR )
@@ -226,59 +214,44 @@ namespace Maze
 			}
 		}
 
-		m_CurrPos = To;
-		m_Renderer.ResetCamera( m_CurrPos, m_CurrDir );
+		m_CmdSeq.emplace_back( WalkEffect( m_Renderer, m_CurrPos, To, ms_nAnimFrame_Walk ) );
+		m_CmdSeq.emplace_back(
+			[this,To]()->Flags<CmdResult>
+			{
+				m_CurrPos = To;
+				m_Renderer.ResetCamera( m_CurrPos, m_CurrDir );
+
+				m_EncountPercentage += RND().GetInt( 0,5 );
+
+				//TODO : イベントチェック．イベントが無い場合にはランダムエンカウント処理
+
+				return CmdResult::Finished | CmdResult::ReqRedraw;
+			}
+		);
+
 		return true;
-
-		//m_WalkEffect.Reset(
-		//	m_CurrPos, To, ms_nAnimFrame_Walk,
-		//	[this](Vec2i pos)
-		//	{
-		//		m_CurrPos=pos;
-		//		m_Renderer.ResetCamera( pos, m_CurrDir );
-		//	}
-		//);
-
-		//m_EffectList.Push_Back( &m_WalkEffect );
-
-		//m_EncountPercentage += RND().GetInt<int>( 0,5 );
-		//m_EffectList.Push_Back(
-		//	std::make_unique<UI::SimpleTask>(
-		//		[this]()->bool
-		//		{
-		//			if( !StartEventProc( Event::EventTrigger::OnEnter ) )
-		//			{	RandomEncount();	}
-		//			return false;
-		//		}
-		//	) 
-		//);
 	}
 
 	//左右どちらかに90度旋回する処理の開始．
 	void MazeScene::BeginTurn( bool ToRight )
 	{
-		m_CurrDir = ( ToRight ? RightDirOf(m_CurrDir) : LeftDirOf(m_CurrDir) );
-		m_Renderer.ResetCamera( m_CurrPos, m_CurrDir );
-
-		//m_TurnEffect.Reset(
-		//	m_CurrDir, ToRight, ms_nAnimFrame_Turn,
-		//	[this](Direction dir){	m_CurrDir=dir;	m_Renderer.ResetCamera( m_CurrPos, dir );	}
-		//);
-
-		//m_EffectList.Push_Back( &m_TurnEffect );
-
-
+		m_CmdSeq.emplace_back( TurnEffect( m_Renderer, m_CurrDir, ToRight, ms_nAnimFrame_Turn ) );
+		m_CmdSeq.emplace_back(
+			[this,ToRight]()->Flags<CmdResult>
+			{
+				m_CurrDir = ( ToRight ? RightDirOf(m_CurrDir) : LeftDirOf(m_CurrDir) );
+				m_Renderer.ResetCamera( m_CurrPos, m_CurrDir );
+				return CmdResult::Finished | CmdResult::ReqRedraw;
+			}
+		);
 	}
 
 	//「調べる」処理
 	//何か処理が開始されたか否かを返す
 	bool MazeScene::Inspect()
 	{
-		//using namespace UI::Menu;
+		//TODO : イベント処理
 
-		////イベント処理
-		//if( StartEventProc( Event::EventTrigger::OnInspect ) )
-		//{	return true;	}
 
 		//梯子処理
 		const auto &CurrFloor = m_MazeMap[ m_CurrFloor ];
@@ -298,8 +271,11 @@ namespace Maze
 						[this](int index)->bool{
 							if( index==0 )
 							{
-								//m_EffectList.Push_Back( LadderEffect::UpToCeil( m_Renderer, ms_nAnimFrame_Ladder) );
-								m_ShouldBackToTown = true;
+								m_CmdSeq.emplace_back( LadderEffect::UpToCeil( m_Renderer, ms_nAnimFrame_Ladder) );
+								m_CmdSeq.emplace_back(
+									[this]()->Flags<CmdResult>
+									{	m_rTopLV.ChangeToTownScene();	return CmdResult::Finished|CmdResult::SuppressSubsequents|CmdResult::ReqRedraw;	}
+								);
 							}
 							return true;
 						}
@@ -310,12 +286,13 @@ namespace Maze
 			}
 			else
 			{//上階へ
-				/*m_EffectList.Push_Back(
-					std::make_unique< ChangeFloorEffect >( m_Renderer, m_CurrFloor, true, ms_nAnimFrame_Ladder, [this](int floor){	m_CurrFloor=floor;	} )
-				);*/
-				//m_EncountPercentage = 0;
+				m_CmdSeq.emplace_back( LadderEffect::UpToCeil( m_Renderer, ms_nAnimFrame_Ladder) );
+				m_CmdSeq.emplace_back(
+					[this]()->Flags<CmdResult>{	--m_CurrFloor;	return CmdResult::Finished|CmdResult::ReqRedraw;	}
+				);
+				m_CmdSeq.emplace_back( LadderEffect::UpFromFloor( m_Renderer, ms_nAnimFrame_Ladder) );
 
-				--m_CurrFloor;
+				m_EncountPercentage = 0;
 				return true;
 			}
 		}
@@ -323,18 +300,18 @@ namespace Maze
 		{//降り
 			if( m_CurrFloor+1 < (int)m_MazeMap.size() )
 			{//下階へ
-				//m_EffectList.Push_Back(
-				//	std::make_unique< ChangeFloorEffect >( m_Renderer, m_CurrFloor, false, ms_nAnimFrame_Ladder, [this](int floor){	m_CurrFloor=floor;	} )
-				//);
-				//m_rGameTopLV.CurrPlayData().OnReachedToFloor( m_CurrFloor+1 );
-				//m_EncountPercentage = 0;
-				++m_CurrFloor;
+				m_CmdSeq.emplace_back( LadderEffect::DownToFloor( m_Renderer, ms_nAnimFrame_Ladder) );
+				m_CmdSeq.emplace_back(
+					[this]()->Flags<CmdResult>{	++m_CurrFloor;	return CmdResult::Finished|CmdResult::ReqRedraw;	}
+				);
+				m_CmdSeq.emplace_back( LadderEffect::DownFromCeil( m_Renderer, ms_nAnimFrame_Ladder) );
+
+				m_EncountPercentage = 0;
 				return true;
 			}
 			else
 			{//※下層データが無い場合への備え
-				//OpenMsgWnd( { u8"穴の中は完全に土砂で埋没している。", u8"ここから下層には進めそうにない。" } );
-				//return true;
+				m_rTopLV.ShowMsgBox( L"ERR", L"フロアデータが不足している" );
 				return false;
 			}
 		}

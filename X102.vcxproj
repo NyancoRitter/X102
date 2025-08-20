@@ -105,10 +105,9 @@
     <ClInclude Include="Common\CharSelMenuContent.h" />
     <ClInclude Include="Common\DrawCharPanel.h" />
     <ClInclude Include="Common\Effect.h" />
-    <ClInclude Include="Common\EffectImpls.h" />
-    <ClInclude Include="Common\EffectList.h" />
     <ClInclude Include="Common\MagicSelUI.h" />
     <ClInclude Include="Common\MoneyView.h" />
+    <ClInclude Include="Common\PainterSeq.h" />
     <ClInclude Include="Common\TgtSelection.h" />
     <ClInclude Include="Common\ValueImgPainter.h" />
     <ClInclude Include="DataPath.h" />
@@ -202,7 +201,7 @@
     <ClCompile Include="CampMenu\TopLVMenu.cpp" />
     <ClCompile Include="Common\CharSelMenuContent.cpp" />
     <ClCompile Include="Common\DrawCharPanel.cpp" />
-    <ClCompile Include="Common\EffectImpls.cpp" />
+    <ClCompile Include="Common\Effect.cpp" />
     <ClCompile Include="Common\MagicSelUI.cpp" />
     <ClCompile Include="Common\MoneyView.cpp" />
     <ClCompile Include="Common\TgtSelection.cpp" />

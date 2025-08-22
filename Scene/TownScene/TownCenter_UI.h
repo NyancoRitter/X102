@@ -39,10 +39,13 @@ namespace Town
 		/// </summary>
 		void SetImgToOutskirts();
 
-		bool TransToMazeScene();
+	private:
+		void OnMazeSelected();
+		Flags<GUI::GUIResult> MenuHandler( GUI::Menu::HandleInputResult MenuResult );
 
 	private:
 		TownScene &m_Outer;
+		GUI::GUIStack m_GUIStack;
 
 		//•\Ž¦•¨
 		GUI::TextLinePainter m_Header;

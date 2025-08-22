@@ -26,14 +26,12 @@ namespace GUI
 		enum class VerticalLocation{	TOP, CENTER, BOTTOM	};
 
 	public:
-		/// <summary>
-		/// ctor．
-		/// </summary>
+		/// <summary>ctor．</summary>
 		/// <param name="nLinesPerPage">一度に表示する行数</param>
 		/// <param name="VerticalLoc">Y方向の位置の指定</param>
 		/// <param name="Width">描画幅[pixel]．0以下を指定した場合にはおおよそ左右方向全域を占めるサイズとなる</param>
 		MsgWnd(
-			int nLinesPerPage,
+			int nLinesPerPage = 3,
 			VerticalLocation VerticalLoc=VerticalLocation::BOTTOM,
 			int Width = 0
 		);

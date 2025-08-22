@@ -130,6 +130,7 @@
     <ClInclude Include="GUI\IPainter.h" />
     <ClInclude Include="GUI\IRectReg.h" />
     <ClInclude Include="GUI\MenuAsGUI.h" />
+    <ClInclude Include="GUI\MsgWnd.h" />
     <ClInclude Include="GUI\SimpleSelection.h" />
     <ClInclude Include="GUI\TextLinePainter.h" />
     <ClInclude Include="IController.h" />
@@ -174,6 +175,7 @@
     <ClInclude Include="Rnd.h" />
     <ClInclude Include="Scene\IScene.h" />
     <ClInclude Include="Scene\MazeScene\MazeScene.h" />
+    <ClInclude Include="Scene\MazeScene\MazeTitleEffect.h" />
     <ClInclude Include="Scene\MazeScene\MoveEffect.h" />
     <ClInclude Include="Scene\TownScene\Inn_UI.h" />
     <ClInclude Include="Scene\TownScene\PartyEditUI.h" />
@@ -217,6 +219,7 @@
     <ClCompile Include="GUI\ImgPainter.cpp" />
     <ClCompile Include="GUI\Menu.cpp" />
     <ClCompile Include="GUI\GenericMenuContent.cpp" />
+    <ClCompile Include="GUI\MsgWnd.cpp" />
     <ClCompile Include="GUI\SimpleSelection.cpp" />
     <ClCompile Include="GUI\TextLinePainter.cpp" />
     <ClCompile Include="MazeDataImpl\LoadMazeDataFile.cpp" />
@@ -232,6 +235,7 @@
     <ClCompile Include="ResManage\MonoBmpHolder.cpp" />
     <ClCompile Include="ResManage\SoundBank.cpp" />
     <ClCompile Include="Scene\MazeScene\MazeScene.cpp" />
+    <ClCompile Include="Scene\MazeScene\MazeTitleEffect.cpp" />
     <ClCompile Include="Scene\TownScene\Inn_UI.cpp" />
     <ClCompile Include="Scene\TownScene\PartyEditUI.cpp" />
     <ClCompile Include="Scene\TownScene\Pub_UI.cpp" />

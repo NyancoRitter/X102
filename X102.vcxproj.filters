@@ -368,6 +368,12 @@
     <ClInclude Include="Common\PainterSeq.h">
       <Filter>Game\Common</Filter>
     </ClInclude>
+    <ClInclude Include="GUI\MsgWnd.h">
+      <Filter>GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\MazeScene\MazeTitleEffect.h">
+      <Filter>Game\Scene\MazeScene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Toyger\Toyger_GameWnd.cpp">
@@ -518,6 +524,12 @@
       <Filter>Parts</Filter>
     </ClCompile>
     <ClCompile Include="Scene\MazeScene\MazeScene.cpp">
+      <Filter>Game\Scene\MazeScene</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\MsgWnd.cpp">
+      <Filter>GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\MazeScene\MazeTitleEffect.cpp">
       <Filter>Game\Scene\MazeScene</Filter>
     </ClCompile>
   </ItemGroup>

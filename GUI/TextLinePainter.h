@@ -56,12 +56,10 @@ namespace GUI
 		/// 表示すべきテキストを指定．
 		/// LineWidth()等の設定との間でうまいこと調整する（想定描画範囲に文字列描画結果が収まるようにする）のは利用側の責任．
 		/// </summary>
-		/// <param name="rTextLinesU16">
-		/// テキストデータ(UTF16)．複数行表示する場合はその分だけの文字列群．
-		/// </param>
+		/// <param name="TextLinesU16">テキストデータ(UTF16)．複数行表示する場合はその分だけの文字列群．</param>
 		/// <returns>*this</returns>
-		TextLinePainter &TextLines( std::initializer_list<std::wstring> rTextLinesU16 )
-		{	m_TextLinesU16.assign( rTextLinesU16 );	return *this;	}
+		TextLinePainter &TextLines( std::vector<std::wstring> TextLinesU16 )
+		{	m_TextLinesU16 = std::move(TextLinesU16);	return *this;	}
 
 		// テキストの水平方向描画位置の設定
 		TextLinePainter &AlignCenter();

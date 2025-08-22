@@ -17,6 +17,7 @@
 #include "CampMenu/CampMenu.h"
 #include "MazeDataImpl/LoadMazeDataFile.h"
 #include "MoveEffect.h"
+#include "MazeTitleEffect.h"
 
 using namespace GUI;
 using namespace MazeDataImpl;
@@ -55,17 +56,9 @@ namespace Maze
 		m_bShowPosInfo = false;
 		m_Renderer.SetBrightnessRate( 0 );
 		m_CmdSeq.clear();
+		m_CmdSeq.emplace_back( TitleEffect( m_EffectsPainter, ms_nAnimFrame_Ladder ) );
 		m_CmdSeq.emplace_back( LadderEffect::DownFromCeil( m_Renderer, ms_nAnimFrame_Ladder ) );
 		m_CmdSeq.emplace_back( [this]()->Flags<CmdResult>{	m_bShowPosInfo=true;	return CmdResult::Finished|CmdResult::ReqRedraw;	}	);
-		
-
-		//{
-		//	auto spPainter = std::make_shared< UI::FramedTextPainter >( GC_W-4, 40 );
-		//	spPainter->Text( u8"=== ENTERING THE MAZE OF PALMETINA ===" ).TopLeft( {0,2} ).XCenter( GC_W );
-		//	constexpr int Wait = 12;
-		//	m_EffectList.Push_Front( std::make_shared<UI::DispForCertainPeriod>( spPainter, ms_nAnimFrame_Ladder+Wait, Wait ) );
-		//}
-
 
 		m_Stack.clear( false );
 		m_Stack.Push( std::make_unique<RefWrapper>( m_UsualUpdater ) );
@@ -127,6 +120,7 @@ namespace Maze
 		FillRectReg( hdc, Rect( 0,0, GlobalConst::GC_W, GlobalConst::GC_H ), RGB(0,0,0) );
 
 		m_Stack.Paint( hdc );
+		m_EffectsPainter.Paint( hdc );
 	}
 
 	//í èÌéûÇÃñ¿òHï`âÊ

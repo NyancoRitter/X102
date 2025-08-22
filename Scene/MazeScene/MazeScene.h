@@ -7,6 +7,7 @@
 #include <string>
 #include <memory>
 #include "Misc/Cmd.h"
+#include "Common/PainterSeq.h"
 
 class ITopLV;
 class PlayData;
@@ -69,6 +70,7 @@ namespace Maze
 		ITopLV &m_rTopLV;
 		GUI::GUIStack m_Stack;
 		CmdSequence<> m_CmdSeq;
+		PainterSeq m_EffectsPainter;
 
 		MazeDataImpl::Win32MazeRenderer m_Renderer;
 

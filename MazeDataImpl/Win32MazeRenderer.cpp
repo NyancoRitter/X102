@@ -98,12 +98,13 @@ namespace
 	};
 
 	//ドア描画色
-	constexpr int N_DoorColor = 4;	//ドア種類数
+	constexpr int N_DoorColor = 5;	//ドア種類数
 	constexpr COLORREF DoorColors[N_DoorColor] = {
-		RGB(128,86,64),
+		RGB(126,84,62),
 		RGB(16,28,164),
 		RGB(8,160,24),
-		RGB(180,0,0)
+		RGB(180,0,0),
+		RGB(226,226,58)
 	};
 }
 
